@@ -21,4 +21,4 @@ jobs:
       - run: gleam test --target javascript
       - run: gleam test --target erlang
       - run: gleam format --check src/*.gleam test
-      - run: gleam run -m pull_countries
+      - run: gleam run -m worldwide/pull_countries
