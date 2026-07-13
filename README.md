@@ -1,5 +1,9 @@
 # worldwide 🗺️
 
+[![Package Version](https://img.shields.io/hexpm/v/worldwide)](https://hex.pm/packages/worldwide)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/worldwide/)
+
+
 A typed, offline database of world countries for Gleam. Get the list of
 countries, look them up by ISO code and read core info (currencies, languages,
 calling codes, timezones) as typed values. Runtime lookups are local and do not make
