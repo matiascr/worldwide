@@ -8,18 +8,18 @@ network calls or parse JSON. All the data is sourced from [countries.dev](https:
 ## Install
 
 ```sh
-gleam add countries_gleam
+gleam add worldwide
 ```
 
 ## Usage
 
 ```gleam
-import countries
-import countries/country
+import worldwide
+import worldwide/country
 
 pub fn main() {
   // Every country
-  let everything = countries.all()
+  let everything = worldwide.all()
 
   // Look up by alpha-2, alpha-3 or numeric code (case-insensitive)
   let assert Ok(spain) = country.from_iso_code("ES")
@@ -34,9 +34,9 @@ pub fn main() {
 }
 ```
 
-Use `countries.all()` for the complete generated snapshot, then use the focused
+Use `worldwide.all()` for the complete generated snapshot, then use the focused
 modules for typed lookups and supporting data. Country lookup helpers live in
-`countries/country`.
+`worldwide/country`.
 
 Countries are records, and the public module delegates to generated lookup
 functions for the data.
@@ -54,7 +54,7 @@ gleam run -m pull_countries
 ## Notes
 
 - The runtime library is still a static snapshot: it does not call countries.dev
-  when your application uses `countries.all()` or `country.from_iso_code`.
+  when your application uses `worldwide.all()` or `country.from_iso_code`.
 - Runtime modules compile for both Erlang and JavaScript targets.
 - Disputed territories, currency redenominations, and new/renamed countries are
   updated by rerunning the generator and committing the resulting snapshot.
