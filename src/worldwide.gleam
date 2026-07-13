@@ -1,6 +1,6 @@
 //// A typed, offline database of world countries.
 ////
-//// Update the list of countries with with `gleam run -m pull_countries`.
+//// Update the list of countries with with `gleam run -m worldwide/pull_countries`.
 ////
 //// ## Quick start
 ////

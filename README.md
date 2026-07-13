@@ -48,7 +48,7 @@ normalized CSV snapshot, and compiles that snapshot into a generated Gleam
 module.
 
 ```sh
-gleam run -m pull_countries
+gleam run -m worldwide/pull_countries
 ```
 
 ## Notes

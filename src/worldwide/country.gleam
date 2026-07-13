@@ -1,7 +1,7 @@
 //// Public country API.
 ////
 //// Generated data lives in `countries/internal/gen/country.gleam`.
-//// Regenerate it with `gleam run -m pull_countries`.
+//// Regenerate it with `gleam run -m worldwide/pull_countries`.
 
 import gleam/list
 import gleam/option.{type Option}

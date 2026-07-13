@@ -1,7 +1,7 @@
 //// Fetches the current countries.dev country list, snapshots it to
 //// `data/countries.csv`, and writes the generated
 //// `src/worldwide/internal/gen/country.gleam` module.
-//// Run with `gleam run -m pull_countries`.
+//// Run with `gleam run -m worldwide/pull_countries`.
 
 import gleam/dynamic/decode.{type Decoder}
 @target(javascript)
@@ -113,7 +113,7 @@ fn report_result(result: Result(Int, String)) {
         <> country_out_path,
       )
     Error(msg) -> {
-      let message = "pull_countries failed: " <> msg
+      let message = "worldwide/pull_countries failed: " <> msg
       panic as message
     }
   }
@@ -392,7 +392,7 @@ fn csv_escape(cell: String) -> String {
 fn render_country_module(rows: List(CountryRow)) -> String {
   let header =
     "//// Generated country data.\n////\n"
-    <> "//// Regenerate from countries.dev with `gleam run -m pull_countries`.\n\n"
+    <> "//// Regenerate from countries.dev with `gleam run -m worldwide/pull_countries`.\n\n"
     <> "// GENERATED FILE - do not edit by hand.\n"
     <> "//\n\n"
     <> "import worldwide/currency.{Currency}\n"
