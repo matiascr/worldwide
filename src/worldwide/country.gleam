@@ -10,10 +10,9 @@ import gleam/time/duration.{type Duration}
 import worldwide/currency.{type Currency}
 import worldwide/internal/gen/country.{type GeneratedCountry} as generated
 import worldwide/language.{type Language}
-import worldwide/region.{type Region}
+import worldwide/region.{type Region, type Subregion}
 
-/// A `Country` record. Currencies and languages may be empty for some
-/// territories. Codes follow ISO 3166-1.
+/// A `Country` record.
 pub type Country {
   Country(
     /// Common English name, e.g. "Spain".
@@ -26,6 +25,8 @@ pub type Country {
     numeric: String,
     /// Continental region.
     region: Region,
+    /// Continental subregion.
+    subregion: Option(Subregion),
     /// Capital city, if the country has one.
     capital: Option(String),
     /// Currencies in use, primary first. May be empty.
@@ -39,7 +40,7 @@ pub type Country {
   )
 }
 
-/// Return every known country in countries.dev name order.
+/// Return every known country in [countries.dev](https://countries.dev) name order.
 pub fn all() -> List(Country) {
   generated.all()
   |> list.map(to_country)
@@ -75,6 +76,7 @@ fn to_country(country: GeneratedCountry) -> Country {
     alpha3: country.alpha3,
     numeric: country.numeric,
     region: country.region,
+    subregion: country.subregion,
     capital: country.capital,
     currencies: country.currencies,
     languages: country.languages,
