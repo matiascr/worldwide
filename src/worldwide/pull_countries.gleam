@@ -1,4 +1,4 @@
-//// Fetches the current countries.dev country list, snapshots it to
+//// Fetches the current [countries.dev](https://countries.dev) country list, snapshots it to
 //// `data/countries.csv`, and writes the generated
 //// `src/worldwide/internal/gen/country.gleam` module.
 //// Run with `gleam run -m worldwide/pull_countries`.
@@ -15,12 +15,12 @@ import gleam/io
 import gleam/javascript/promise.{type Promise}
 import gleam/json
 import gleam/list
-import gleam/option.{None, Some}
+import gleam/option.{type Option, None, Some}
 import gleam/result
 import gleam/string
 import simplifile
 
-const countries_url = "https://countries.dev/countries?fields=name,alpha2Code,alpha3Code,numericCode,region,capital,currencies,languages,callingCodes,timezones&sort=name"
+const countries_url = "https://countries.dev/countries?fields=name,alpha2Code,alpha3Code,numericCode,region,subregion,capital,currencies,languages,callingCodes,timezones&sort=name"
 
 const csv_parent = "data/"
 
@@ -37,6 +37,7 @@ type GeneratedCountry {
     alpha3: String,
     numeric: String,
     region: String,
+    subregion: String,
     capital: String,
     currencies: List(GeneratedCurrency),
     languages: List(GeneratedLanguage),
@@ -60,6 +61,7 @@ type CountryRow {
     alpha3: String,
     numeric: String,
     region: String,
+    subregion: Option(String),
     capital: String,
     currencies: List(CurrencyRow),
     languages: List(LanguageRow),
@@ -223,6 +225,7 @@ fn country_decoder() -> Decoder(GeneratedCountry) {
   use alpha3 <- decode.field("alpha3Code", string_or_empty())
   use numeric <- decode.field("numericCode", string_or_empty())
   use region <- decode.field("region", string_or_empty())
+  use subregion <- decode.field("subregion", string_or_empty())
   use capital <- decode.optional_field("capital", "", string_or_empty())
   use currencies <- decode.optional_field(
     "currencies",
@@ -250,6 +253,7 @@ fn country_decoder() -> Decoder(GeneratedCountry) {
     alpha3:,
     numeric:,
     region:,
+    subregion:,
     capital:,
     currencies:,
     languages:,
@@ -303,6 +307,7 @@ fn normalize_country(country: GeneratedCountry) -> CountryRow {
     alpha3: country.alpha3,
     numeric: country.numeric,
     region: normalize_region(country.region),
+    subregion: normalize_subregion(country.subregion),
     capital: country.capital,
     currencies: list.map(country.currencies, fn(currency) {
       CurrencyRow(
@@ -332,11 +337,32 @@ fn normalize_region(region: String) -> String {
     | "Europe"
     | "Oceania"
     | "Polar" -> region
+
     "Antarctic Ocean" -> "AntarcticOcean"
+
     _ -> {
       let message = "tried to generate code for " <> region
       panic as message
     }
+  }
+}
+
+fn normalize_subregion(subregion: String) -> Option(String) {
+  case subregion {
+    "" -> {
+      let message = "tried to generate code for " <> subregion
+      panic as message
+    }
+    "Antarctic" -> None
+    subregion ->
+      subregion
+      |> string.trim()
+      |> string.replace("-", " ")
+      |> string.split(" ")
+      |> list.map(string.capitalise)
+      |> list.map(string.trim)
+      |> string.concat()
+      |> string.to_option()
   }
 }
 
@@ -402,7 +428,7 @@ fn csv_escape(cell: String) -> String {
 fn render_country_module(rows: List(CountryRow)) -> String {
   [
     "//// Generated country data.\n////",
-    "//// Regenerate from countries.dev with `gleam run -m worldwide/pull_countries`.\n",
+    "//// Regenerate from [countries.dev](https://countries.dev) with `gleam run -m worldwide/pull_countries`.\n",
     "// GENERATED FILE - do not edit by hand.",
     "//\n",
     "import gleam/option.{type Option, None, Some}",
@@ -410,10 +436,7 @@ fn render_country_module(rows: List(CountryRow)) -> String {
     "import gleam/time/duration.{type Duration}",
     "import worldwide/currency.{type Currency, Currency}",
     "import worldwide/language.{type Language, Language}",
-    "import worldwide/region.{",
-    "  type Region, Africa, Americas, Antarctic, AntarcticOcean, Asia, Europe,",
-    "  Oceania, Polar,",
-    "}\n",
+    "import worldwide/region.{type Region, type Subregion}",
     render_source_country_type(),
     render_countries_function(rows),
     render_country_from_iso_code_function(rows),
@@ -426,7 +449,8 @@ fn render_country_module(rows: List(CountryRow)) -> String {
 }
 
 fn render_source_country_type() -> String {
-  "@internal
+  "
+@internal
 pub type GeneratedCountry {
   GeneratedCountry(
     name: String,
@@ -434,6 +458,7 @@ pub type GeneratedCountry {
     alpha3: String,
     numeric: String,
     region: Region,
+    subregion: Option(Subregion),
     capital: Option(String),
     currencies: List(Currency),
     languages: List(Language),
@@ -444,7 +469,7 @@ pub type GeneratedCountry {
 }
 
 fn render_countries_function(rows: List(CountryRow)) -> String {
-  "/// Return every known country in countries.dev name order.\n"
+  "/// Return every known country in [countries.dev](https://countries.dev) name order.\n"
   <> "@internal\n"
   <> "pub fn all() {\n"
   <> "  [\n"
@@ -568,6 +593,9 @@ fn render_country_literal(row: CountryRow, indent: String) -> String {
   <> render_region(row.region)
   <> ",\n"
   <> indent
+  <> render_subregion(row.subregion)
+  <> ",\n"
+  <> indent
   <> render_capital(row.capital)
   <> ",\n"
   <> indent
@@ -588,8 +616,15 @@ fn render_country_literal(row: CountryRow, indent: String) -> String {
 
 fn render_region(raw: String) -> String {
   case string.split(raw, "|") {
-    [bare] -> bare
+    [bare] -> "region." <> bare
     _ -> "Other(" <> quote(raw) <> ")"
+  }
+}
+
+fn render_subregion(subregion: Option(String)) -> String {
+  case subregion {
+    Some(subregion) -> "Some(region." <> subregion <> ")"
+    None -> "None"
   }
 }
 

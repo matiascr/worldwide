@@ -47,7 +47,7 @@ functions for the data.
 
 ## Updating the data
 
-The pull command fetches the current countries.dev country list, writes a
+The pull command fetches the current [countries.dev](https://countries.dev) country list, writes a
 normalized CSV snapshot, and compiles that snapshot into a generated Gleam
 module.
 
@@ -57,7 +57,7 @@ gleam run -m worldwide/pull_countries
 
 ## Notes
 
-- The runtime library is still a static snapshot: it does not call countries.dev
+- The runtime library is still a static snapshot: it does not call [countries.dev](https://countries.dev)
   when your application uses `worldwide.all()` or `country.from_iso_code`.
 - Runtime modules compile for both Erlang and JavaScript targets.
 - Disputed territories, currency redenominations, and new/renamed countries are

@@ -1,6 +1,6 @@
 //// Generated country data.
 ////
-//// Regenerate from countries.dev with `gleam run -m worldwide/pull_countries`.
+//// Regenerate from [countries.dev](https://countries.dev) with `gleam run -m worldwide/pull_countries`.
 
 // GENERATED FILE - do not edit by hand.
 //
@@ -10,10 +10,7 @@ import gleam/string
 import gleam/time/duration.{type Duration}
 import worldwide/currency.{type Currency, Currency}
 import worldwide/language.{type Language, Language}
-import worldwide/region.{
-  type Region, Africa, Americas, Antarctic, AntarcticOcean, Asia, Europe,
-  Oceania, Polar,
-}
+import worldwide/region.{type Region, type Subregion}
 
 @internal
 pub type GeneratedCountry {
@@ -23,6 +20,7 @@ pub type GeneratedCountry {
     alpha3: String,
     numeric: String,
     region: Region,
+    subregion: Option(Subregion),
     capital: Option(String),
     currencies: List(Currency),
     languages: List(Language),
@@ -31,7 +29,7 @@ pub type GeneratedCountry {
   )
 }
 
-/// Return every known country in countries.dev name order.
+/// Return every known country in [countries.dev](https://countries.dev) name order.
 @internal
 pub fn all() {
   [
@@ -1568,7 +1566,8 @@ fn country_af() {
     "AF",
     "AFG",
     "004",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Kabul"),
     [
       Currency("AFN", "Afghan afghani", "؋"),
@@ -1593,7 +1592,8 @@ fn country_ax() {
     "AX",
     "ALA",
     "248",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Mariehamn"),
     [
       Currency("EUR", "Euro", "€"),
@@ -1616,7 +1616,8 @@ fn country_al() {
     "AL",
     "ALB",
     "008",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Tirana"),
     [
       Currency("ALL", "Albanian lek", "L"),
@@ -1639,7 +1640,8 @@ fn country_dz() {
     "DZ",
     "DZA",
     "012",
-    Africa,
+    region.Africa,
+    Some(region.NorthernAfrica),
     Some("Algiers"),
     [
       Currency("DZD", "Algerian dinar", "د.ج"),
@@ -1662,7 +1664,8 @@ fn country_as() {
     "AS",
     "ASM",
     "016",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Pago Pago"),
     [
       Currency("USD", "United States Dollar", "$"),
@@ -1686,7 +1689,8 @@ fn country_ad() {
     "AD",
     "AND",
     "020",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Andorra la Vella"),
     [
       Currency("EUR", "Euro", "€"),
@@ -1709,7 +1713,8 @@ fn country_ao() {
     "AO",
     "AGO",
     "024",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Luanda"),
     [
       Currency("AOA", "Angolan kwanza", "Kz"),
@@ -1732,7 +1737,8 @@ fn country_ai() {
     "AI",
     "AIA",
     "660",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("The Valley"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -1755,7 +1761,8 @@ fn country_aq() {
     "AQ",
     "ATA",
     "010",
-    Polar,
+    region.Polar,
+    Some(region.Antarctica),
     None,
     [],
     [
@@ -1784,7 +1791,8 @@ fn country_ag() {
     "AG",
     "ATG",
     "028",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Saint John's"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -1807,7 +1815,8 @@ fn country_ar() {
     "AR",
     "ARG",
     "032",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Buenos Aires"),
     [
       Currency("ARS", "Argentine peso", "$"),
@@ -1831,7 +1840,8 @@ fn country_am() {
     "AM",
     "ARM",
     "051",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Yerevan"),
     [
       Currency("AMD", "Armenian dram", "֏"),
@@ -1854,7 +1864,8 @@ fn country_aw() {
     "AW",
     "ABW",
     "533",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Oranjestad"),
     [
       Currency("AWG", "Aruban florin", "ƒ"),
@@ -1878,7 +1889,8 @@ fn country_au() {
     "AU",
     "AUS",
     "036",
-    Oceania,
+    region.Oceania,
+    Some(region.AustraliaAndNewZealand),
     Some("Canberra"),
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -1908,7 +1920,8 @@ fn country_at() {
     "AT",
     "AUT",
     "040",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Vienna"),
     [
       Currency("EUR", "Euro", "€"),
@@ -1931,7 +1944,8 @@ fn country_az() {
     "AZ",
     "AZE",
     "031",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Baku"),
     [
       Currency("AZN", "Azerbaijani manat", "₼"),
@@ -1954,7 +1968,8 @@ fn country_bs() {
     "BS",
     "BHS",
     "044",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Nassau"),
     [
       Currency("BSD", "Bahamian dollar", "$"),
@@ -1977,7 +1992,8 @@ fn country_bh() {
     "BH",
     "BHR",
     "048",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Manama"),
     [
       Currency("BHD", "Bahraini dinar", ".د.ب"),
@@ -2000,7 +2016,8 @@ fn country_bd() {
     "BD",
     "BGD",
     "050",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Dhaka"),
     [
       Currency("BDT", "Bangladeshi taka", "৳"),
@@ -2023,7 +2040,8 @@ fn country_bb() {
     "BB",
     "BRB",
     "052",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Bridgetown"),
     [
       Currency("BBD", "Barbadian dollar", "$"),
@@ -2046,7 +2064,8 @@ fn country_by() {
     "BY",
     "BLR",
     "112",
-    Europe,
+    region.Europe,
+    Some(region.EasternEurope),
     Some("Minsk"),
     [
       Currency("BYN", "New Belarusian ruble", "Br"),
@@ -2071,7 +2090,8 @@ fn country_be() {
     "BE",
     "BEL",
     "056",
-    Europe,
+    region.Europe,
+    Some(region.WesternEurope),
     Some("Brussels"),
     [
       Currency("EUR", "Euro", "€"),
@@ -2096,7 +2116,8 @@ fn country_bz() {
     "BZ",
     "BLZ",
     "084",
-    Americas,
+    region.Americas,
+    Some(region.CentralAmerica),
     Some("Belmopan"),
     [
       Currency("BZD", "Belize dollar", "$"),
@@ -2120,7 +2141,8 @@ fn country_bj() {
     "BJ",
     "BEN",
     "204",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Porto-Novo"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -2143,7 +2165,8 @@ fn country_bm() {
     "BM",
     "BMU",
     "060",
-    Americas,
+    region.Americas,
+    Some(region.NorthernAmerica),
     Some("Hamilton"),
     [
       Currency("BMD", "Bermudian dollar", "$"),
@@ -2166,7 +2189,8 @@ fn country_bt() {
     "BT",
     "BTN",
     "064",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Thimphu"),
     [
       Currency("BTN", "Bhutanese ngultrum", "Nu."),
@@ -2190,7 +2214,8 @@ fn country_bo() {
     "BO",
     "BOL",
     "068",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Sucre"),
     [
       Currency("BOB", "Bolivian boliviano", "Bs."),
@@ -2215,7 +2240,8 @@ fn country_bq() {
     "BQ",
     "BES",
     "535",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Kralendijk"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -2238,7 +2264,8 @@ fn country_ba() {
     "BA",
     "BIH",
     "070",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Sarajevo"),
     [
       Currency("BAM", "Bosnia and Herzegovina convertible mark", "KM"),
@@ -2263,7 +2290,8 @@ fn country_bw() {
     "BW",
     "BWA",
     "072",
-    Africa,
+    region.Africa,
+    Some(region.SouthernAfrica),
     Some("Gaborone"),
     [
       Currency("BWP", "Botswana pula", "P"),
@@ -2287,7 +2315,8 @@ fn country_bv() {
     "BV",
     "BVT",
     "074",
-    AntarcticOcean,
+    region.AntarcticOcean,
+    Some(region.SouthAntarcticOcean),
     None,
     [
       Currency("NOK", "Norwegian krone", "kr"),
@@ -2312,7 +2341,8 @@ fn country_br() {
     "BR",
     "BRA",
     "076",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Brasília"),
     [
       Currency("BRL", "Brazilian real", "R$"),
@@ -2338,7 +2368,8 @@ fn country_io() {
     "IO",
     "IOT",
     "086",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Diego Garcia"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -2361,7 +2392,8 @@ fn country_bn() {
     "BN",
     "BRN",
     "096",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Bandar Seri Begawan"),
     [
       Currency("BND", "Brunei dollar", "$"),
@@ -2385,7 +2417,8 @@ fn country_bg() {
     "BG",
     "BGR",
     "100",
-    Europe,
+    region.Europe,
+    Some(region.EasternEurope),
     Some("Sofia"),
     [
       Currency("BGN", "Bulgarian lev", "лв"),
@@ -2408,7 +2441,8 @@ fn country_bf() {
     "BF",
     "BFA",
     "854",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Ouagadougou"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -2432,7 +2466,8 @@ fn country_bi() {
     "BI",
     "BDI",
     "108",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Gitega"),
     [
       Currency("BIF", "Burundian franc", "Fr"),
@@ -2456,7 +2491,8 @@ fn country_cv() {
     "CV",
     "CPV",
     "132",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Praia"),
     [
       Currency("CVE", "Cape Verdean escudo", "Esc"),
@@ -2479,7 +2515,8 @@ fn country_kh() {
     "KH",
     "KHM",
     "116",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Phnom Penh"),
     [
       Currency("KHR", "Cambodian riel", "៛"),
@@ -2503,7 +2540,8 @@ fn country_cm() {
     "CM",
     "CMR",
     "120",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Yaoundé"),
     [
       Currency("XAF", "Central African CFA franc", "Fr"),
@@ -2527,7 +2565,8 @@ fn country_ca() {
     "CA",
     "CAN",
     "124",
-    Americas,
+    region.Americas,
+    Some(region.NorthernAmerica),
     Some("Ottawa"),
     [
       Currency("CAD", "Canadian dollar", "$"),
@@ -2556,7 +2595,8 @@ fn country_ky() {
     "KY",
     "CYM",
     "136",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("George Town"),
     [
       Currency("KYD", "Cayman Islands dollar", "$"),
@@ -2579,7 +2619,8 @@ fn country_cf() {
     "CF",
     "CAF",
     "140",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Bangui"),
     [
       Currency("XAF", "Central African CFA franc", "Fr"),
@@ -2603,7 +2644,8 @@ fn country_td() {
     "TD",
     "TCD",
     "148",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("N'Djamena"),
     [
       Currency("XAF", "Central African CFA franc", "Fr"),
@@ -2627,7 +2669,8 @@ fn country_cl() {
     "CL",
     "CHL",
     "152",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Santiago"),
     [
       Currency("CLP", "Chilean peso", "$"),
@@ -2651,7 +2694,8 @@ fn country_cn() {
     "CN",
     "CHN",
     "156",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     Some("Beijing"),
     [
       Currency("CNY", "Chinese yuan", "¥"),
@@ -2674,7 +2718,8 @@ fn country_cx() {
     "CX",
     "CXR",
     "162",
-    Oceania,
+    region.Oceania,
+    Some(region.AustraliaAndNewZealand),
     Some("Flying Fish Cove"),
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -2697,7 +2742,8 @@ fn country_cc() {
     "CC",
     "CCK",
     "166",
-    Oceania,
+    region.Oceania,
+    Some(region.AustraliaAndNewZealand),
     Some("West Island"),
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -2720,7 +2766,8 @@ fn country_co() {
     "CO",
     "COL",
     "170",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Bogotá"),
     [
       Currency("COP", "Colombian peso", "$"),
@@ -2743,7 +2790,8 @@ fn country_km() {
     "KM",
     "COM",
     "174",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Moroni"),
     [
       Currency("KMF", "Comorian franc", "Fr"),
@@ -2767,7 +2815,8 @@ fn country_cg() {
     "CG",
     "COG",
     "178",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Brazzaville"),
     [
       Currency("XAF", "Central African CFA franc", "Fr"),
@@ -2791,7 +2840,8 @@ fn country_cd() {
     "CD",
     "COD",
     "180",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Kinshasa"),
     [
       Currency("CDF", "Congolese franc", "Fr"),
@@ -2819,7 +2869,8 @@ fn country_ck() {
     "CK",
     "COK",
     "184",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Avarua"),
     [
       Currency("NZD", "New Zealand dollar", "$"),
@@ -2844,7 +2895,8 @@ fn country_cr() {
     "CR",
     "CRI",
     "188",
-    Americas,
+    region.Americas,
+    Some(region.CentralAmerica),
     Some("San José"),
     [
       Currency("CRC", "Costa Rican colón", "₡"),
@@ -2867,7 +2919,8 @@ fn country_hr() {
     "HR",
     "HRV",
     "191",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Zagreb"),
     [
       Currency("EUR", "Euro", "€"),
@@ -2890,7 +2943,8 @@ fn country_cu() {
     "CU",
     "CUB",
     "192",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Havana"),
     [
       Currency("CUC", "Cuban convertible peso", "$"),
@@ -2914,7 +2968,8 @@ fn country_cw() {
     "CW",
     "CUW",
     "531",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Willemstad"),
     [
       Currency("ANG", "Netherlands Antillean guilder", "ƒ"),
@@ -2939,7 +2994,8 @@ fn country_cy() {
     "CY",
     "CYP",
     "196",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Nicosia"),
     [
       Currency("EUR", "Euro", "€"),
@@ -2964,7 +3020,8 @@ fn country_cz() {
     "CZ",
     "CZE",
     "203",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Prague"),
     [
       Currency("CZK", "Czech koruna", "Kč"),
@@ -2988,7 +3045,8 @@ fn country_dk() {
     "DK",
     "DNK",
     "208",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Copenhagen"),
     [
       Currency("DKK", "Danish krone", "kr"),
@@ -3015,7 +3073,8 @@ fn country_dj() {
     "DJ",
     "DJI",
     "262",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Djibouti"),
     [
       Currency("DJF", "Djiboutian franc", "Fr"),
@@ -3039,7 +3098,8 @@ fn country_dm() {
     "DM",
     "DMA",
     "212",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Roseau"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -3062,7 +3122,8 @@ fn country_do() {
     "DO",
     "DOM",
     "214",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Santo Domingo"),
     [
       Currency("DOP", "Dominican peso", "$"),
@@ -3085,7 +3146,8 @@ fn country_ec() {
     "EC",
     "ECU",
     "218",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Quito"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -3109,7 +3171,8 @@ fn country_eg() {
     "EG",
     "EGY",
     "818",
-    Africa,
+    region.Africa,
+    Some(region.NorthernAfrica),
     Some("Cairo"),
     [
       Currency("EGP", "Egyptian pound", "£"),
@@ -3132,7 +3195,8 @@ fn country_sv() {
     "SV",
     "SLV",
     "222",
-    Americas,
+    region.Americas,
+    Some(region.CentralAmerica),
     Some("San Salvador"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -3155,7 +3219,8 @@ fn country_gq() {
     "GQ",
     "GNQ",
     "226",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Malabo"),
     [
       Currency("XAF", "Central African CFA franc", "Fr"),
@@ -3181,7 +3246,8 @@ fn country_er() {
     "ER",
     "ERI",
     "232",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Asmara"),
     [
       Currency("ERN", "Eritrean nakfa", "Nfk"),
@@ -3212,7 +3278,8 @@ fn country_ee() {
     "EE",
     "EST",
     "233",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Tallinn"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3235,7 +3302,8 @@ fn country_et() {
     "ET",
     "ETH",
     "231",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Addis Ababa"),
     [
       Currency("ETB", "Ethiopian birr", "Br"),
@@ -3258,7 +3326,8 @@ fn country_fk() {
     "FK",
     "FLK",
     "238",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Stanley"),
     [
       Currency("FKP", "Falkland Islands pound", "£"),
@@ -3281,7 +3350,8 @@ fn country_fo() {
     "FO",
     "FRO",
     "234",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Tórshavn"),
     [
       Currency("DKK", "Danish krone", "kr"),
@@ -3305,7 +3375,8 @@ fn country_fj() {
     "FJ",
     "FJI",
     "242",
-    Oceania,
+    region.Oceania,
+    Some(region.Melanesia),
     Some("Suva"),
     [
       Currency("FJD", "Fijian dollar", "$"),
@@ -3331,7 +3402,8 @@ fn country_fi() {
     "FI",
     "FIN",
     "246",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Helsinki"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3355,7 +3427,8 @@ fn country_fr() {
     "FR",
     "FRA",
     "250",
-    Europe,
+    region.Europe,
+    Some(region.WesternEurope),
     Some("Paris"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3391,7 +3464,8 @@ fn country_gf() {
     "GF",
     "GUF",
     "254",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Cayenne"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3414,7 +3488,8 @@ fn country_pf() {
     "PF",
     "PYF",
     "258",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Papeetē"),
     [
       Currency("XPF", "CFP franc", "Fr"),
@@ -3439,7 +3514,8 @@ fn country_tf() {
     "TF",
     "ATF",
     "260",
-    Africa,
+    region.Africa,
+    Some(region.SouthernAfrica),
     Some("Port-aux-Français"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3462,7 +3538,8 @@ fn country_ga() {
     "GA",
     "GAB",
     "266",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Libreville"),
     [
       Currency("XAF", "Central African CFA franc", "Fr"),
@@ -3485,7 +3562,8 @@ fn country_gm() {
     "GM",
     "GMB",
     "270",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Banjul"),
     [
       Currency("GMD", "Gambian dalasi", "D"),
@@ -3508,7 +3586,8 @@ fn country_ge() {
     "GE",
     "GEO",
     "268",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Tbilisi"),
     [
       Currency("GEL", "Georgian Lari", "ლ"),
@@ -3531,7 +3610,8 @@ fn country_de() {
     "DE",
     "DEU",
     "276",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Berlin"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3554,7 +3634,8 @@ fn country_gh() {
     "GH",
     "GHA",
     "288",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Accra"),
     [
       Currency("GHS", "Ghanaian cedi", "₵"),
@@ -3577,7 +3658,8 @@ fn country_gi() {
     "GI",
     "GIB",
     "292",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Gibraltar"),
     [
       Currency("GIP", "Gibraltar pound", "£"),
@@ -3600,7 +3682,8 @@ fn country_gr() {
     "GR",
     "GRC",
     "300",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Athens"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3623,7 +3706,8 @@ fn country_gl() {
     "GL",
     "GRL",
     "304",
-    Americas,
+    region.Americas,
+    Some(region.NorthernAmerica),
     Some("Nuuk"),
     [
       Currency("DKK", "Danish krone", "kr"),
@@ -3649,7 +3733,8 @@ fn country_gd() {
     "GD",
     "GRD",
     "308",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("St. George's"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -3672,7 +3757,8 @@ fn country_gp() {
     "GP",
     "GLP",
     "312",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Basse-Terre"),
     [
       Currency("EUR", "Euro", "€"),
@@ -3695,7 +3781,8 @@ fn country_gu() {
     "GU",
     "GUM",
     "316",
-    Oceania,
+    region.Oceania,
+    Some(region.Micronesia),
     Some("Hagåtña"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -3720,7 +3807,8 @@ fn country_gt() {
     "GT",
     "GTM",
     "320",
-    Americas,
+    region.Americas,
+    Some(region.CentralAmerica),
     Some("Guatemala City"),
     [
       Currency("GTQ", "Guatemalan quetzal", "Q"),
@@ -3743,7 +3831,8 @@ fn country_gg() {
     "GG",
     "GGY",
     "831",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("St. Peter Port"),
     [
       Currency("GBP", "British pound", "£"),
@@ -3768,7 +3857,8 @@ fn country_gn() {
     "GN",
     "GIN",
     "324",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Conakry"),
     [
       Currency("GNF", "Guinean franc", "Fr"),
@@ -3792,7 +3882,8 @@ fn country_gw() {
     "GW",
     "GNB",
     "624",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Bissau"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -3815,7 +3906,8 @@ fn country_gy() {
     "GY",
     "GUY",
     "328",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Georgetown"),
     [
       Currency("GYD", "Guyanese dollar", "$"),
@@ -3838,7 +3930,8 @@ fn country_ht() {
     "HT",
     "HTI",
     "332",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Port-au-Prince"),
     [
       Currency("HTG", "Haitian gourde", "G"),
@@ -3862,7 +3955,8 @@ fn country_hm() {
     "HM",
     "HMD",
     "334",
-    Antarctic,
+    region.Antarctic,
+    None,
     None,
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -3885,7 +3979,8 @@ fn country_hn() {
     "HN",
     "HND",
     "340",
-    Americas,
+    region.Americas,
+    Some(region.CentralAmerica),
     Some("Tegucigalpa"),
     [
       Currency("HNL", "Honduran lempira", "L"),
@@ -3908,7 +4003,8 @@ fn country_hk() {
     "HK",
     "HKG",
     "344",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     Some("City of Victoria"),
     [
       Currency("HKD", "Hong Kong dollar", "$"),
@@ -3932,7 +4028,8 @@ fn country_hu() {
     "HU",
     "HUN",
     "348",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Budapest"),
     [
       Currency("HUF", "Hungarian forint", "Ft"),
@@ -3955,7 +4052,8 @@ fn country_is() {
     "IS",
     "ISL",
     "352",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Reykjavík"),
     [
       Currency("ISK", "Icelandic króna", "kr"),
@@ -3978,7 +4076,8 @@ fn country_in() {
     "IN",
     "IND",
     "356",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("New Delhi"),
     [
       Currency("INR", "Indian rupee", "₹"),
@@ -4002,7 +4101,8 @@ fn country_id() {
     "ID",
     "IDN",
     "360",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Jakarta"),
     [
       Currency("IDR", "Indonesian rupiah", "Rp"),
@@ -4027,7 +4127,8 @@ fn country_ir() {
     "IR",
     "IRN",
     "364",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Tehran"),
     [
       Currency("IRR", "Iranian rial", "﷼"),
@@ -4050,7 +4151,8 @@ fn country_iq() {
     "IQ",
     "IRQ",
     "368",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Baghdad"),
     [
       Currency("IQD", "Iraqi dinar", "ع.د"),
@@ -4074,7 +4176,8 @@ fn country_ie() {
     "IE",
     "IRL",
     "372",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Dublin"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4098,7 +4201,8 @@ fn country_im() {
     "IM",
     "IMN",
     "833",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Douglas"),
     [
       Currency("GBP", "British pound", "£"),
@@ -4123,7 +4227,8 @@ fn country_il() {
     "IL",
     "ISR",
     "376",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Jerusalem"),
     [
       Currency("ILS", "Israeli new shekel", "₪"),
@@ -4147,7 +4252,8 @@ fn country_it() {
     "IT",
     "ITA",
     "380",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Rome"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4170,7 +4276,8 @@ fn country_ci() {
     "CI",
     "CIV",
     "384",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Yamoussoukro"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -4193,7 +4300,8 @@ fn country_jm() {
     "JM",
     "JAM",
     "388",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Kingston"),
     [
       Currency("JMD", "Jamaican dollar", "$"),
@@ -4216,7 +4324,8 @@ fn country_jp() {
     "JP",
     "JPN",
     "392",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     Some("Tokyo"),
     [
       Currency("JPY", "Japanese yen", "¥"),
@@ -4239,7 +4348,8 @@ fn country_je() {
     "JE",
     "JEY",
     "832",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Saint Helier"),
     [
       Currency("GBP", "British pound", "£"),
@@ -4264,7 +4374,8 @@ fn country_jo() {
     "JO",
     "JOR",
     "400",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Amman"),
     [
       Currency("JOD", "Jordanian dinar", "د.ا"),
@@ -4287,7 +4398,8 @@ fn country_kz() {
     "KZ",
     "KAZ",
     "398",
-    Asia,
+    region.Asia,
+    Some(region.CentralAsia),
     Some("Nur-Sultan"),
     [
       Currency("KZT", "Kazakhstani tenge", "₸"),
@@ -4313,7 +4425,8 @@ fn country_ke() {
     "KE",
     "KEN",
     "404",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Nairobi"),
     [
       Currency("KES", "Kenyan shilling", "Sh"),
@@ -4337,7 +4450,8 @@ fn country_ki() {
     "KI",
     "KIR",
     "296",
-    Oceania,
+    region.Oceania,
+    Some(region.Micronesia),
     Some("South Tarawa"),
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -4363,7 +4477,8 @@ fn country_kp() {
     "KP",
     "PRK",
     "408",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     Some("Pyongyang"),
     [
       Currency("KPW", "North Korean won", "₩"),
@@ -4386,7 +4501,8 @@ fn country_kr() {
     "KR",
     "KOR",
     "410",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     Some("Seoul"),
     [
       Currency("KRW", "South Korean won", "₩"),
@@ -4409,7 +4525,8 @@ fn country_kw() {
     "KW",
     "KWT",
     "414",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Kuwait City"),
     [
       Currency("KWD", "Kuwaiti dinar", "د.ك"),
@@ -4432,7 +4549,8 @@ fn country_kg() {
     "KG",
     "KGZ",
     "417",
-    Asia,
+    region.Asia,
+    Some(region.CentralAsia),
     Some("Bishkek"),
     [
       Currency("KGS", "Kyrgyzstani som", "с"),
@@ -4456,7 +4574,8 @@ fn country_la() {
     "LA",
     "LAO",
     "418",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Vientiane"),
     [
       Currency("LAK", "Lao kip", "₭"),
@@ -4479,7 +4598,8 @@ fn country_lv() {
     "LV",
     "LVA",
     "428",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Riga"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4502,7 +4622,8 @@ fn country_lb() {
     "LB",
     "LBN",
     "422",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Beirut"),
     [
       Currency("LBP", "Lebanese pound", "ل.ل"),
@@ -4526,7 +4647,8 @@ fn country_ls() {
     "LS",
     "LSO",
     "426",
-    Africa,
+    region.Africa,
+    Some(region.SouthernAfrica),
     Some("Maseru"),
     [
       Currency("LSL", "Lesotho loti", "L"),
@@ -4551,7 +4673,8 @@ fn country_lr() {
     "LR",
     "LBR",
     "430",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Monrovia"),
     [
       Currency("LRD", "Liberian dollar", "$"),
@@ -4574,7 +4697,8 @@ fn country_ly() {
     "LY",
     "LBY",
     "434",
-    Africa,
+    region.Africa,
+    Some(region.NorthernAfrica),
     Some("Tripoli"),
     [
       Currency("LYD", "Libyan dinar", "ل.د"),
@@ -4597,7 +4721,8 @@ fn country_li() {
     "LI",
     "LIE",
     "438",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Vaduz"),
     [
       Currency("CHF", "Swiss franc", "Fr"),
@@ -4620,7 +4745,8 @@ fn country_lt() {
     "LT",
     "LTU",
     "440",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Vilnius"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4643,7 +4769,8 @@ fn country_lu() {
     "LU",
     "LUX",
     "442",
-    Europe,
+    region.Europe,
+    Some(region.WesternEurope),
     Some("Luxembourg"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4668,7 +4795,8 @@ fn country_mo() {
     "MO",
     "MAC",
     "446",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     None,
     [
       Currency("MOP", "Macanese pataca", "P"),
@@ -4692,7 +4820,8 @@ fn country_mg() {
     "MG",
     "MDG",
     "450",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Antananarivo"),
     [
       Currency("MGA", "Malagasy ariary", "Ar"),
@@ -4716,7 +4845,8 @@ fn country_mw() {
     "MW",
     "MWI",
     "454",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Lilongwe"),
     [
       Currency("MWK", "Malawian kwacha", "MK"),
@@ -4740,7 +4870,8 @@ fn country_my() {
     "MY",
     "MYS",
     "458",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Kuala Lumpur"),
     [
       Currency("MYR", "Malaysian ringgit", "RM"),
@@ -4763,7 +4894,8 @@ fn country_mv() {
     "MV",
     "MDV",
     "462",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Malé"),
     [
       Currency("MVR", "Maldivian rufiyaa", ".ރ"),
@@ -4786,7 +4918,8 @@ fn country_ml() {
     "ML",
     "MLI",
     "466",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Bamako"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -4809,7 +4942,8 @@ fn country_mt() {
     "MT",
     "MLT",
     "470",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Valletta"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4833,7 +4967,8 @@ fn country_mh() {
     "MH",
     "MHL",
     "584",
-    Oceania,
+    region.Oceania,
+    Some(region.Micronesia),
     Some("Majuro"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -4857,7 +4992,8 @@ fn country_mq() {
     "MQ",
     "MTQ",
     "474",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Fort-de-France"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4880,7 +5016,8 @@ fn country_mr() {
     "MR",
     "MRT",
     "478",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Nouakchott"),
     [
       Currency("MRO", "Mauritanian ouguiya", "UM"),
@@ -4903,7 +5040,8 @@ fn country_mu() {
     "MU",
     "MUS",
     "480",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Port Louis"),
     [
       Currency("MUR", "Mauritian rupee", "₨"),
@@ -4926,7 +5064,8 @@ fn country_yt() {
     "YT",
     "MYT",
     "175",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Mamoudzou"),
     [
       Currency("EUR", "Euro", "€"),
@@ -4949,7 +5088,8 @@ fn country_mx() {
     "MX",
     "MEX",
     "484",
-    Americas,
+    region.Americas,
+    Some(region.NorthAmerica),
     Some("Mexico City"),
     [
       Currency("MXN", "Mexican peso", "$"),
@@ -4974,7 +5114,8 @@ fn country_fm() {
     "FM",
     "FSM",
     "583",
-    Oceania,
+    region.Oceania,
+    Some(region.Micronesia),
     Some("Palikir"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -4998,7 +5139,8 @@ fn country_md() {
     "MD",
     "MDA",
     "498",
-    Europe,
+    region.Europe,
+    Some(region.EasternEurope),
     Some("Chișinău"),
     [
       Currency("MDL", "Moldovan leu", "L"),
@@ -5021,7 +5163,8 @@ fn country_mc() {
     "MC",
     "MCO",
     "492",
-    Europe,
+    region.Europe,
+    Some(region.WesternEurope),
     Some("Monaco"),
     [
       Currency("EUR", "Euro", "€"),
@@ -5044,7 +5187,8 @@ fn country_mn() {
     "MN",
     "MNG",
     "496",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     Some("Ulan Bator"),
     [
       Currency("MNT", "Mongolian tögrög", "₮"),
@@ -5068,7 +5212,8 @@ fn country_me() {
     "ME",
     "MNE",
     "499",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Podgorica"),
     [
       Currency("EUR", "Euro", "€"),
@@ -5094,7 +5239,8 @@ fn country_ms() {
     "MS",
     "MSR",
     "500",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Plymouth"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -5117,7 +5263,8 @@ fn country_ma() {
     "MA",
     "MAR",
     "504",
-    Africa,
+    region.Africa,
+    Some(region.NorthernAfrica),
     Some("Rabat"),
     [
       Currency("MAD", "Moroccan dirham", "د.م."),
@@ -5140,7 +5287,8 @@ fn country_mz() {
     "MZ",
     "MOZ",
     "508",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Maputo"),
     [
       Currency("MZN", "Mozambican metical", "MT"),
@@ -5163,7 +5311,8 @@ fn country_mm() {
     "MM",
     "MMR",
     "104",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Naypyidaw"),
     [
       Currency("MMK", "Burmese kyat", "Ks"),
@@ -5186,7 +5335,8 @@ fn country_na() {
     "NA",
     "NAM",
     "516",
-    Africa,
+    region.Africa,
+    Some(region.SouthernAfrica),
     Some("Windhoek"),
     [
       Currency("NAD", "Namibian dollar", "$"),
@@ -5211,7 +5361,8 @@ fn country_nr() {
     "NR",
     "NRU",
     "520",
-    Oceania,
+    region.Oceania,
+    Some(region.Micronesia),
     Some("Yaren"),
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -5235,7 +5386,8 @@ fn country_np() {
     "NP",
     "NPL",
     "524",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Kathmandu"),
     [
       Currency("NPR", "Nepalese rupee", "₨"),
@@ -5258,7 +5410,8 @@ fn country_nl() {
     "NL",
     "NLD",
     "528",
-    Europe,
+    region.Europe,
+    Some(region.WesternEurope),
     Some("Amsterdam"),
     [
       Currency("EUR", "Euro", "€"),
@@ -5282,7 +5435,8 @@ fn country_nc() {
     "NC",
     "NCL",
     "540",
-    Oceania,
+    region.Oceania,
+    Some(region.Melanesia),
     Some("Nouméa"),
     [
       Currency("XPF", "CFP franc", "Fr"),
@@ -5305,7 +5459,8 @@ fn country_nz() {
     "NZ",
     "NZL",
     "554",
-    Oceania,
+    region.Oceania,
+    Some(region.AustraliaAndNewZealand),
     Some("Wellington"),
     [
       Currency("NZD", "New Zealand dollar", "$"),
@@ -5333,7 +5488,8 @@ fn country_ni() {
     "NI",
     "NIC",
     "558",
-    Americas,
+    region.Americas,
+    Some(region.CentralAmerica),
     Some("Managua"),
     [
       Currency("NIO", "Nicaraguan córdoba", "C$"),
@@ -5356,7 +5512,8 @@ fn country_ne() {
     "NE",
     "NER",
     "562",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Niamey"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -5379,7 +5536,8 @@ fn country_ng() {
     "NG",
     "NGA",
     "566",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Abuja"),
     [
       Currency("NGN", "Nigerian naira", "₦"),
@@ -5402,7 +5560,8 @@ fn country_nu() {
     "NU",
     "NIU",
     "570",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Alofi"),
     [
       Currency("NZD", "New Zealand dollar", "$"),
@@ -5426,7 +5585,8 @@ fn country_nf() {
     "NF",
     "NFK",
     "574",
-    Oceania,
+    region.Oceania,
+    Some(region.AustraliaAndNewZealand),
     Some("Kingston"),
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -5449,7 +5609,8 @@ fn country_mk() {
     "MK",
     "MKD",
     "807",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Skopje"),
     [
       Currency("MKD", "Macedonian denar", "ден"),
@@ -5472,7 +5633,8 @@ fn country_mp() {
     "MP",
     "MNP",
     "580",
-    Oceania,
+    region.Oceania,
+    Some(region.Micronesia),
     Some("Saipan"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -5496,7 +5658,8 @@ fn country_no() {
     "NO",
     "NOR",
     "578",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Oslo"),
     [
       Currency("NOK", "Norwegian krone", "kr"),
@@ -5521,7 +5684,8 @@ fn country_om() {
     "OM",
     "OMN",
     "512",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Muscat"),
     [
       Currency("OMR", "Omani rial", "ر.ع."),
@@ -5544,7 +5708,8 @@ fn country_pk() {
     "PK",
     "PAK",
     "586",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Islamabad"),
     [
       Currency("PKR", "Pakistani rupee", "₨"),
@@ -5568,7 +5733,8 @@ fn country_pw() {
     "PW",
     "PLW",
     "585",
-    Oceania,
+    region.Oceania,
+    Some(region.Micronesia),
     Some("Ngerulmud"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -5591,7 +5757,8 @@ fn country_ps() {
     "PS",
     "PSE",
     "275",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Ramallah"),
     [
       Currency("EGP", "Egyptian pound", "E£"),
@@ -5616,7 +5783,8 @@ fn country_pa() {
     "PA",
     "PAN",
     "591",
-    Americas,
+    region.Americas,
+    Some(region.CentralAmerica),
     Some("Panama City"),
     [
       Currency("PAB", "Panamanian balboa", "B/."),
@@ -5640,7 +5808,8 @@ fn country_pg() {
     "PG",
     "PNG",
     "598",
-    Oceania,
+    region.Oceania,
+    Some(region.Melanesia),
     Some("Port Moresby"),
     [
       Currency("PGK", "Papua New Guinean kina", "K"),
@@ -5663,7 +5832,8 @@ fn country_py() {
     "PY",
     "PRY",
     "600",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Asunción"),
     [
       Currency("PYG", "Paraguayan guaraní", "₲"),
@@ -5687,7 +5857,8 @@ fn country_pe() {
     "PE",
     "PER",
     "604",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Lima"),
     [
       Currency("PEN", "Peruvian sol", "S/."),
@@ -5710,7 +5881,8 @@ fn country_ph() {
     "PH",
     "PHL",
     "608",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Manila"),
     [
       Currency("PHP", "Philippine peso", "₱"),
@@ -5733,7 +5905,8 @@ fn country_pn() {
     "PN",
     "PCN",
     "612",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Adamstown"),
     [
       Currency("NZD", "New Zealand dollar", "$"),
@@ -5757,7 +5930,8 @@ fn country_pl() {
     "PL",
     "POL",
     "616",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Warsaw"),
     [
       Currency("PLN", "Polish złoty", "zł"),
@@ -5780,7 +5954,8 @@ fn country_pt() {
     "PT",
     "PRT",
     "620",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Lisbon"),
     [
       Currency("EUR", "Euro", "€"),
@@ -5804,7 +5979,8 @@ fn country_pr() {
     "PR",
     "PRI",
     "630",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("San Juan"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -5828,7 +6004,8 @@ fn country_qa() {
     "QA",
     "QAT",
     "634",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Doha"),
     [
       Currency("QAR", "Qatari riyal", "ر.ق"),
@@ -5851,7 +6028,8 @@ fn country_xk() {
     "XK",
     "UNK",
     "926",
-    Europe,
+    region.Europe,
+    Some(region.EasternEurope),
     Some("Pristina"),
     [
       Currency("EUR", "Euro", "€"),
@@ -5875,7 +6053,8 @@ fn country_re() {
     "RE",
     "REU",
     "638",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Saint-Denis"),
     [
       Currency("EUR", "Euro", "€"),
@@ -5898,7 +6077,8 @@ fn country_ro() {
     "RO",
     "ROU",
     "642",
-    Europe,
+    region.Europe,
+    Some(region.EasternEurope),
     Some("Bucharest"),
     [
       Currency("RON", "Romanian leu", "lei"),
@@ -5921,7 +6101,8 @@ fn country_ru() {
     "RU",
     "RUS",
     "643",
-    Europe,
+    region.Europe,
+    Some(region.EasternEurope),
     Some("Moscow"),
     [
       Currency("RUB", "Russian ruble", "₽"),
@@ -5952,7 +6133,8 @@ fn country_rw() {
     "RW",
     "RWA",
     "646",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Kigali"),
     [
       Currency("RWF", "Rwandan franc", "Fr"),
@@ -5977,7 +6159,8 @@ fn country_bl() {
     "BL",
     "BLM",
     "652",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Gustavia"),
     [
       Currency("EUR", "Euro", "€"),
@@ -6000,7 +6183,8 @@ fn country_sh() {
     "SH",
     "SHN",
     "654",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Jamestown"),
     [
       Currency("SHP", "Saint Helena pound", "£"),
@@ -6023,7 +6207,8 @@ fn country_kn() {
     "KN",
     "KNA",
     "659",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Basseterre"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -6046,7 +6231,8 @@ fn country_lc() {
     "LC",
     "LCA",
     "662",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Castries"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -6069,7 +6255,8 @@ fn country_mf() {
     "MF",
     "MAF",
     "663",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Marigot"),
     [
       Currency("EUR", "Euro", "€"),
@@ -6094,7 +6281,8 @@ fn country_pm() {
     "PM",
     "SPM",
     "666",
-    Americas,
+    region.Americas,
+    Some(region.NorthernAmerica),
     Some("Saint-Pierre"),
     [
       Currency("EUR", "Euro", "€"),
@@ -6117,7 +6305,8 @@ fn country_vc() {
     "VC",
     "VCT",
     "670",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Kingstown"),
     [
       Currency("XCD", "East Caribbean dollar", "$"),
@@ -6140,7 +6329,8 @@ fn country_ws() {
     "WS",
     "WSM",
     "882",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Apia"),
     [
       Currency("WST", "Samoan tālā", "T"),
@@ -6164,7 +6354,8 @@ fn country_sm() {
     "SM",
     "SMR",
     "674",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("City of San Marino"),
     [
       Currency("EUR", "Euro", "€"),
@@ -6187,7 +6378,8 @@ fn country_st() {
     "ST",
     "STP",
     "678",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("São Tomé"),
     [
       Currency("STD", "São Tomé and Príncipe dobra", "Db"),
@@ -6210,7 +6402,8 @@ fn country_sa() {
     "SA",
     "SAU",
     "682",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Riyadh"),
     [
       Currency("SAR", "Saudi riyal", "ر.س"),
@@ -6233,7 +6426,8 @@ fn country_sn() {
     "SN",
     "SEN",
     "686",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Dakar"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -6256,7 +6450,8 @@ fn country_rs() {
     "RS",
     "SRB",
     "688",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Belgrade"),
     [
       Currency("RSD", "Serbian dinar", "дин."),
@@ -6279,7 +6474,8 @@ fn country_sc() {
     "SC",
     "SYC",
     "690",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Victoria"),
     [
       Currency("SCR", "Seychellois rupee", "₨"),
@@ -6303,7 +6499,8 @@ fn country_sl() {
     "SL",
     "SLE",
     "694",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Freetown"),
     [
       Currency("SLL", "Sierra Leonean leone", "Le"),
@@ -6326,7 +6523,8 @@ fn country_sg() {
     "SG",
     "SGP",
     "702",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Singapore"),
     [
       Currency("SGD", "Singapore dollar", "$"),
@@ -6352,7 +6550,8 @@ fn country_sx() {
     "SX",
     "SXM",
     "534",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Philipsburg"),
     [
       Currency("ANG", "Netherlands Antillean guilder", "ƒ"),
@@ -6376,7 +6575,8 @@ fn country_sk() {
     "SK",
     "SVK",
     "703",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Bratislava"),
     [
       Currency("EUR", "Euro", "€"),
@@ -6399,7 +6599,8 @@ fn country_si() {
     "SI",
     "SVN",
     "705",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Ljubljana"),
     [
       Currency("EUR", "Euro", "€"),
@@ -6422,7 +6623,8 @@ fn country_sb() {
     "SB",
     "SLB",
     "090",
-    Oceania,
+    region.Oceania,
+    Some(region.Melanesia),
     Some("Honiara"),
     [
       Currency("SBD", "Solomon Islands dollar", "$"),
@@ -6445,7 +6647,8 @@ fn country_so() {
     "SO",
     "SOM",
     "706",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Mogadishu"),
     [
       Currency("SOS", "Somali shilling", "Sh"),
@@ -6469,7 +6672,8 @@ fn country_za() {
     "ZA",
     "ZAF",
     "710",
-    Africa,
+    region.Africa,
+    Some(region.SouthernAfrica),
     Some("Pretoria"),
     [
       Currency("ZAR", "South African rand", "R"),
@@ -6501,7 +6705,8 @@ fn country_gs() {
     "GS",
     "SGS",
     "239",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("King Edward Point"),
     [
       Currency("FKP", "Falkland Islands Pound", "£"),
@@ -6524,7 +6729,8 @@ fn country_ss() {
     "SS",
     "SSD",
     "728",
-    Africa,
+    region.Africa,
+    Some(region.MiddleAfrica),
     Some("Juba"),
     [
       Currency("SSP", "South Sudanese pound", "£"),
@@ -6547,7 +6753,8 @@ fn country_es() {
     "ES",
     "ESP",
     "724",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Madrid"),
     [
       Currency("EUR", "Euro", "€"),
@@ -6571,7 +6778,8 @@ fn country_lk() {
     "LK",
     "LKA",
     "144",
-    Asia,
+    region.Asia,
+    Some(region.SouthernAsia),
     Some("Sri Jayawardenepura Kotte"),
     [
       Currency("LKR", "Sri Lankan rupee", "Rs"),
@@ -6595,7 +6803,8 @@ fn country_sd() {
     "SD",
     "SDN",
     "729",
-    Africa,
+    region.Africa,
+    Some(region.NorthernAfrica),
     Some("Khartoum"),
     [
       Currency("SDG", "Sudanese pound", "ج.س."),
@@ -6619,7 +6828,8 @@ fn country_sr() {
     "SR",
     "SUR",
     "740",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Paramaribo"),
     [
       Currency("SRD", "Surinamese dollar", "$"),
@@ -6642,7 +6852,8 @@ fn country_sj() {
     "SJ",
     "SJM",
     "744",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Longyearbyen"),
     [
       Currency("NOK", "Norwegian krone", "kr"),
@@ -6665,7 +6876,8 @@ fn country_sz() {
     "SZ",
     "SWZ",
     "748",
-    Africa,
+    region.Africa,
+    Some(region.SouthernAfrica),
     Some("Mbabane"),
     [
       Currency("SZL", "Swazi lilangeni", "L"),
@@ -6689,7 +6901,8 @@ fn country_se() {
     "SE",
     "SWE",
     "752",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("Stockholm"),
     [
       Currency("SEK", "Swedish krona", "kr"),
@@ -6712,7 +6925,8 @@ fn country_ch() {
     "CH",
     "CHE",
     "756",
-    Europe,
+    region.Europe,
+    Some(region.CentralEurope),
     Some("Bern"),
     [
       Currency("CHF", "Swiss franc", "Fr"),
@@ -6738,7 +6952,8 @@ fn country_sy() {
     "SY",
     "SYR",
     "760",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Damascus"),
     [
       Currency("SYP", "Syrian pound", "£"),
@@ -6761,7 +6976,8 @@ fn country_tw() {
     "TW",
     "TWN",
     "158",
-    Asia,
+    region.Asia,
+    Some(region.EasternAsia),
     Some("Taipei"),
     [
       Currency("TWD", "New Taiwan dollar", "$"),
@@ -6784,7 +7000,8 @@ fn country_tj() {
     "TJ",
     "TJK",
     "762",
-    Asia,
+    region.Asia,
+    Some(region.CentralAsia),
     Some("Dushanbe"),
     [
       Currency("TJS", "Tajikistani somoni", "ЅМ"),
@@ -6808,7 +7025,8 @@ fn country_tz() {
     "TZ",
     "TZA",
     "834",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Dodoma"),
     [
       Currency("TZS", "Tanzanian shilling", "Sh"),
@@ -6832,7 +7050,8 @@ fn country_th() {
     "TH",
     "THA",
     "764",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Bangkok"),
     [
       Currency("THB", "Thai baht", "฿"),
@@ -6855,7 +7074,8 @@ fn country_tl() {
     "TL",
     "TLS",
     "626",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Dili"),
     [
       Currency("USD", "United States Dollar", "$"),
@@ -6878,7 +7098,8 @@ fn country_tg() {
     "TG",
     "TGO",
     "768",
-    Africa,
+    region.Africa,
+    Some(region.WesternAfrica),
     Some("Lomé"),
     [
       Currency("XOF", "West African CFA franc", "Fr"),
@@ -6901,7 +7122,8 @@ fn country_tk() {
     "TK",
     "TKL",
     "772",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Fakaofo"),
     [
       Currency("NZD", "New Zealand dollar", "$"),
@@ -6924,7 +7146,8 @@ fn country_to() {
     "TO",
     "TON",
     "776",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Nuku'alofa"),
     [
       Currency("TOP", "Tongan paʻanga", "T$"),
@@ -6948,7 +7171,8 @@ fn country_tt() {
     "TT",
     "TTO",
     "780",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Port of Spain"),
     [
       Currency("TTD", "Trinidad and Tobago dollar", "$"),
@@ -6971,7 +7195,8 @@ fn country_tn() {
     "TN",
     "TUN",
     "788",
-    Africa,
+    region.Africa,
+    Some(region.NorthernAfrica),
     Some("Tunis"),
     [
       Currency("TND", "Tunisian dinar", "د.ت"),
@@ -6994,7 +7219,8 @@ fn country_tr() {
     "TR",
     "TUR",
     "792",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Ankara"),
     [
       Currency("TRY", "Turkish lira", "₺"),
@@ -7017,7 +7243,8 @@ fn country_tm() {
     "TM",
     "TKM",
     "795",
-    Asia,
+    region.Asia,
+    Some(region.CentralAsia),
     Some("Ashgabat"),
     [
       Currency("TMT", "Turkmenistan manat", "m"),
@@ -7041,7 +7268,8 @@ fn country_tc() {
     "TC",
     "TCA",
     "796",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Cockburn Town"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -7064,7 +7292,8 @@ fn country_tv() {
     "TV",
     "TUV",
     "798",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Funafuti"),
     [
       Currency("AUD", "Australian dollar", "$"),
@@ -7088,7 +7317,8 @@ fn country_ug() {
     "UG",
     "UGA",
     "800",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Kampala"),
     [
       Currency("UGX", "Ugandan shilling", "Sh"),
@@ -7112,7 +7342,8 @@ fn country_ua() {
     "UA",
     "UKR",
     "804",
-    Europe,
+    region.Europe,
+    Some(region.EasternEurope),
     Some("Kyiv"),
     [
       Currency("UAH", "Ukrainian hryvnia", "₴"),
@@ -7135,7 +7366,8 @@ fn country_ae() {
     "AE",
     "ARE",
     "784",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Abu Dhabi"),
     [
       Currency("AED", "United Arab Emirates dirham", "د.إ"),
@@ -7158,7 +7390,8 @@ fn country_gb() {
     "GB",
     "GBR",
     "826",
-    Europe,
+    region.Europe,
+    Some(region.NorthernEurope),
     Some("London"),
     [
       Currency("GBP", "British pound", "£"),
@@ -7189,7 +7422,8 @@ fn country_um() {
     "UM",
     "UMI",
     "581",
-    Americas,
+    region.Americas,
+    Some(region.NorthernAmerica),
     None,
     [
       Currency("GBP", "British pound", "£"),
@@ -7214,7 +7448,8 @@ fn country_us() {
     "US",
     "USA",
     "840",
-    Americas,
+    region.Americas,
+    Some(region.NorthernAmerica),
     Some("Washington, D.C."),
     [
       Currency("USD", "United States dollar", "$"),
@@ -7247,7 +7482,8 @@ fn country_uy() {
     "UY",
     "URY",
     "858",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Montevideo"),
     [
       Currency("UYU", "Uruguayan peso", "$"),
@@ -7270,7 +7506,8 @@ fn country_uz() {
     "UZ",
     "UZB",
     "860",
-    Asia,
+    region.Asia,
+    Some(region.CentralAsia),
     Some("Tashkent"),
     [
       Currency("UZS", "Uzbekistani so'm", "so'm"),
@@ -7294,7 +7531,8 @@ fn country_vu() {
     "VU",
     "VUT",
     "548",
-    Oceania,
+    region.Oceania,
+    Some(region.Melanesia),
     Some("Port Vila"),
     [
       Currency("VUV", "Vanuatu vatu", "Vt"),
@@ -7319,7 +7557,8 @@ fn country_va() {
     "VA",
     "VAT",
     "336",
-    Europe,
+    region.Europe,
+    Some(region.SouthernEurope),
     Some("Vatican City"),
     [
       Currency("EUR", "Euro", "€"),
@@ -7345,7 +7584,8 @@ fn country_ve() {
     "VE",
     "VEN",
     "862",
-    Americas,
+    region.Americas,
+    Some(region.SouthAmerica),
     Some("Caracas"),
     [
       Currency("VEF", "Venezuelan bolívar", "Bs S"),
@@ -7368,7 +7608,8 @@ fn country_vn() {
     "VN",
     "VNM",
     "704",
-    Asia,
+    region.Asia,
+    Some(region.SouthEasternAsia),
     Some("Hanoi"),
     [
       Currency("VND", "Vietnamese đồng", "₫"),
@@ -7391,7 +7632,8 @@ fn country_vg() {
     "VG",
     "VGB",
     "092",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Road Town"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -7414,7 +7656,8 @@ fn country_vi() {
     "VI",
     "VIR",
     "850",
-    Americas,
+    region.Americas,
+    Some(region.Caribbean),
     Some("Charlotte Amalie"),
     [
       Currency("USD", "United States dollar", "$"),
@@ -7437,7 +7680,8 @@ fn country_wf() {
     "WF",
     "WLF",
     "876",
-    Oceania,
+    region.Oceania,
+    Some(region.Polynesia),
     Some("Mata-Utu"),
     [
       Currency("XPF", "CFP franc", "Fr"),
@@ -7460,7 +7704,8 @@ fn country_eh() {
     "EH",
     "ESH",
     "732",
-    Africa,
+    region.Africa,
+    Some(region.NorthernAfrica),
     Some("El Aaiún"),
     [
       Currency("MAD", "Moroccan dirham", "د.م."),
@@ -7484,7 +7729,8 @@ fn country_ye() {
     "YE",
     "YEM",
     "887",
-    Asia,
+    region.Asia,
+    Some(region.WesternAsia),
     Some("Sana'a"),
     [
       Currency("YER", "Yemeni rial", "﷼"),
@@ -7507,7 +7753,8 @@ fn country_zm() {
     "ZM",
     "ZMB",
     "894",
-    Africa,
+    region.Africa,
+    Some(region.EasternAfrica),
     Some("Lusaka"),
     [
       Currency("ZMW", "Zambian kwacha", "ZK"),
@@ -7530,7 +7777,8 @@ fn country_zw() {
     "ZW",
     "ZWE",
     "716",
-    Africa,
+    region.Africa,
+    Some(region.SouthernAfrica),
     Some("Harare"),
     [
       Currency("ZMW", "Zambian kwacha", "K"),

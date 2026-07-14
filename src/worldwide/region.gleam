@@ -1,13 +1,48 @@
-/// Continental region a country belongs to.
+// Continental region a country belongs to.
 pub type Region {
   Africa
   Americas
-  Antarctic
-  AntarcticOcean
   Asia
   Europe
   Oceania
   Polar
+  AntarcticOcean
+  Antarctic
+}
+
+// Continental subregion a country belongs to.
+pub type Subregion {
+  EasternAfrica
+  MiddleAfrica
+  NorthernAfrica
+  SouthernAfrica
+  WesternAfrica
+
+  CentralAmerica
+  NorthAmerica
+  NorthernAmerica
+  SouthAmerica
+  Caribbean
+
+  CentralAsia
+  EasternAsia
+  SouthEasternAsia
+  SouthernAsia
+  WesternAsia
+
+  CentralEurope
+  EasternEurope
+  NorthernEurope
+  SouthernEurope
+  WesternEurope
+
+  AustraliaAndNewZealand
+  Melanesia
+  Micronesia
+  Polynesia
+
+  SouthAntarcticOcean
+  Antarctica
 }
 
 /// Render a `Region` as its stored `String` value.
@@ -35,6 +70,43 @@ pub fn from_string(raw: String) -> Result(Region, Nil) {
     "Antarctic" -> Antarctic |> Ok
     "Antarctic Ocean" -> AntarcticOcean |> Ok
     "Polar" -> Polar |> Ok
-    _ -> panic
+    _ -> Error(Nil)
   }
+}
+
+@internal
+pub fn all_regions() {
+  [Africa, Americas, Asia, Europe, Oceania, Polar, AntarcticOcean, Antarctic]
+}
+
+@internal
+pub fn all_subregions() {
+  [
+    EasternAfrica,
+    MiddleAfrica,
+    NorthernAfrica,
+    SouthernAfrica,
+    WesternAfrica,
+    CentralAmerica,
+    NorthAmerica,
+    NorthernAmerica,
+    SouthAmerica,
+    Caribbean,
+    CentralAsia,
+    EasternAsia,
+    SouthEasternAsia,
+    SouthernAsia,
+    WesternAsia,
+    CentralEurope,
+    EasternEurope,
+    NorthernEurope,
+    SouthernEurope,
+    WesternEurope,
+    AustraliaAndNewZealand,
+    Melanesia,
+    Micronesia,
+    Polynesia,
+    SouthAntarcticOcean,
+    Antarctica,
+  ]
 }

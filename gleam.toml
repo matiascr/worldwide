@@ -1,5 +1,5 @@
 name = "worldwide"
-version = "1.0.0"
+version = "1.0.1"
 description = "A typed, offline database of world countries for Gleam."
 licences = ["Apache-2.0"]
 
