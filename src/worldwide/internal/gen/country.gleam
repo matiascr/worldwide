@@ -5,14 +5,31 @@
 // GENERATED FILE - do not edit by hand.
 //
 
-import worldwide/currency.{Currency}
+import gleam/option.{type Option, None, Some}
+import gleam/string
+import gleam/time/duration.{type Duration}
+import worldwide/currency.{type Currency, Currency}
+import worldwide/language.{type Language, Language}
 import worldwide/region.{
-  Africa, Americas, Antarctic, AntarcticOcean, Asia, Europe, Oceania, Polar,
+  type Region, Africa, Americas, Antarctic, AntarcticOcean, Asia, Europe,
+  Oceania, Polar,
 }
 
-import gleam/option.{None, Some}
-import gleam/string
-import gleam/time/duration
+@internal
+pub type GeneratedCountry {
+  GeneratedCountry(
+    name: String,
+    alpha2: String,
+    alpha3: String,
+    numeric: String,
+    region: Region,
+    capital: Option(String),
+    currencies: List(Currency),
+    languages: List(Language),
+    calling_codes: List(String),
+    timezones: List(Duration),
+  )
+}
 
 /// Return every known country in countries.dev name order.
 @internal
@@ -1546,131 +1563,194 @@ pub fn from_name(name: String) {
 }
 
 fn country_af() {
-  #(
+  GeneratedCountry(
     "Afghanistan",
     "AF",
     "AFG",
     "004",
     Asia,
     Some("Kabul"),
-    [Currency(code: "AFN", name: "Afghan afghani", symbol: "؋")],
     [
-      #("Pashto", "ps", "پښتو"),
-      #("Uzbek", "uz", "Oʻzbek"),
-      #("Turkmen", "tk", "Türkmen"),
+      Currency("AFN", "Afghan afghani", "؋"),
     ],
-    ["93"],
-    [duration.add(duration.hours(4), duration.minutes(30))],
+    [
+      Language("Pashto", "ps", "پښتو"),
+      Language("Uzbek", "uz", "Oʻzbek"),
+      Language("Turkmen", "tk", "Türkmen"),
+    ],
+    [
+      "93",
+    ],
+    [
+      duration.add(duration.hours(4), duration.minutes(30)),
+    ],
   )
 }
 
 fn country_ax() {
-  #(
+  GeneratedCountry(
     "Åland Islands",
     "AX",
     "ALA",
     "248",
     Europe,
     Some("Mariehamn"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Swedish", "sv", "svenska")],
-    ["358"],
-    [duration.hours(2)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Swedish", "sv", "svenska"),
+    ],
+    [
+      "358",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_al() {
-  #(
+  GeneratedCountry(
     "Albania",
     "AL",
     "ALB",
     "008",
     Europe,
     Some("Tirana"),
-    [Currency(code: "ALL", name: "Albanian lek", symbol: "L")],
-    [#("Albanian", "sq", "Shqip")],
-    ["355"],
-    [duration.hours(1)],
+    [
+      Currency("ALL", "Albanian lek", "L"),
+    ],
+    [
+      Language("Albanian", "sq", "Shqip"),
+    ],
+    [
+      "355",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_dz() {
-  #(
+  GeneratedCountry(
     "Algeria",
     "DZ",
     "DZA",
     "012",
     Africa,
     Some("Algiers"),
-    [Currency(code: "DZD", name: "Algerian dinar", symbol: "د.ج")],
-    [#("Arabic", "ar", "العربية")],
-    ["213"],
-    [duration.hours(1)],
+    [
+      Currency("DZD", "Algerian dinar", "د.ج"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "213",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_as() {
-  #(
+  GeneratedCountry(
     "American Samoa",
     "AS",
     "ASM",
     "016",
     Oceania,
     Some("Pago Pago"),
-    [Currency(code: "USD", name: "United States Dollar", symbol: "$")],
-    [#("English", "en", "English"), #("Samoan", "sm", "gagana fa'a Samoa")],
-    ["1"],
-    [duration.hours(-11)],
+    [
+      Currency("USD", "United States Dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Samoan", "sm", "gagana fa'a Samoa"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-11),
+    ],
   )
 }
 
 fn country_ad() {
-  #(
+  GeneratedCountry(
     "Andorra",
     "AD",
     "AND",
     "020",
     Europe,
     Some("Andorra la Vella"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Catalan", "ca", "català")],
-    ["376"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Catalan", "ca", "català"),
+    ],
+    [
+      "376",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ao() {
-  #(
+  GeneratedCountry(
     "Angola",
     "AO",
     "AGO",
     "024",
     Africa,
     Some("Luanda"),
-    [Currency(code: "AOA", name: "Angolan kwanza", symbol: "Kz")],
-    [#("Portuguese", "pt", "Português")],
-    ["244"],
-    [duration.hours(1)],
+    [
+      Currency("AOA", "Angolan kwanza", "Kz"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "244",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ai() {
-  #(
+  GeneratedCountry(
     "Anguilla",
     "AI",
     "AIA",
     "660",
     Americas,
     Some("The Valley"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_aq() {
-  #(
+  GeneratedCountry(
     "Antarctica",
     "AQ",
     "ATA",
@@ -1678,8 +1758,13 @@ fn country_aq() {
     Polar,
     None,
     [],
-    [#("English", "en", "English"), #("Russian", "ru", "Русский")],
-    ["672"],
+    [
+      Language("English", "en", "English"),
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "672",
+    ],
     [
       duration.hours(-3),
       duration.hours(3),
@@ -1694,76 +1779,116 @@ fn country_aq() {
 }
 
 fn country_ag() {
-  #(
+  GeneratedCountry(
     "Antigua and Barbuda",
     "AG",
     "ATG",
     "028",
     Americas,
     Some("Saint John's"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_ar() {
-  #(
+  GeneratedCountry(
     "Argentina",
     "AR",
     "ARG",
     "032",
     Americas,
     Some("Buenos Aires"),
-    [Currency(code: "ARS", name: "Argentine peso", symbol: "$")],
-    [#("Spanish", "es", "Español"), #("Guaraní", "gn", "Avañe'ẽ")],
-    ["54"],
-    [duration.hours(-3)],
+    [
+      Currency("ARS", "Argentine peso", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+      Language("Guaraní", "gn", "Avañe'ẽ"),
+    ],
+    [
+      "54",
+    ],
+    [
+      duration.hours(-3),
+    ],
   )
 }
 
 fn country_am() {
-  #(
+  GeneratedCountry(
     "Armenia",
     "AM",
     "ARM",
     "051",
     Asia,
     Some("Yerevan"),
-    [Currency(code: "AMD", name: "Armenian dram", symbol: "֏")],
-    [#("Armenian", "hy", "Հայերեն")],
-    ["374"],
-    [duration.hours(4)],
+    [
+      Currency("AMD", "Armenian dram", "֏"),
+    ],
+    [
+      Language("Armenian", "hy", "Հայերեն"),
+    ],
+    [
+      "374",
+    ],
+    [
+      duration.hours(4),
+    ],
   )
 }
 
 fn country_aw() {
-  #(
+  GeneratedCountry(
     "Aruba",
     "AW",
     "ABW",
     "533",
     Americas,
     Some("Oranjestad"),
-    [Currency(code: "AWG", name: "Aruban florin", symbol: "ƒ")],
-    [#("Dutch", "nl", "Nederlands"), #("(Eastern) Punjabi", "pa", "ਪੰਜਾਬੀ")],
-    ["297"],
-    [duration.hours(-4)],
+    [
+      Currency("AWG", "Aruban florin", "ƒ"),
+    ],
+    [
+      Language("Dutch", "nl", "Nederlands"),
+      Language("(Eastern) Punjabi", "pa", "ਪੰਜਾਬੀ"),
+    ],
+    [
+      "297",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_au() {
-  #(
+  GeneratedCountry(
     "Australia",
     "AU",
     "AUS",
     "036",
     Oceania,
     Some("Canberra"),
-    [Currency(code: "AUD", name: "Australian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["61"],
+    [
+      Currency("AUD", "Australian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "61",
+    ],
     [
       duration.hours(5),
       duration.add(duration.hours(6), duration.minutes(30)),
@@ -1778,97 +1903,145 @@ fn country_au() {
 }
 
 fn country_at() {
-  #(
+  GeneratedCountry(
     "Austria",
     "AT",
     "AUT",
     "040",
     Europe,
     Some("Vienna"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("German", "de", "Deutsch")],
-    ["43"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("German", "de", "Deutsch"),
+    ],
+    [
+      "43",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_az() {
-  #(
+  GeneratedCountry(
     "Azerbaijan",
     "AZ",
     "AZE",
     "031",
     Asia,
     Some("Baku"),
-    [Currency(code: "AZN", name: "Azerbaijani manat", symbol: "₼")],
-    [#("Azerbaijani", "az", "azərbaycan dili")],
-    ["994"],
-    [duration.hours(4)],
+    [
+      Currency("AZN", "Azerbaijani manat", "₼"),
+    ],
+    [
+      Language("Azerbaijani", "az", "azərbaycan dili"),
+    ],
+    [
+      "994",
+    ],
+    [
+      duration.hours(4),
+    ],
   )
 }
 
 fn country_bs() {
-  #(
+  GeneratedCountry(
     "Bahamas",
     "BS",
     "BHS",
     "044",
     Americas,
     Some("Nassau"),
-    [Currency(code: "BSD", name: "Bahamian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-5)],
+    [
+      Currency("BSD", "Bahamian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_bh() {
-  #(
+  GeneratedCountry(
     "Bahrain",
     "BH",
     "BHR",
     "048",
     Asia,
     Some("Manama"),
-    [Currency(code: "BHD", name: "Bahraini dinar", symbol: ".د.ب")],
-    [#("Arabic", "ar", "العربية")],
-    ["973"],
-    [duration.hours(3)],
+    [
+      Currency("BHD", "Bahraini dinar", ".د.ب"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "973",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_bd() {
-  #(
+  GeneratedCountry(
     "Bangladesh",
     "BD",
     "BGD",
     "050",
     Asia,
     Some("Dhaka"),
-    [Currency(code: "BDT", name: "Bangladeshi taka", symbol: "৳")],
-    [#("Bengali", "bn", "বাংলা")],
-    ["880"],
-    [duration.hours(6)],
+    [
+      Currency("BDT", "Bangladeshi taka", "৳"),
+    ],
+    [
+      Language("Bengali", "bn", "বাংলা"),
+    ],
+    [
+      "880",
+    ],
+    [
+      duration.hours(6),
+    ],
   )
 }
 
 fn country_bb() {
-  #(
+  GeneratedCountry(
     "Barbados",
     "BB",
     "BRB",
     "052",
     Americas,
     Some("Bridgetown"),
-    [Currency(code: "BBD", name: "Barbadian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("BBD", "Barbadian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_by() {
-  #(
+  GeneratedCountry(
     "Belarus",
     "BY",
     "BLR",
@@ -1876,81 +2049,119 @@ fn country_by() {
     Europe,
     Some("Minsk"),
     [
-      Currency(code: "BYN", name: "New Belarusian ruble", symbol: "Br"),
-      Currency(code: "BYR", name: "Old Belarusian ruble", symbol: "Br"),
+      Currency("BYN", "New Belarusian ruble", "Br"),
+      Currency("BYR", "Old Belarusian ruble", "Br"),
     ],
-    [#("Belarusian", "be", "беларуская мова"), #("Russian", "ru", "Русский")],
-    ["375"],
-    [duration.hours(3)],
+    [
+      Language("Belarusian", "be", "беларуская мова"),
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "375",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_be() {
-  #(
+  GeneratedCountry(
     "Belgium",
     "BE",
     "BEL",
     "056",
     Europe,
     Some("Brussels"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
     [
-      #("Dutch", "nl", "Nederlands"),
-      #("French", "fr", "français"),
-      #("German", "de", "Deutsch"),
+      Currency("EUR", "Euro", "€"),
     ],
-    ["32"],
-    [duration.hours(1)],
+    [
+      Language("Dutch", "nl", "Nederlands"),
+      Language("French", "fr", "français"),
+      Language("German", "de", "Deutsch"),
+    ],
+    [
+      "32",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_bz() {
-  #(
+  GeneratedCountry(
     "Belize",
     "BZ",
     "BLZ",
     "084",
     Americas,
     Some("Belmopan"),
-    [Currency(code: "BZD", name: "Belize dollar", symbol: "$")],
-    [#("English", "en", "English"), #("Spanish", "es", "Español")],
-    ["501"],
-    [duration.hours(-6)],
+    [
+      Currency("BZD", "Belize dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "501",
+    ],
+    [
+      duration.hours(-6),
+    ],
   )
 }
 
 fn country_bj() {
-  #(
+  GeneratedCountry(
     "Benin",
     "BJ",
     "BEN",
     "204",
     Africa,
     Some("Porto-Novo"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["229"],
-    [duration.hours(1)],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "229",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_bm() {
-  #(
+  GeneratedCountry(
     "Bermuda",
     "BM",
     "BMU",
     "060",
     Americas,
     Some("Hamilton"),
-    [Currency(code: "BMD", name: "Bermudian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("BMD", "Bermudian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_bt() {
-  #(
+  GeneratedCountry(
     "Bhutan",
     "BT",
     "BTN",
@@ -1958,51 +2169,71 @@ fn country_bt() {
     Asia,
     Some("Thimphu"),
     [
-      Currency(code: "BTN", name: "Bhutanese ngultrum", symbol: "Nu."),
-      Currency(code: "INR", name: "Indian rupee", symbol: "₹"),
+      Currency("BTN", "Bhutanese ngultrum", "Nu."),
+      Currency("INR", "Indian rupee", "₹"),
     ],
-    [#("Dzongkha", "dz", "རྫོང་ཁ")],
-    ["975"],
-    [duration.hours(6)],
+    [
+      Language("Dzongkha", "dz", "རྫོང་ཁ"),
+    ],
+    [
+      "975",
+    ],
+    [
+      duration.hours(6),
+    ],
   )
 }
 
 fn country_bo() {
-  #(
+  GeneratedCountry(
     "Bolivia (Plurinational State of)",
     "BO",
     "BOL",
     "068",
     Americas,
     Some("Sucre"),
-    [Currency(code: "BOB", name: "Bolivian boliviano", symbol: "Bs.")],
     [
-      #("Spanish", "es", "Español"),
-      #("Aymara", "ay", "aymar aru"),
-      #("Quechua", "qu", "Runa Simi"),
+      Currency("BOB", "Bolivian boliviano", "Bs."),
     ],
-    ["591"],
-    [duration.hours(-4)],
+    [
+      Language("Spanish", "es", "Español"),
+      Language("Aymara", "ay", "aymar aru"),
+      Language("Quechua", "qu", "Runa Simi"),
+    ],
+    [
+      "591",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_bq() {
-  #(
+  GeneratedCountry(
     "Bonaire, Sint Eustatius and Saba",
     "BQ",
     "BES",
     "535",
     Americas,
     Some("Kralendijk"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("Dutch", "nl", "Nederlands")],
-    ["599"],
-    [duration.hours(-4)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("Dutch", "nl", "Nederlands"),
+    ],
+    [
+      "599",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_ba() {
-  #(
+  GeneratedCountry(
     "Bosnia and Herzegovina",
     "BA",
     "BIH",
@@ -2010,67 +2241,88 @@ fn country_ba() {
     Europe,
     Some("Sarajevo"),
     [
-      Currency(
-        code: "BAM",
-        name: "Bosnia and Herzegovina convertible mark",
-        symbol: "KM",
-      ),
+      Currency("BAM", "Bosnia and Herzegovina convertible mark", "KM"),
     ],
     [
-      #("Bosnian", "bs", "bosanski jezik"),
-      #("Croatian", "hr", "hrvatski jezik"),
-      #("Serbian", "sr", "српски језик"),
+      Language("Bosnian", "bs", "bosanski jezik"),
+      Language("Croatian", "hr", "hrvatski jezik"),
+      Language("Serbian", "sr", "српски језик"),
     ],
-    ["387"],
-    [duration.hours(1)],
+    [
+      "387",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_bw() {
-  #(
+  GeneratedCountry(
     "Botswana",
     "BW",
     "BWA",
     "072",
     Africa,
     Some("Gaborone"),
-    [Currency(code: "BWP", name: "Botswana pula", symbol: "P")],
-    [#("English", "en", "English"), #("Tswana", "tn", "Setswana")],
-    ["267"],
-    [duration.hours(2)],
+    [
+      Currency("BWP", "Botswana pula", "P"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Tswana", "tn", "Setswana"),
+    ],
+    [
+      "267",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_bv() {
-  #(
+  GeneratedCountry(
     "Bouvet Island",
     "BV",
     "BVT",
     "074",
     AntarcticOcean,
     None,
-    [Currency(code: "NOK", name: "Norwegian krone", symbol: "kr")],
     [
-      #("Norwegian", "no", "Norsk"),
-      #("Norwegian Bokmål", "nb", "Norsk bokmål"),
-      #("Norwegian Nynorsk", "nn", "Norsk nynorsk"),
+      Currency("NOK", "Norwegian krone", "kr"),
     ],
-    ["47"],
-    [duration.hours(1)],
+    [
+      Language("Norwegian", "no", "Norsk"),
+      Language("Norwegian Bokmål", "nb", "Norsk bokmål"),
+      Language("Norwegian Nynorsk", "nn", "Norsk nynorsk"),
+    ],
+    [
+      "47",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_br() {
-  #(
+  GeneratedCountry(
     "Brazil",
     "BR",
     "BRA",
     "076",
     Americas,
     Some("Brasília"),
-    [Currency(code: "BRL", name: "Brazilian real", symbol: "R$")],
-    [#("Portuguese", "pt", "Português")],
-    ["55"],
+    [
+      Currency("BRL", "Brazilian real", "R$"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "55",
+    ],
     [
       duration.hours(-5),
       duration.hours(-4),
@@ -2081,22 +2333,30 @@ fn country_br() {
 }
 
 fn country_io() {
-  #(
+  GeneratedCountry(
     "British Indian Ocean Territory",
     "IO",
     "IOT",
     "086",
     Africa,
     Some("Diego Garcia"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["246"],
-    [duration.hours(6)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "246",
+    ],
+    [
+      duration.hours(6),
+    ],
   )
 }
 
 fn country_bn() {
-  #(
+  GeneratedCountry(
     "Brunei Darussalam",
     "BN",
     "BRN",
@@ -2104,77 +2364,117 @@ fn country_bn() {
     Asia,
     Some("Bandar Seri Begawan"),
     [
-      Currency(code: "BND", name: "Brunei dollar", symbol: "$"),
-      Currency(code: "SGD", name: "Singapore dollar", symbol: "$"),
+      Currency("BND", "Brunei dollar", "$"),
+      Currency("SGD", "Singapore dollar", "$"),
     ],
-    [#("Malay", "ms", "bahasa Melayu")],
-    ["673"],
-    [duration.hours(8)],
+    [
+      Language("Malay", "ms", "bahasa Melayu"),
+    ],
+    [
+      "673",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_bg() {
-  #(
+  GeneratedCountry(
     "Bulgaria",
     "BG",
     "BGR",
     "100",
     Europe,
     Some("Sofia"),
-    [Currency(code: "BGN", name: "Bulgarian lev", symbol: "лв")],
-    [#("Bulgarian", "bg", "български език")],
-    ["359"],
-    [duration.hours(2)],
+    [
+      Currency("BGN", "Bulgarian lev", "лв"),
+    ],
+    [
+      Language("Bulgarian", "bg", "български език"),
+    ],
+    [
+      "359",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_bf() {
-  #(
+  GeneratedCountry(
     "Burkina Faso",
     "BF",
     "BFA",
     "854",
     Africa,
     Some("Ouagadougou"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français"), #("Fula", "ff", "Fulfulde")],
-    ["226"],
-    [duration.empty],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Fula", "ff", "Fulfulde"),
+    ],
+    [
+      "226",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_bi() {
-  #(
+  GeneratedCountry(
     "Burundi",
     "BI",
     "BDI",
     "108",
     Africa,
     Some("Gitega"),
-    [Currency(code: "BIF", name: "Burundian franc", symbol: "Fr")],
-    [#("French", "fr", "français"), #("Kirundi", "rn", "Ikirundi")],
-    ["257"],
-    [duration.hours(2)],
+    [
+      Currency("BIF", "Burundian franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Kirundi", "rn", "Ikirundi"),
+    ],
+    [
+      "257",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_cv() {
-  #(
+  GeneratedCountry(
     "Cabo Verde",
     "CV",
     "CPV",
     "132",
     Africa,
     Some("Praia"),
-    [Currency(code: "CVE", name: "Cape Verdean escudo", symbol: "Esc")],
-    [#("Portuguese", "pt", "Português")],
-    ["238"],
-    [duration.hours(-1)],
+    [
+      Currency("CVE", "Cape Verdean escudo", "Esc"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "238",
+    ],
+    [
+      duration.hours(-1),
+    ],
   )
 }
 
 fn country_kh() {
-  #(
+  GeneratedCountry(
     "Cambodia",
     "KH",
     "KHM",
@@ -2182,41 +2482,63 @@ fn country_kh() {
     Asia,
     Some("Phnom Penh"),
     [
-      Currency(code: "KHR", name: "Cambodian riel", symbol: "៛"),
-      Currency(code: "USD", name: "United States dollar", symbol: "$"),
+      Currency("KHR", "Cambodian riel", "៛"),
+      Currency("USD", "United States dollar", "$"),
     ],
-    [#("Khmer", "km", "ខ្មែរ")],
-    ["855"],
-    [duration.hours(7)],
+    [
+      Language("Khmer", "km", "ខ្មែរ"),
+    ],
+    [
+      "855",
+    ],
+    [
+      duration.hours(7),
+    ],
   )
 }
 
 fn country_cm() {
-  #(
+  GeneratedCountry(
     "Cameroon",
     "CM",
     "CMR",
     "120",
     Africa,
     Some("Yaoundé"),
-    [Currency(code: "XAF", name: "Central African CFA franc", symbol: "Fr")],
-    [#("English", "en", "English"), #("French", "fr", "français")],
-    ["237"],
-    [duration.hours(1)],
+    [
+      Currency("XAF", "Central African CFA franc", "Fr"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "237",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ca() {
-  #(
+  GeneratedCountry(
     "Canada",
     "CA",
     "CAN",
     "124",
     Americas,
     Some("Ottawa"),
-    [Currency(code: "CAD", name: "Canadian dollar", symbol: "$")],
-    [#("English", "en", "English"), #("French", "fr", "français")],
-    ["1"],
+    [
+      Currency("CAD", "Canadian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "1",
+    ],
     [
       duration.hours(-8),
       duration.hours(-7),
@@ -2229,178 +2551,270 @@ fn country_ca() {
 }
 
 fn country_ky() {
-  #(
+  GeneratedCountry(
     "Cayman Islands",
     "KY",
     "CYM",
     "136",
     Americas,
     Some("George Town"),
-    [Currency(code: "KYD", name: "Cayman Islands dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-5)],
+    [
+      Currency("KYD", "Cayman Islands dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_cf() {
-  #(
+  GeneratedCountry(
     "Central African Republic",
     "CF",
     "CAF",
     "140",
     Africa,
     Some("Bangui"),
-    [Currency(code: "XAF", name: "Central African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français"), #("Sango", "sg", "yângâ tî sängö")],
-    ["236"],
-    [duration.hours(1)],
+    [
+      Currency("XAF", "Central African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Sango", "sg", "yângâ tî sängö"),
+    ],
+    [
+      "236",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_td() {
-  #(
+  GeneratedCountry(
     "Chad",
     "TD",
     "TCD",
     "148",
     Africa,
     Some("N'Djamena"),
-    [Currency(code: "XAF", name: "Central African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français"), #("Arabic", "ar", "العربية")],
-    ["235"],
-    [duration.hours(1)],
+    [
+      Currency("XAF", "Central African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "235",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_cl() {
-  #(
+  GeneratedCountry(
     "Chile",
     "CL",
     "CHL",
     "152",
     Americas,
     Some("Santiago"),
-    [Currency(code: "CLP", name: "Chilean peso", symbol: "$")],
-    [#("Spanish", "es", "Español")],
-    ["56"],
-    [duration.hours(-6), duration.hours(-4)],
+    [
+      Currency("CLP", "Chilean peso", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "56",
+    ],
+    [
+      duration.hours(-6),
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_cn() {
-  #(
+  GeneratedCountry(
     "China",
     "CN",
     "CHN",
     "156",
     Asia,
     Some("Beijing"),
-    [Currency(code: "CNY", name: "Chinese yuan", symbol: "¥")],
-    [#("Chinese", "zh", "中文 (Zhōngwén)")],
-    ["86"],
-    [duration.hours(8)],
+    [
+      Currency("CNY", "Chinese yuan", "¥"),
+    ],
+    [
+      Language("Chinese", "zh", "中文 (Zhōngwén)"),
+    ],
+    [
+      "86",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_cx() {
-  #(
+  GeneratedCountry(
     "Christmas Island",
     "CX",
     "CXR",
     "162",
     Oceania,
     Some("Flying Fish Cove"),
-    [Currency(code: "AUD", name: "Australian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["61"],
-    [duration.hours(7)],
+    [
+      Currency("AUD", "Australian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "61",
+    ],
+    [
+      duration.hours(7),
+    ],
   )
 }
 
 fn country_cc() {
-  #(
+  GeneratedCountry(
     "Cocos (Keeling) Islands",
     "CC",
     "CCK",
     "166",
     Oceania,
     Some("West Island"),
-    [Currency(code: "AUD", name: "Australian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["61"],
-    [duration.add(duration.hours(6), duration.minutes(30))],
+    [
+      Currency("AUD", "Australian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "61",
+    ],
+    [
+      duration.add(duration.hours(6), duration.minutes(30)),
+    ],
   )
 }
 
 fn country_co() {
-  #(
+  GeneratedCountry(
     "Colombia",
     "CO",
     "COL",
     "170",
     Americas,
     Some("Bogotá"),
-    [Currency(code: "COP", name: "Colombian peso", symbol: "$")],
-    [#("Spanish", "es", "Español")],
-    ["57"],
-    [duration.hours(-5)],
+    [
+      Currency("COP", "Colombian peso", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "57",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_km() {
-  #(
+  GeneratedCountry(
     "Comoros",
     "KM",
     "COM",
     "174",
     Africa,
     Some("Moroni"),
-    [Currency(code: "KMF", name: "Comorian franc", symbol: "Fr")],
-    [#("Arabic", "ar", "العربية"), #("French", "fr", "français")],
-    ["269"],
-    [duration.hours(3)],
+    [
+      Currency("KMF", "Comorian franc", "Fr"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "269",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_cg() {
-  #(
+  GeneratedCountry(
     "Congo",
     "CG",
     "COG",
     "178",
     Africa,
     Some("Brazzaville"),
-    [Currency(code: "XAF", name: "Central African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français"), #("Lingala", "ln", "Lingála")],
-    ["242"],
-    [duration.hours(1)],
+    [
+      Currency("XAF", "Central African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Lingala", "ln", "Lingála"),
+    ],
+    [
+      "242",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_cd() {
-  #(
+  GeneratedCountry(
     "Congo (Democratic Republic of the)",
     "CD",
     "COD",
     "180",
     Africa,
     Some("Kinshasa"),
-    [Currency(code: "CDF", name: "Congolese franc", symbol: "Fr")],
     [
-      #("French", "fr", "français"),
-      #("Lingala", "ln", "Lingála"),
-      #("Kongo", "kg", "Kikongo"),
-      #("Swahili", "sw", "Kiswahili"),
-      #("Luba-Katanga", "lu", "Tshiluba"),
+      Currency("CDF", "Congolese franc", "Fr"),
     ],
-    ["243"],
-    [duration.hours(1), duration.hours(2)],
+    [
+      Language("French", "fr", "français"),
+      Language("Lingala", "ln", "Lingála"),
+      Language("Kongo", "kg", "Kikongo"),
+      Language("Swahili", "sw", "Kiswahili"),
+      Language("Luba-Katanga", "lu", "Tshiluba"),
+    ],
+    [
+      "243",
+    ],
+    [
+      duration.hours(1),
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_ck() {
-  #(
+  GeneratedCountry(
     "Cook Islands",
     "CK",
     "COK",
@@ -2408,47 +2822,70 @@ fn country_ck() {
     Oceania,
     Some("Avarua"),
     [
-      Currency(code: "NZD", name: "New Zealand dollar", symbol: "$"),
-      Currency(code: "CKD", name: "Cook Islands dollar", symbol: "$"),
+      Currency("NZD", "New Zealand dollar", "$"),
+      Currency("CKD", "Cook Islands dollar", "$"),
     ],
-    [#("English", "en", "English"), #("Cook Islands Māori", "", "Māori")],
-    ["682"],
-    [duration.hours(-10)],
+    [
+      Language("English", "en", "English"),
+      Language("Cook Islands Māori", "", "Māori"),
+    ],
+    [
+      "682",
+    ],
+    [
+      duration.hours(-10),
+    ],
   )
 }
 
 fn country_cr() {
-  #(
+  GeneratedCountry(
     "Costa Rica",
     "CR",
     "CRI",
     "188",
     Americas,
     Some("San José"),
-    [Currency(code: "CRC", name: "Costa Rican colón", symbol: "₡")],
-    [#("Spanish", "es", "Español")],
-    ["506"],
-    [duration.hours(-6)],
+    [
+      Currency("CRC", "Costa Rican colón", "₡"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "506",
+    ],
+    [
+      duration.hours(-6),
+    ],
   )
 }
 
 fn country_hr() {
-  #(
+  GeneratedCountry(
     "Croatia",
     "HR",
     "HRV",
     "191",
     Europe,
     Some("Zagreb"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Croatian", "hr", "hrvatski jezik")],
-    ["385"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Croatian", "hr", "hrvatski jezik"),
+    ],
+    [
+      "385",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_cu() {
-  #(
+  GeneratedCountry(
     "Cuba",
     "CU",
     "CUB",
@@ -2456,79 +2893,112 @@ fn country_cu() {
     Americas,
     Some("Havana"),
     [
-      Currency(code: "CUC", name: "Cuban convertible peso", symbol: "$"),
-      Currency(code: "CUP", name: "Cuban peso", symbol: "$"),
+      Currency("CUC", "Cuban convertible peso", "$"),
+      Currency("CUP", "Cuban peso", "$"),
     ],
-    [#("Spanish", "es", "Español")],
-    ["53"],
-    [duration.hours(-5)],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "53",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_cw() {
-  #(
+  GeneratedCountry(
     "Curaçao",
     "CW",
     "CUW",
     "531",
     Americas,
     Some("Willemstad"),
-    [Currency(code: "ANG", name: "Netherlands Antillean guilder", symbol: "ƒ")],
     [
-      #("Dutch", "nl", "Nederlands"),
-      #("(Eastern) Punjabi", "pa", "ਪੰਜਾਬੀ"),
-      #("English", "en", "English"),
+      Currency("ANG", "Netherlands Antillean guilder", "ƒ"),
     ],
-    ["599"],
-    [duration.hours(-4)],
+    [
+      Language("Dutch", "nl", "Nederlands"),
+      Language("(Eastern) Punjabi", "pa", "ਪੰਜਾਬੀ"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "599",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_cy() {
-  #(
+  GeneratedCountry(
     "Cyprus",
     "CY",
     "CYP",
     "196",
     Europe,
     Some("Nicosia"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
     [
-      #("Greek (modern)", "el", "ελληνικά"),
-      #("Turkish", "tr", "Türkçe"),
-      #("Armenian", "hy", "Հայերեն"),
+      Currency("EUR", "Euro", "€"),
     ],
-    ["357"],
-    [duration.hours(2)],
+    [
+      Language("Greek (modern)", "el", "ελληνικά"),
+      Language("Turkish", "tr", "Türkçe"),
+      Language("Armenian", "hy", "Հայերեն"),
+    ],
+    [
+      "357",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_cz() {
-  #(
+  GeneratedCountry(
     "Czech Republic",
     "CZ",
     "CZE",
     "203",
     Europe,
     Some("Prague"),
-    [Currency(code: "CZK", name: "Czech koruna", symbol: "Kč")],
-    [#("Czech", "cs", "čeština"), #("Slovak", "sk", "slovenčina")],
-    ["420"],
-    [duration.hours(1)],
+    [
+      Currency("CZK", "Czech koruna", "Kč"),
+    ],
+    [
+      Language("Czech", "cs", "čeština"),
+      Language("Slovak", "sk", "slovenčina"),
+    ],
+    [
+      "420",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_dk() {
-  #(
+  GeneratedCountry(
     "Denmark",
     "DK",
     "DNK",
     "208",
     Europe,
     Some("Copenhagen"),
-    [Currency(code: "DKK", name: "Danish krone", symbol: "kr")],
-    [#("Danish", "da", "dansk")],
-    ["45"],
+    [
+      Currency("DKK", "Danish krone", "kr"),
+    ],
+    [
+      Language("Danish", "da", "dansk"),
+    ],
+    [
+      "45",
+    ],
     [
       duration.hours(-4),
       duration.hours(-3),
@@ -2540,187 +3010,273 @@ fn country_dk() {
 }
 
 fn country_dj() {
-  #(
+  GeneratedCountry(
     "Djibouti",
     "DJ",
     "DJI",
     "262",
     Africa,
     Some("Djibouti"),
-    [Currency(code: "DJF", name: "Djiboutian franc", symbol: "Fr")],
-    [#("French", "fr", "français"), #("Arabic", "ar", "العربية")],
-    ["253"],
-    [duration.hours(3)],
+    [
+      Currency("DJF", "Djiboutian franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "253",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_dm() {
-  #(
+  GeneratedCountry(
     "Dominica",
     "DM",
     "DMA",
     "212",
     Americas,
     Some("Roseau"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_do() {
-  #(
+  GeneratedCountry(
     "Dominican Republic",
     "DO",
     "DOM",
     "214",
     Americas,
     Some("Santo Domingo"),
-    [Currency(code: "DOP", name: "Dominican peso", symbol: "$")],
-    [#("Spanish", "es", "Español")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("DOP", "Dominican peso", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_ec() {
-  #(
+  GeneratedCountry(
     "Ecuador",
     "EC",
     "ECU",
     "218",
     Americas,
     Some("Quito"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("Spanish", "es", "Español")],
-    ["593"],
-    [duration.hours(-6), duration.hours(-5)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "593",
+    ],
+    [
+      duration.hours(-6),
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_eg() {
-  #(
+  GeneratedCountry(
     "Egypt",
     "EG",
     "EGY",
     "818",
     Africa,
     Some("Cairo"),
-    [Currency(code: "EGP", name: "Egyptian pound", symbol: "£")],
-    [#("Arabic", "ar", "العربية")],
-    ["20"],
-    [duration.hours(2)],
+    [
+      Currency("EGP", "Egyptian pound", "£"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "20",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_sv() {
-  #(
+  GeneratedCountry(
     "El Salvador",
     "SV",
     "SLV",
     "222",
     Americas,
     Some("San Salvador"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("Spanish", "es", "Español")],
-    ["503"],
-    [duration.hours(-6)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "503",
+    ],
+    [
+      duration.hours(-6),
+    ],
   )
 }
 
 fn country_gq() {
-  #(
+  GeneratedCountry(
     "Equatorial Guinea",
     "GQ",
     "GNQ",
     "226",
     Africa,
     Some("Malabo"),
-    [Currency(code: "XAF", name: "Central African CFA franc", symbol: "Fr")],
     [
-      #("Spanish", "es", "Español"),
-      #("French", "fr", "français"),
-      #("Portuguese", "pt", "Português"),
-      #("Fang", "", "Fang"),
+      Currency("XAF", "Central African CFA franc", "Fr"),
     ],
-    ["240"],
-    [duration.hours(1)],
+    [
+      Language("Spanish", "es", "Español"),
+      Language("French", "fr", "français"),
+      Language("Portuguese", "pt", "Português"),
+      Language("Fang", "", "Fang"),
+    ],
+    [
+      "240",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_er() {
-  #(
+  GeneratedCountry(
     "Eritrea",
     "ER",
     "ERI",
     "232",
     Africa,
     Some("Asmara"),
-    [Currency(code: "ERN", name: "Eritrean nakfa", symbol: "Nfk")],
     [
-      #("Tigrinya", "ti", "ትግርኛ"),
-      #("Arabic", "ar", "العربية"),
-      #("English", "en", "English"),
-      #("Tigre", "", "ትግረ"),
-      #("Kunama", "", "Kunama"),
-      #("Saho", "", "Saho"),
-      #("Bilen", "", "ብሊና"),
-      #("Nara", "", "Nara"),
-      #("Afar", "aa", "Afar"),
+      Currency("ERN", "Eritrean nakfa", "Nfk"),
     ],
-    ["291"],
-    [duration.hours(3)],
+    [
+      Language("Tigrinya", "ti", "ትግርኛ"),
+      Language("Arabic", "ar", "العربية"),
+      Language("English", "en", "English"),
+      Language("Tigre", "", "ትግረ"),
+      Language("Kunama", "", "Kunama"),
+      Language("Saho", "", "Saho"),
+      Language("Bilen", "", "ብሊና"),
+      Language("Nara", "", "Nara"),
+      Language("Afar", "aa", "Afar"),
+    ],
+    [
+      "291",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_ee() {
-  #(
+  GeneratedCountry(
     "Estonia",
     "EE",
     "EST",
     "233",
     Europe,
     Some("Tallinn"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Estonian", "et", "eesti")],
-    ["372"],
-    [duration.hours(2)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Estonian", "et", "eesti"),
+    ],
+    [
+      "372",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_et() {
-  #(
+  GeneratedCountry(
     "Ethiopia",
     "ET",
     "ETH",
     "231",
     Africa,
     Some("Addis Ababa"),
-    [Currency(code: "ETB", name: "Ethiopian birr", symbol: "Br")],
-    [#("Amharic", "am", "አማርኛ")],
-    ["251"],
-    [duration.hours(3)],
+    [
+      Currency("ETB", "Ethiopian birr", "Br"),
+    ],
+    [
+      Language("Amharic", "am", "አማርኛ"),
+    ],
+    [
+      "251",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_fk() {
-  #(
+  GeneratedCountry(
     "Falkland Islands (Malvinas)",
     "FK",
     "FLK",
     "238",
     Americas,
     Some("Stanley"),
-    [Currency(code: "FKP", name: "Falkland Islands pound", symbol: "£")],
-    [#("English", "en", "English")],
-    ["500"],
-    [duration.hours(-4)],
+    [
+      Currency("FKP", "Falkland Islands pound", "£"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "500",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_fo() {
-  #(
+  GeneratedCountry(
     "Faroe Islands",
     "FO",
     "FRO",
@@ -2728,61 +3284,88 @@ fn country_fo() {
     Europe,
     Some("Tórshavn"),
     [
-      Currency(code: "DKK", name: "Danish krone", symbol: "kr"),
-      Currency(code: "FOK", name: "Faroese króna", symbol: "kr"),
+      Currency("DKK", "Danish krone", "kr"),
+      Currency("FOK", "Faroese króna", "kr"),
     ],
-    [#("Faroese", "fo", "føroyskt")],
-    ["298"],
-    [duration.empty],
+    [
+      Language("Faroese", "fo", "føroyskt"),
+    ],
+    [
+      "298",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_fj() {
-  #(
+  GeneratedCountry(
     "Fiji",
     "FJ",
     "FJI",
     "242",
     Oceania,
     Some("Suva"),
-    [Currency(code: "FJD", name: "Fijian dollar", symbol: "$")],
     [
-      #("English", "en", "English"),
-      #("Fijian", "fj", "vosa Vakaviti"),
-      #("Fiji Hindi", "", "फ़िजी बात"),
-      #("Rotuman", "", "Fäeag Rotuma"),
+      Currency("FJD", "Fijian dollar", "$"),
     ],
-    ["679"],
-    [duration.hours(12)],
+    [
+      Language("English", "en", "English"),
+      Language("Fijian", "fj", "vosa Vakaviti"),
+      Language("Fiji Hindi", "", "फ़िजी बात"),
+      Language("Rotuman", "", "Fäeag Rotuma"),
+    ],
+    [
+      "679",
+    ],
+    [
+      duration.hours(12),
+    ],
   )
 }
 
 fn country_fi() {
-  #(
+  GeneratedCountry(
     "Finland",
     "FI",
     "FIN",
     "246",
     Europe,
     Some("Helsinki"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Finnish", "fi", "suomi"), #("Swedish", "sv", "svenska")],
-    ["358"],
-    [duration.hours(2)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Finnish", "fi", "suomi"),
+      Language("Swedish", "sv", "svenska"),
+    ],
+    [
+      "358",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_fr() {
-  #(
+  GeneratedCountry(
     "France",
     "FR",
     "FRA",
     "250",
     Europe,
     Some("Paris"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["33"],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "33",
+    ],
     [
       duration.hours(-10),
       duration.add(duration.hours(-9), duration.minutes(-30)),
@@ -2803,31 +3386,45 @@ fn country_fr() {
 }
 
 fn country_gf() {
-  #(
+  GeneratedCountry(
     "French Guiana",
     "GF",
     "GUF",
     "254",
     Americas,
     Some("Cayenne"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["594"],
-    [duration.hours(-3)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "594",
+    ],
+    [
+      duration.hours(-3),
+    ],
   )
 }
 
 fn country_pf() {
-  #(
+  GeneratedCountry(
     "French Polynesia",
     "PF",
     "PYF",
     "258",
     Oceania,
     Some("Papeetē"),
-    [Currency(code: "XPF", name: "CFP franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["689"],
+    [
+      Currency("XPF", "CFP franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "689",
+    ],
     [
       duration.hours(-10),
       duration.add(duration.hours(-9), duration.minutes(-30)),
@@ -2837,206 +3434,311 @@ fn country_pf() {
 }
 
 fn country_tf() {
-  #(
+  GeneratedCountry(
     "French Southern Territories",
     "TF",
     "ATF",
     "260",
     Africa,
     Some("Port-aux-Français"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["262"],
-    [duration.hours(5)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "262",
+    ],
+    [
+      duration.hours(5),
+    ],
   )
 }
 
 fn country_ga() {
-  #(
+  GeneratedCountry(
     "Gabon",
     "GA",
     "GAB",
     "266",
     Africa,
     Some("Libreville"),
-    [Currency(code: "XAF", name: "Central African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["241"],
-    [duration.hours(1)],
+    [
+      Currency("XAF", "Central African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "241",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_gm() {
-  #(
+  GeneratedCountry(
     "Gambia",
     "GM",
     "GMB",
     "270",
     Africa,
     Some("Banjul"),
-    [Currency(code: "GMD", name: "Gambian dalasi", symbol: "D")],
-    [#("English", "en", "English")],
-    ["220"],
-    [duration.empty],
+    [
+      Currency("GMD", "Gambian dalasi", "D"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "220",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_ge() {
-  #(
+  GeneratedCountry(
     "Georgia",
     "GE",
     "GEO",
     "268",
     Asia,
     Some("Tbilisi"),
-    [Currency(code: "GEL", name: "Georgian Lari", symbol: "ლ")],
-    [#("Georgian", "ka", "ქართული")],
-    ["995"],
-    [duration.hours(-4)],
+    [
+      Currency("GEL", "Georgian Lari", "ლ"),
+    ],
+    [
+      Language("Georgian", "ka", "ქართული"),
+    ],
+    [
+      "995",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_de() {
-  #(
+  GeneratedCountry(
     "Germany",
     "DE",
     "DEU",
     "276",
     Europe,
     Some("Berlin"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("German", "de", "Deutsch")],
-    ["49"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("German", "de", "Deutsch"),
+    ],
+    [
+      "49",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_gh() {
-  #(
+  GeneratedCountry(
     "Ghana",
     "GH",
     "GHA",
     "288",
     Africa,
     Some("Accra"),
-    [Currency(code: "GHS", name: "Ghanaian cedi", symbol: "₵")],
-    [#("English", "en", "English")],
-    ["233"],
-    [duration.empty],
+    [
+      Currency("GHS", "Ghanaian cedi", "₵"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "233",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_gi() {
-  #(
+  GeneratedCountry(
     "Gibraltar",
     "GI",
     "GIB",
     "292",
     Europe,
     Some("Gibraltar"),
-    [Currency(code: "GIP", name: "Gibraltar pound", symbol: "£")],
-    [#("English", "en", "English")],
-    ["350"],
-    [duration.hours(1)],
+    [
+      Currency("GIP", "Gibraltar pound", "£"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "350",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_gr() {
-  #(
+  GeneratedCountry(
     "Greece",
     "GR",
     "GRC",
     "300",
     Europe,
     Some("Athens"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Greek (modern)", "el", "ελληνικά")],
-    ["30"],
-    [duration.hours(2)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Greek (modern)", "el", "ελληνικά"),
+    ],
+    [
+      "30",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_gl() {
-  #(
+  GeneratedCountry(
     "Greenland",
     "GL",
     "GRL",
     "304",
     Americas,
     Some("Nuuk"),
-    [Currency(code: "DKK", name: "Danish krone", symbol: "kr")],
-    [#("Kalaallisut", "kl", "kalaallisut")],
-    ["299"],
-    [duration.hours(-4), duration.hours(-3), duration.hours(-1), duration.empty],
+    [
+      Currency("DKK", "Danish krone", "kr"),
+    ],
+    [
+      Language("Kalaallisut", "kl", "kalaallisut"),
+    ],
+    [
+      "299",
+    ],
+    [
+      duration.hours(-4),
+      duration.hours(-3),
+      duration.hours(-1),
+      duration.empty,
+    ],
   )
 }
 
 fn country_gd() {
-  #(
+  GeneratedCountry(
     "Grenada",
     "GD",
     "GRD",
     "308",
     Americas,
     Some("St. George's"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_gp() {
-  #(
+  GeneratedCountry(
     "Guadeloupe",
     "GP",
     "GLP",
     "312",
     Americas,
     Some("Basse-Terre"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["590"],
-    [duration.hours(-4)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "590",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_gu() {
-  #(
+  GeneratedCountry(
     "Guam",
     "GU",
     "GUM",
     "316",
     Oceania,
     Some("Hagåtña"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
     [
-      #("English", "en", "English"),
-      #("Chamorro", "ch", "Chamoru"),
-      #("Spanish", "es", "Español"),
+      Currency("USD", "United States dollar", "$"),
     ],
-    ["1"],
-    [duration.hours(10)],
+    [
+      Language("English", "en", "English"),
+      Language("Chamorro", "ch", "Chamoru"),
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(10),
+    ],
   )
 }
 
 fn country_gt() {
-  #(
+  GeneratedCountry(
     "Guatemala",
     "GT",
     "GTM",
     "320",
     Americas,
     Some("Guatemala City"),
-    [Currency(code: "GTQ", name: "Guatemalan quetzal", symbol: "Q")],
-    [#("Spanish", "es", "Español")],
-    ["502"],
-    [duration.hours(-6)],
+    [
+      Currency("GTQ", "Guatemalan quetzal", "Q"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "502",
+    ],
+    [
+      duration.hours(-6),
+    ],
   )
 }
 
 fn country_gg() {
-  #(
+  GeneratedCountry(
     "Guernsey",
     "GG",
     "GGY",
@@ -3044,227 +3746,354 @@ fn country_gg() {
     Europe,
     Some("St. Peter Port"),
     [
-      Currency(code: "GBP", name: "British pound", symbol: "£"),
-      Currency(code: "GGP", name: "Guernsey pound", symbol: "£"),
+      Currency("GBP", "British pound", "£"),
+      Currency("GGP", "Guernsey pound", "£"),
     ],
-    [#("English", "en", "English"), #("French", "fr", "français")],
-    ["44"],
-    [duration.empty],
+    [
+      Language("English", "en", "English"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "44",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_gn() {
-  #(
+  GeneratedCountry(
     "Guinea",
     "GN",
     "GIN",
     "324",
     Africa,
     Some("Conakry"),
-    [Currency(code: "GNF", name: "Guinean franc", symbol: "Fr")],
-    [#("French", "fr", "français"), #("Fula", "ff", "Fulfulde")],
-    ["224"],
-    [duration.empty],
+    [
+      Currency("GNF", "Guinean franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Fula", "ff", "Fulfulde"),
+    ],
+    [
+      "224",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_gw() {
-  #(
+  GeneratedCountry(
     "Guinea-Bissau",
     "GW",
     "GNB",
     "624",
     Africa,
     Some("Bissau"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("Portuguese", "pt", "Português")],
-    ["245"],
-    [duration.empty],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "245",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_gy() {
-  #(
+  GeneratedCountry(
     "Guyana",
     "GY",
     "GUY",
     "328",
     Americas,
     Some("Georgetown"),
-    [Currency(code: "GYD", name: "Guyanese dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["592"],
-    [duration.hours(-4)],
+    [
+      Currency("GYD", "Guyanese dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "592",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_ht() {
-  #(
+  GeneratedCountry(
     "Haiti",
     "HT",
     "HTI",
     "332",
     Americas,
     Some("Port-au-Prince"),
-    [Currency(code: "HTG", name: "Haitian gourde", symbol: "G")],
-    [#("French", "fr", "français"), #("Haitian", "ht", "Kreyòl ayisyen")],
-    ["509"],
-    [duration.hours(-5)],
+    [
+      Currency("HTG", "Haitian gourde", "G"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Haitian", "ht", "Kreyòl ayisyen"),
+    ],
+    [
+      "509",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_hm() {
-  #(
+  GeneratedCountry(
     "Heard Island and McDonald Islands",
     "HM",
     "HMD",
     "334",
     Antarctic,
     None,
-    [Currency(code: "AUD", name: "Australian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["672"],
-    [duration.hours(5)],
+    [
+      Currency("AUD", "Australian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "672",
+    ],
+    [
+      duration.hours(5),
+    ],
   )
 }
 
 fn country_hn() {
-  #(
+  GeneratedCountry(
     "Honduras",
     "HN",
     "HND",
     "340",
     Americas,
     Some("Tegucigalpa"),
-    [Currency(code: "HNL", name: "Honduran lempira", symbol: "L")],
-    [#("Spanish", "es", "Español")],
-    ["504"],
-    [duration.hours(-6)],
+    [
+      Currency("HNL", "Honduran lempira", "L"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "504",
+    ],
+    [
+      duration.hours(-6),
+    ],
   )
 }
 
 fn country_hk() {
-  #(
+  GeneratedCountry(
     "Hong Kong",
     "HK",
     "HKG",
     "344",
     Asia,
     Some("City of Victoria"),
-    [Currency(code: "HKD", name: "Hong Kong dollar", symbol: "$")],
-    [#("English", "en", "English"), #("Chinese", "zh", "中文 (Zhōngwén)")],
-    ["852"],
-    [duration.hours(8)],
+    [
+      Currency("HKD", "Hong Kong dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Chinese", "zh", "中文 (Zhōngwén)"),
+    ],
+    [
+      "852",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_hu() {
-  #(
+  GeneratedCountry(
     "Hungary",
     "HU",
     "HUN",
     "348",
     Europe,
     Some("Budapest"),
-    [Currency(code: "HUF", name: "Hungarian forint", symbol: "Ft")],
-    [#("Hungarian", "hu", "magyar")],
-    ["36"],
-    [duration.hours(1)],
+    [
+      Currency("HUF", "Hungarian forint", "Ft"),
+    ],
+    [
+      Language("Hungarian", "hu", "magyar"),
+    ],
+    [
+      "36",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_is() {
-  #(
+  GeneratedCountry(
     "Iceland",
     "IS",
     "ISL",
     "352",
     Europe,
     Some("Reykjavík"),
-    [Currency(code: "ISK", name: "Icelandic króna", symbol: "kr")],
-    [#("Icelandic", "is", "Íslenska")],
-    ["354"],
-    [duration.empty],
+    [
+      Currency("ISK", "Icelandic króna", "kr"),
+    ],
+    [
+      Language("Icelandic", "is", "Íslenska"),
+    ],
+    [
+      "354",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_in() {
-  #(
+  GeneratedCountry(
     "India",
     "IN",
     "IND",
     "356",
     Asia,
     Some("New Delhi"),
-    [Currency(code: "INR", name: "Indian rupee", symbol: "₹")],
-    [#("Hindi", "hi", "हिन्दी"), #("English", "en", "English")],
-    ["91"],
-    [duration.add(duration.hours(5), duration.minutes(30))],
+    [
+      Currency("INR", "Indian rupee", "₹"),
+    ],
+    [
+      Language("Hindi", "hi", "हिन्दी"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "91",
+    ],
+    [
+      duration.add(duration.hours(5), duration.minutes(30)),
+    ],
   )
 }
 
 fn country_id() {
-  #(
+  GeneratedCountry(
     "Indonesia",
     "ID",
     "IDN",
     "360",
     Asia,
     Some("Jakarta"),
-    [Currency(code: "IDR", name: "Indonesian rupiah", symbol: "Rp")],
-    [#("Indonesian", "id", "Bahasa Indonesia")],
-    ["62"],
-    [duration.hours(7), duration.hours(8), duration.hours(9)],
+    [
+      Currency("IDR", "Indonesian rupiah", "Rp"),
+    ],
+    [
+      Language("Indonesian", "id", "Bahasa Indonesia"),
+    ],
+    [
+      "62",
+    ],
+    [
+      duration.hours(7),
+      duration.hours(8),
+      duration.hours(9),
+    ],
   )
 }
 
 fn country_ir() {
-  #(
+  GeneratedCountry(
     "Iran (Islamic Republic of)",
     "IR",
     "IRN",
     "364",
     Asia,
     Some("Tehran"),
-    [Currency(code: "IRR", name: "Iranian rial", symbol: "﷼")],
-    [#("Persian (Farsi)", "fa", "فارسی")],
-    ["98"],
-    [duration.add(duration.hours(3), duration.minutes(30))],
+    [
+      Currency("IRR", "Iranian rial", "﷼"),
+    ],
+    [
+      Language("Persian (Farsi)", "fa", "فارسی"),
+    ],
+    [
+      "98",
+    ],
+    [
+      duration.add(duration.hours(3), duration.minutes(30)),
+    ],
   )
 }
 
 fn country_iq() {
-  #(
+  GeneratedCountry(
     "Iraq",
     "IQ",
     "IRQ",
     "368",
     Asia,
     Some("Baghdad"),
-    [Currency(code: "IQD", name: "Iraqi dinar", symbol: "ع.د")],
-    [#("Arabic", "ar", "العربية"), #("Kurdish", "ku", "Kurdî")],
-    ["964"],
-    [duration.hours(3)],
+    [
+      Currency("IQD", "Iraqi dinar", "ع.د"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+      Language("Kurdish", "ku", "Kurdî"),
+    ],
+    [
+      "964",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_ie() {
-  #(
+  GeneratedCountry(
     "Ireland",
     "IE",
     "IRL",
     "372",
     Europe,
     Some("Dublin"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Irish", "ga", "Gaeilge"), #("English", "en", "English")],
-    ["353"],
-    [duration.empty],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Irish", "ga", "Gaeilge"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "353",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_im() {
-  #(
+  GeneratedCountry(
     "Isle of Man",
     "IM",
     "IMN",
@@ -3272,92 +4101,140 @@ fn country_im() {
     Europe,
     Some("Douglas"),
     [
-      Currency(code: "GBP", name: "British pound", symbol: "£"),
-      Currency(code: "IMP[G]", name: "Manx pound", symbol: "£"),
+      Currency("GBP", "British pound", "£"),
+      Currency("IMP[G]", "Manx pound", "£"),
     ],
-    [#("English", "en", "English"), #("Manx", "gv", "Gaelg")],
-    ["44"],
-    [duration.empty],
+    [
+      Language("English", "en", "English"),
+      Language("Manx", "gv", "Gaelg"),
+    ],
+    [
+      "44",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_il() {
-  #(
+  GeneratedCountry(
     "Israel",
     "IL",
     "ISR",
     "376",
     Asia,
     Some("Jerusalem"),
-    [Currency(code: "ILS", name: "Israeli new shekel", symbol: "₪")],
-    [#("Hebrew (modern)", "he", "עברית"), #("Arabic", "ar", "العربية")],
-    ["972"],
-    [duration.hours(2)],
+    [
+      Currency("ILS", "Israeli new shekel", "₪"),
+    ],
+    [
+      Language("Hebrew (modern)", "he", "עברית"),
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "972",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_it() {
-  #(
+  GeneratedCountry(
     "Italy",
     "IT",
     "ITA",
     "380",
     Europe,
     Some("Rome"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Italian", "it", "Italiano")],
-    ["39"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Italian", "it", "Italiano"),
+    ],
+    [
+      "39",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ci() {
-  #(
+  GeneratedCountry(
     "Ivory Coast",
     "CI",
     "CIV",
     "384",
     Africa,
     Some("Yamoussoukro"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["225"],
-    [duration.empty],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "225",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_jm() {
-  #(
+  GeneratedCountry(
     "Jamaica",
     "JM",
     "JAM",
     "388",
     Americas,
     Some("Kingston"),
-    [Currency(code: "JMD", name: "Jamaican dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-5)],
+    [
+      Currency("JMD", "Jamaican dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_jp() {
-  #(
+  GeneratedCountry(
     "Japan",
     "JP",
     "JPN",
     "392",
     Asia,
     Some("Tokyo"),
-    [Currency(code: "JPY", name: "Japanese yen", symbol: "¥")],
-    [#("Japanese", "ja", "日本語 (にほんご)")],
-    ["81"],
-    [duration.hours(9)],
+    [
+      Currency("JPY", "Japanese yen", "¥"),
+    ],
+    [
+      Language("Japanese", "ja", "日本語 (にほんご)"),
+    ],
+    [
+      "81",
+    ],
+    [
+      duration.hours(9),
+    ],
   )
 }
 
 fn country_je() {
-  #(
+  GeneratedCountry(
     "Jersey",
     "JE",
     "JEY",
@@ -3365,62 +4242,97 @@ fn country_je() {
     Europe,
     Some("Saint Helier"),
     [
-      Currency(code: "GBP", name: "British pound", symbol: "£"),
-      Currency(code: "JEP[G]", name: "Jersey pound", symbol: "£"),
+      Currency("GBP", "British pound", "£"),
+      Currency("JEP[G]", "Jersey pound", "£"),
     ],
-    [#("English", "en", "English"), #("French", "fr", "français")],
-    ["44"],
-    [duration.hours(1)],
+    [
+      Language("English", "en", "English"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "44",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_jo() {
-  #(
+  GeneratedCountry(
     "Jordan",
     "JO",
     "JOR",
     "400",
     Asia,
     Some("Amman"),
-    [Currency(code: "JOD", name: "Jordanian dinar", symbol: "د.ا")],
-    [#("Arabic", "ar", "العربية")],
-    ["962"],
-    [duration.hours(3)],
+    [
+      Currency("JOD", "Jordanian dinar", "د.ا"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "962",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_kz() {
-  #(
+  GeneratedCountry(
     "Kazakhstan",
     "KZ",
     "KAZ",
     "398",
     Asia,
     Some("Nur-Sultan"),
-    [Currency(code: "KZT", name: "Kazakhstani tenge", symbol: "₸")],
-    [#("Kazakh", "kk", "қазақ тілі"), #("Russian", "ru", "Русский")],
-    ["76", "77"],
-    [duration.hours(5), duration.hours(6)],
+    [
+      Currency("KZT", "Kazakhstani tenge", "₸"),
+    ],
+    [
+      Language("Kazakh", "kk", "қазақ тілі"),
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "76",
+      "77",
+    ],
+    [
+      duration.hours(5),
+      duration.hours(6),
+    ],
   )
 }
 
 fn country_ke() {
-  #(
+  GeneratedCountry(
     "Kenya",
     "KE",
     "KEN",
     "404",
     Africa,
     Some("Nairobi"),
-    [Currency(code: "KES", name: "Kenyan shilling", symbol: "Sh")],
-    [#("English", "en", "English"), #("Swahili", "sw", "Kiswahili")],
-    ["254"],
-    [duration.hours(3)],
+    [
+      Currency("KES", "Kenyan shilling", "Sh"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Swahili", "sw", "Kiswahili"),
+    ],
+    [
+      "254",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_ki() {
-  #(
+  GeneratedCountry(
     "Kiribati",
     "KI",
     "KIR",
@@ -3428,122 +4340,188 @@ fn country_ki() {
     Oceania,
     Some("South Tarawa"),
     [
-      Currency(code: "AUD", name: "Australian dollar", symbol: "$"),
-      Currency(code: "KID", name: "Kiribati dollar", symbol: "$"),
+      Currency("AUD", "Australian dollar", "$"),
+      Currency("KID", "Kiribati dollar", "$"),
     ],
-    [#("English", "en", "English")],
-    ["686"],
-    [duration.hours(12), duration.hours(13), duration.hours(14)],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "686",
+    ],
+    [
+      duration.hours(12),
+      duration.hours(13),
+      duration.hours(14),
+    ],
   )
 }
 
 fn country_kp() {
-  #(
+  GeneratedCountry(
     "Korea (Democratic People's Republic of)",
     "KP",
     "PRK",
     "408",
     Asia,
     Some("Pyongyang"),
-    [Currency(code: "KPW", name: "North Korean won", symbol: "₩")],
-    [#("Korean", "ko", "한국어")],
-    ["850"],
-    [duration.hours(9)],
+    [
+      Currency("KPW", "North Korean won", "₩"),
+    ],
+    [
+      Language("Korean", "ko", "한국어"),
+    ],
+    [
+      "850",
+    ],
+    [
+      duration.hours(9),
+    ],
   )
 }
 
 fn country_kr() {
-  #(
+  GeneratedCountry(
     "Korea (Republic of)",
     "KR",
     "KOR",
     "410",
     Asia,
     Some("Seoul"),
-    [Currency(code: "KRW", name: "South Korean won", symbol: "₩")],
-    [#("Korean", "ko", "한국어")],
-    ["82"],
-    [duration.hours(9)],
+    [
+      Currency("KRW", "South Korean won", "₩"),
+    ],
+    [
+      Language("Korean", "ko", "한국어"),
+    ],
+    [
+      "82",
+    ],
+    [
+      duration.hours(9),
+    ],
   )
 }
 
 fn country_kw() {
-  #(
+  GeneratedCountry(
     "Kuwait",
     "KW",
     "KWT",
     "414",
     Asia,
     Some("Kuwait City"),
-    [Currency(code: "KWD", name: "Kuwaiti dinar", symbol: "د.ك")],
-    [#("Arabic", "ar", "العربية")],
-    ["965"],
-    [duration.hours(3)],
+    [
+      Currency("KWD", "Kuwaiti dinar", "د.ك"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "965",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_kg() {
-  #(
+  GeneratedCountry(
     "Kyrgyzstan",
     "KG",
     "KGZ",
     "417",
     Asia,
     Some("Bishkek"),
-    [Currency(code: "KGS", name: "Kyrgyzstani som", symbol: "с")],
-    [#("Kyrgyz", "ky", "Кыргызча"), #("Russian", "ru", "Русский")],
-    ["996"],
-    [duration.hours(6)],
+    [
+      Currency("KGS", "Kyrgyzstani som", "с"),
+    ],
+    [
+      Language("Kyrgyz", "ky", "Кыргызча"),
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "996",
+    ],
+    [
+      duration.hours(6),
+    ],
   )
 }
 
 fn country_la() {
-  #(
+  GeneratedCountry(
     "Lao People's Democratic Republic",
     "LA",
     "LAO",
     "418",
     Asia,
     Some("Vientiane"),
-    [Currency(code: "LAK", name: "Lao kip", symbol: "₭")],
-    [#("Lao", "lo", "ພາສາລາວ")],
-    ["856"],
-    [duration.hours(7)],
+    [
+      Currency("LAK", "Lao kip", "₭"),
+    ],
+    [
+      Language("Lao", "lo", "ພາສາລາວ"),
+    ],
+    [
+      "856",
+    ],
+    [
+      duration.hours(7),
+    ],
   )
 }
 
 fn country_lv() {
-  #(
+  GeneratedCountry(
     "Latvia",
     "LV",
     "LVA",
     "428",
     Europe,
     Some("Riga"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Latvian", "lv", "latviešu valoda")],
-    ["371"],
-    [duration.hours(2)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Latvian", "lv", "latviešu valoda"),
+    ],
+    [
+      "371",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_lb() {
-  #(
+  GeneratedCountry(
     "Lebanon",
     "LB",
     "LBN",
     "422",
     Asia,
     Some("Beirut"),
-    [Currency(code: "LBP", name: "Lebanese pound", symbol: "ل.ل")],
-    [#("Arabic", "ar", "العربية"), #("French", "fr", "français")],
-    ["961"],
-    [duration.hours(2)],
+    [
+      Currency("LBP", "Lebanese pound", "ل.ل"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "961",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_ls() {
-  #(
+  GeneratedCountry(
     "Lesotho",
     "LS",
     "LSO",
@@ -3551,431 +4529,659 @@ fn country_ls() {
     Africa,
     Some("Maseru"),
     [
-      Currency(code: "LSL", name: "Lesotho loti", symbol: "L"),
-      Currency(code: "ZAR", name: "South African rand", symbol: "R"),
+      Currency("LSL", "Lesotho loti", "L"),
+      Currency("ZAR", "South African rand", "R"),
     ],
-    [#("English", "en", "English"), #("Southern Sotho", "st", "Sesotho")],
-    ["266"],
-    [duration.hours(2)],
+    [
+      Language("English", "en", "English"),
+      Language("Southern Sotho", "st", "Sesotho"),
+    ],
+    [
+      "266",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_lr() {
-  #(
+  GeneratedCountry(
     "Liberia",
     "LR",
     "LBR",
     "430",
     Africa,
     Some("Monrovia"),
-    [Currency(code: "LRD", name: "Liberian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["231"],
-    [duration.empty],
+    [
+      Currency("LRD", "Liberian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "231",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_ly() {
-  #(
+  GeneratedCountry(
     "Libya",
     "LY",
     "LBY",
     "434",
     Africa,
     Some("Tripoli"),
-    [Currency(code: "LYD", name: "Libyan dinar", symbol: "ل.د")],
-    [#("Arabic", "ar", "العربية")],
-    ["218"],
-    [duration.hours(1)],
+    [
+      Currency("LYD", "Libyan dinar", "ل.د"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "218",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_li() {
-  #(
+  GeneratedCountry(
     "Liechtenstein",
     "LI",
     "LIE",
     "438",
     Europe,
     Some("Vaduz"),
-    [Currency(code: "CHF", name: "Swiss franc", symbol: "Fr")],
-    [#("German", "de", "Deutsch")],
-    ["423"],
-    [duration.hours(1)],
+    [
+      Currency("CHF", "Swiss franc", "Fr"),
+    ],
+    [
+      Language("German", "de", "Deutsch"),
+    ],
+    [
+      "423",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_lt() {
-  #(
+  GeneratedCountry(
     "Lithuania",
     "LT",
     "LTU",
     "440",
     Europe,
     Some("Vilnius"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Lithuanian", "lt", "lietuvių kalba")],
-    ["370"],
-    [duration.hours(2)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Lithuanian", "lt", "lietuvių kalba"),
+    ],
+    [
+      "370",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_lu() {
-  #(
+  GeneratedCountry(
     "Luxembourg",
     "LU",
     "LUX",
     "442",
     Europe,
     Some("Luxembourg"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
     [
-      #("French", "fr", "français"),
-      #("German", "de", "Deutsch"),
-      #("Luxembourgish", "lb", "Lëtzebuergesch"),
+      Currency("EUR", "Euro", "€"),
     ],
-    ["352"],
-    [duration.hours(1)],
+    [
+      Language("French", "fr", "français"),
+      Language("German", "de", "Deutsch"),
+      Language("Luxembourgish", "lb", "Lëtzebuergesch"),
+    ],
+    [
+      "352",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_mo() {
-  #(
+  GeneratedCountry(
     "Macao",
     "MO",
     "MAC",
     "446",
     Asia,
     None,
-    [Currency(code: "MOP", name: "Macanese pataca", symbol: "P")],
-    [#("Chinese", "zh", "中文 (Zhōngwén)"), #("Portuguese", "pt", "Português")],
-    ["853"],
-    [duration.hours(8)],
+    [
+      Currency("MOP", "Macanese pataca", "P"),
+    ],
+    [
+      Language("Chinese", "zh", "中文 (Zhōngwén)"),
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "853",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_mg() {
-  #(
+  GeneratedCountry(
     "Madagascar",
     "MG",
     "MDG",
     "450",
     Africa,
     Some("Antananarivo"),
-    [Currency(code: "MGA", name: "Malagasy ariary", symbol: "Ar")],
-    [#("French", "fr", "français"), #("Malagasy", "mg", "fiteny malagasy")],
-    ["261"],
-    [duration.hours(3)],
+    [
+      Currency("MGA", "Malagasy ariary", "Ar"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("Malagasy", "mg", "fiteny malagasy"),
+    ],
+    [
+      "261",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_mw() {
-  #(
+  GeneratedCountry(
     "Malawi",
     "MW",
     "MWI",
     "454",
     Africa,
     Some("Lilongwe"),
-    [Currency(code: "MWK", name: "Malawian kwacha", symbol: "MK")],
-    [#("English", "en", "English"), #("Chichewa", "ny", "chiCheŵa")],
-    ["265"],
-    [duration.hours(2)],
+    [
+      Currency("MWK", "Malawian kwacha", "MK"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Chichewa", "ny", "chiCheŵa"),
+    ],
+    [
+      "265",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_my() {
-  #(
+  GeneratedCountry(
     "Malaysia",
     "MY",
     "MYS",
     "458",
     Asia,
     Some("Kuala Lumpur"),
-    [Currency(code: "MYR", name: "Malaysian ringgit", symbol: "RM")],
-    [#("Malaysian", "ms", "بهاس مليسيا")],
-    ["60"],
-    [duration.hours(8)],
+    [
+      Currency("MYR", "Malaysian ringgit", "RM"),
+    ],
+    [
+      Language("Malaysian", "ms", "بهاس مليسيا"),
+    ],
+    [
+      "60",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_mv() {
-  #(
+  GeneratedCountry(
     "Maldives",
     "MV",
     "MDV",
     "462",
     Asia,
     Some("Malé"),
-    [Currency(code: "MVR", name: "Maldivian rufiyaa", symbol: ".ރ")],
-    [#("Divehi", "dv", "ދިވެހި")],
-    ["960"],
-    [duration.hours(5)],
+    [
+      Currency("MVR", "Maldivian rufiyaa", ".ރ"),
+    ],
+    [
+      Language("Divehi", "dv", "ދިވެހި"),
+    ],
+    [
+      "960",
+    ],
+    [
+      duration.hours(5),
+    ],
   )
 }
 
 fn country_ml() {
-  #(
+  GeneratedCountry(
     "Mali",
     "ML",
     "MLI",
     "466",
     Africa,
     Some("Bamako"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["223"],
-    [duration.empty],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "223",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_mt() {
-  #(
+  GeneratedCountry(
     "Malta",
     "MT",
     "MLT",
     "470",
     Europe,
     Some("Valletta"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Maltese", "mt", "Malti"), #("English", "en", "English")],
-    ["356"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Maltese", "mt", "Malti"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "356",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_mh() {
-  #(
+  GeneratedCountry(
     "Marshall Islands",
     "MH",
     "MHL",
     "584",
     Oceania,
     Some("Majuro"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English"), #("Marshallese", "mh", "Kajin M̧ajeļ")],
-    ["692"],
-    [duration.hours(12)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Marshallese", "mh", "Kajin M̧ajeļ"),
+    ],
+    [
+      "692",
+    ],
+    [
+      duration.hours(12),
+    ],
   )
 }
 
 fn country_mq() {
-  #(
+  GeneratedCountry(
     "Martinique",
     "MQ",
     "MTQ",
     "474",
     Americas,
     Some("Fort-de-France"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["596"],
-    [duration.hours(-4)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "596",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_mr() {
-  #(
+  GeneratedCountry(
     "Mauritania",
     "MR",
     "MRT",
     "478",
     Africa,
     Some("Nouakchott"),
-    [Currency(code: "MRO", name: "Mauritanian ouguiya", symbol: "UM")],
-    [#("Arabic", "ar", "العربية")],
-    ["222"],
-    [duration.empty],
+    [
+      Currency("MRO", "Mauritanian ouguiya", "UM"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "222",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_mu() {
-  #(
+  GeneratedCountry(
     "Mauritius",
     "MU",
     "MUS",
     "480",
     Africa,
     Some("Port Louis"),
-    [Currency(code: "MUR", name: "Mauritian rupee", symbol: "₨")],
-    [#("English", "en", "English")],
-    ["230"],
-    [duration.hours(4)],
+    [
+      Currency("MUR", "Mauritian rupee", "₨"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "230",
+    ],
+    [
+      duration.hours(4),
+    ],
   )
 }
 
 fn country_yt() {
-  #(
+  GeneratedCountry(
     "Mayotte",
     "YT",
     "MYT",
     "175",
     Africa,
     Some("Mamoudzou"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["262"],
-    [duration.hours(3)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "262",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_mx() {
-  #(
+  GeneratedCountry(
     "Mexico",
     "MX",
     "MEX",
     "484",
     Americas,
     Some("Mexico City"),
-    [Currency(code: "MXN", name: "Mexican peso", symbol: "$")],
-    [#("Spanish", "es", "Español")],
-    ["52"],
-    [duration.hours(-8), duration.hours(-7), duration.hours(-6)],
+    [
+      Currency("MXN", "Mexican peso", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "52",
+    ],
+    [
+      duration.hours(-8),
+      duration.hours(-7),
+      duration.hours(-6),
+    ],
   )
 }
 
 fn country_fm() {
-  #(
+  GeneratedCountry(
     "Micronesia (Federated States of)",
     "FM",
     "FSM",
     "583",
     Oceania,
     Some("Palikir"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["691"],
-    [duration.hours(10), duration.hours(11)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "691",
+    ],
+    [
+      duration.hours(10),
+      duration.hours(11),
+    ],
   )
 }
 
 fn country_md() {
-  #(
+  GeneratedCountry(
     "Moldova (Republic of)",
     "MD",
     "MDA",
     "498",
     Europe,
     Some("Chișinău"),
-    [Currency(code: "MDL", name: "Moldovan leu", symbol: "L")],
-    [#("Romanian", "ro", "Română")],
-    ["373"],
-    [duration.hours(2)],
+    [
+      Currency("MDL", "Moldovan leu", "L"),
+    ],
+    [
+      Language("Romanian", "ro", "Română"),
+    ],
+    [
+      "373",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_mc() {
-  #(
+  GeneratedCountry(
     "Monaco",
     "MC",
     "MCO",
     "492",
     Europe,
     Some("Monaco"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["377"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "377",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_mn() {
-  #(
+  GeneratedCountry(
     "Mongolia",
     "MN",
     "MNG",
     "496",
     Asia,
     Some("Ulan Bator"),
-    [Currency(code: "MNT", name: "Mongolian tögrög", symbol: "₮")],
-    [#("Mongolian", "mn", "Монгол хэл")],
-    ["976"],
-    [duration.hours(7), duration.hours(8)],
+    [
+      Currency("MNT", "Mongolian tögrög", "₮"),
+    ],
+    [
+      Language("Mongolian", "mn", "Монгол хэл"),
+    ],
+    [
+      "976",
+    ],
+    [
+      duration.hours(7),
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_me() {
-  #(
+  GeneratedCountry(
     "Montenegro",
     "ME",
     "MNE",
     "499",
     Europe,
     Some("Podgorica"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
     [
-      #("Serbian", "sr", "српски језик"),
-      #("Bosnian", "bs", "bosanski jezik"),
-      #("Albanian", "sq", "Shqip"),
-      #("Croatian", "hr", "hrvatski jezik"),
+      Currency("EUR", "Euro", "€"),
     ],
-    ["382"],
-    [duration.hours(1)],
+    [
+      Language("Serbian", "sr", "српски језик"),
+      Language("Bosnian", "bs", "bosanski jezik"),
+      Language("Albanian", "sq", "Shqip"),
+      Language("Croatian", "hr", "hrvatski jezik"),
+    ],
+    [
+      "382",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ms() {
-  #(
+  GeneratedCountry(
     "Montserrat",
     "MS",
     "MSR",
     "500",
     Americas,
     Some("Plymouth"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_ma() {
-  #(
+  GeneratedCountry(
     "Morocco",
     "MA",
     "MAR",
     "504",
     Africa,
     Some("Rabat"),
-    [Currency(code: "MAD", name: "Moroccan dirham", symbol: "د.م.")],
-    [#("Arabic", "ar", "العربية")],
-    ["212"],
-    [duration.empty],
+    [
+      Currency("MAD", "Moroccan dirham", "د.م."),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "212",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_mz() {
-  #(
+  GeneratedCountry(
     "Mozambique",
     "MZ",
     "MOZ",
     "508",
     Africa,
     Some("Maputo"),
-    [Currency(code: "MZN", name: "Mozambican metical", symbol: "MT")],
-    [#("Portuguese", "pt", "Português")],
-    ["258"],
-    [duration.hours(2)],
+    [
+      Currency("MZN", "Mozambican metical", "MT"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "258",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_mm() {
-  #(
+  GeneratedCountry(
     "Myanmar",
     "MM",
     "MMR",
     "104",
     Asia,
     Some("Naypyidaw"),
-    [Currency(code: "MMK", name: "Burmese kyat", symbol: "Ks")],
-    [#("Burmese", "my", "ဗမာစာ")],
-    ["95"],
-    [duration.add(duration.hours(6), duration.minutes(30))],
+    [
+      Currency("MMK", "Burmese kyat", "Ks"),
+    ],
+    [
+      Language("Burmese", "my", "ဗမာစာ"),
+    ],
+    [
+      "95",
+    ],
+    [
+      duration.add(duration.hours(6), duration.minutes(30)),
+    ],
   )
 }
 
 fn country_na() {
-  #(
+  GeneratedCountry(
     "Namibia",
     "NA",
     "NAM",
@@ -3983,86 +5189,134 @@ fn country_na() {
     Africa,
     Some("Windhoek"),
     [
-      Currency(code: "NAD", name: "Namibian dollar", symbol: "$"),
-      Currency(code: "ZAR", name: "South African rand", symbol: "R"),
+      Currency("NAD", "Namibian dollar", "$"),
+      Currency("ZAR", "South African rand", "R"),
     ],
-    [#("English", "en", "English"), #("Afrikaans", "af", "Afrikaans")],
-    ["264"],
-    [duration.hours(1)],
+    [
+      Language("English", "en", "English"),
+      Language("Afrikaans", "af", "Afrikaans"),
+    ],
+    [
+      "264",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_nr() {
-  #(
+  GeneratedCountry(
     "Nauru",
     "NR",
     "NRU",
     "520",
     Oceania,
     Some("Yaren"),
-    [Currency(code: "AUD", name: "Australian dollar", symbol: "$")],
-    [#("English", "en", "English"), #("Nauruan", "na", "Dorerin Naoero")],
-    ["674"],
-    [duration.hours(12)],
+    [
+      Currency("AUD", "Australian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Nauruan", "na", "Dorerin Naoero"),
+    ],
+    [
+      "674",
+    ],
+    [
+      duration.hours(12),
+    ],
   )
 }
 
 fn country_np() {
-  #(
+  GeneratedCountry(
     "Nepal",
     "NP",
     "NPL",
     "524",
     Asia,
     Some("Kathmandu"),
-    [Currency(code: "NPR", name: "Nepalese rupee", symbol: "₨")],
-    [#("Nepali", "ne", "नेपाली")],
-    ["977"],
-    [duration.add(duration.hours(5), duration.minutes(45))],
+    [
+      Currency("NPR", "Nepalese rupee", "₨"),
+    ],
+    [
+      Language("Nepali", "ne", "नेपाली"),
+    ],
+    [
+      "977",
+    ],
+    [
+      duration.add(duration.hours(5), duration.minutes(45)),
+    ],
   )
 }
 
 fn country_nl() {
-  #(
+  GeneratedCountry(
     "Netherlands",
     "NL",
     "NLD",
     "528",
     Europe,
     Some("Amsterdam"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Dutch", "nl", "Nederlands")],
-    ["31"],
-    [duration.hours(-4), duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Dutch", "nl", "Nederlands"),
+    ],
+    [
+      "31",
+    ],
+    [
+      duration.hours(-4),
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_nc() {
-  #(
+  GeneratedCountry(
     "New Caledonia",
     "NC",
     "NCL",
     "540",
     Oceania,
     Some("Nouméa"),
-    [Currency(code: "XPF", name: "CFP franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["687"],
-    [duration.hours(11)],
+    [
+      Currency("XPF", "CFP franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "687",
+    ],
+    [
+      duration.hours(11),
+    ],
   )
 }
 
 fn country_nz() {
-  #(
+  GeneratedCountry(
     "New Zealand",
     "NZ",
     "NZL",
     "554",
     Oceania,
     Some("Wellington"),
-    [Currency(code: "NZD", name: "New Zealand dollar", symbol: "$")],
-    [#("English", "en", "English"), #("Māori", "mi", "te reo Māori")],
-    ["64"],
+    [
+      Currency("NZD", "New Zealand dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Māori", "mi", "te reo Māori"),
+    ],
+    [
+      "64",
+    ],
     [
       duration.hours(-11),
       duration.hours(-10),
@@ -4074,52 +5328,76 @@ fn country_nz() {
 }
 
 fn country_ni() {
-  #(
+  GeneratedCountry(
     "Nicaragua",
     "NI",
     "NIC",
     "558",
     Americas,
     Some("Managua"),
-    [Currency(code: "NIO", name: "Nicaraguan córdoba", symbol: "C$")],
-    [#("Spanish", "es", "Español")],
-    ["505"],
-    [duration.hours(-6)],
+    [
+      Currency("NIO", "Nicaraguan córdoba", "C$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "505",
+    ],
+    [
+      duration.hours(-6),
+    ],
   )
 }
 
 fn country_ne() {
-  #(
+  GeneratedCountry(
     "Niger",
     "NE",
     "NER",
     "562",
     Africa,
     Some("Niamey"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["227"],
-    [duration.hours(1)],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "227",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ng() {
-  #(
+  GeneratedCountry(
     "Nigeria",
     "NG",
     "NGA",
     "566",
     Africa,
     Some("Abuja"),
-    [Currency(code: "NGN", name: "Nigerian naira", symbol: "₦")],
-    [#("English", "en", "English")],
-    ["234"],
-    [duration.hours(1)],
+    [
+      Currency("NGN", "Nigerian naira", "₦"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "234",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_nu() {
-  #(
+  GeneratedCountry(
     "Niue",
     "NU",
     "NIU",
@@ -4127,126 +5405,188 @@ fn country_nu() {
     Oceania,
     Some("Alofi"),
     [
-      Currency(code: "NZD", name: "New Zealand dollar", symbol: "$"),
-      Currency(code: "NZD", name: "Niue dollar", symbol: "$"),
+      Currency("NZD", "New Zealand dollar", "$"),
+      Currency("NZD", "Niue dollar", "$"),
     ],
-    [#("English", "en", "English")],
-    ["683"],
-    [duration.hours(-11)],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "683",
+    ],
+    [
+      duration.hours(-11),
+    ],
   )
 }
 
 fn country_nf() {
-  #(
+  GeneratedCountry(
     "Norfolk Island",
     "NF",
     "NFK",
     "574",
     Oceania,
     Some("Kingston"),
-    [Currency(code: "AUD", name: "Australian dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["672"],
-    [duration.add(duration.hours(11), duration.minutes(30))],
+    [
+      Currency("AUD", "Australian dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "672",
+    ],
+    [
+      duration.add(duration.hours(11), duration.minutes(30)),
+    ],
   )
 }
 
 fn country_mk() {
-  #(
+  GeneratedCountry(
     "North Macedonia",
     "MK",
     "MKD",
     "807",
     Europe,
     Some("Skopje"),
-    [Currency(code: "MKD", name: "Macedonian denar", symbol: "ден")],
-    [#("Macedonian", "mk", "македонски јазик")],
-    ["389"],
-    [duration.hours(1)],
+    [
+      Currency("MKD", "Macedonian denar", "ден"),
+    ],
+    [
+      Language("Macedonian", "mk", "македонски јазик"),
+    ],
+    [
+      "389",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_mp() {
-  #(
+  GeneratedCountry(
     "Northern Mariana Islands",
     "MP",
     "MNP",
     "580",
     Oceania,
     Some("Saipan"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English"), #("Chamorro", "ch", "Chamoru")],
-    ["1"],
-    [duration.hours(10)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Chamorro", "ch", "Chamoru"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(10),
+    ],
   )
 }
 
 fn country_no() {
-  #(
+  GeneratedCountry(
     "Norway",
     "NO",
     "NOR",
     "578",
     Europe,
     Some("Oslo"),
-    [Currency(code: "NOK", name: "Norwegian krone", symbol: "kr")],
     [
-      #("Norwegian", "no", "Norsk"),
-      #("Norwegian Bokmål", "nb", "Norsk bokmål"),
-      #("Norwegian Nynorsk", "nn", "Norsk nynorsk"),
+      Currency("NOK", "Norwegian krone", "kr"),
     ],
-    ["47"],
-    [duration.hours(1)],
+    [
+      Language("Norwegian", "no", "Norsk"),
+      Language("Norwegian Bokmål", "nb", "Norsk bokmål"),
+      Language("Norwegian Nynorsk", "nn", "Norsk nynorsk"),
+    ],
+    [
+      "47",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_om() {
-  #(
+  GeneratedCountry(
     "Oman",
     "OM",
     "OMN",
     "512",
     Asia,
     Some("Muscat"),
-    [Currency(code: "OMR", name: "Omani rial", symbol: "ر.ع.")],
-    [#("Arabic", "ar", "العربية")],
-    ["968"],
-    [duration.hours(4)],
+    [
+      Currency("OMR", "Omani rial", "ر.ع."),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "968",
+    ],
+    [
+      duration.hours(4),
+    ],
   )
 }
 
 fn country_pk() {
-  #(
+  GeneratedCountry(
     "Pakistan",
     "PK",
     "PAK",
     "586",
     Asia,
     Some("Islamabad"),
-    [Currency(code: "PKR", name: "Pakistani rupee", symbol: "₨")],
-    [#("Urdu", "ur", "اردو"), #("English", "en", "English")],
-    ["92"],
-    [duration.hours(5)],
+    [
+      Currency("PKR", "Pakistani rupee", "₨"),
+    ],
+    [
+      Language("Urdu", "ur", "اردو"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "92",
+    ],
+    [
+      duration.hours(5),
+    ],
   )
 }
 
 fn country_pw() {
-  #(
+  GeneratedCountry(
     "Palau",
     "PW",
     "PLW",
     "585",
     Oceania,
     Some("Ngerulmud"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["680"],
-    [duration.hours(9)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "680",
+    ],
+    [
+      duration.hours(9),
+    ],
   )
 }
 
 fn country_ps() {
-  #(
+  GeneratedCountry(
     "Palestine, State of",
     "PS",
     "PSE",
@@ -4254,18 +5594,24 @@ fn country_ps() {
     Asia,
     Some("Ramallah"),
     [
-      Currency(code: "EGP", name: "Egyptian pound", symbol: "E£"),
-      Currency(code: "ILS", name: "Israeli new shekel", symbol: "₪"),
-      Currency(code: "JOD", name: "Jordanian dinar", symbol: "د.أ"),
+      Currency("EGP", "Egyptian pound", "E£"),
+      Currency("ILS", "Israeli new shekel", "₪"),
+      Currency("JOD", "Jordanian dinar", "د.أ"),
     ],
-    [#("Arabic", "ar", "العربية")],
-    ["970"],
-    [duration.hours(2)],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "970",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_pa() {
-  #(
+  GeneratedCountry(
     "Panama",
     "PA",
     "PAN",
@@ -4273,77 +5619,116 @@ fn country_pa() {
     Americas,
     Some("Panama City"),
     [
-      Currency(code: "PAB", name: "Panamanian balboa", symbol: "B/."),
-      Currency(code: "USD", name: "United States dollar", symbol: "$"),
+      Currency("PAB", "Panamanian balboa", "B/."),
+      Currency("USD", "United States dollar", "$"),
     ],
-    [#("Spanish", "es", "Español")],
-    ["507"],
-    [duration.hours(-5)],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "507",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_pg() {
-  #(
+  GeneratedCountry(
     "Papua New Guinea",
     "PG",
     "PNG",
     "598",
     Oceania,
     Some("Port Moresby"),
-    [Currency(code: "PGK", name: "Papua New Guinean kina", symbol: "K")],
-    [#("English", "en", "English")],
-    ["675"],
-    [duration.hours(10)],
+    [
+      Currency("PGK", "Papua New Guinean kina", "K"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "675",
+    ],
+    [
+      duration.hours(10),
+    ],
   )
 }
 
 fn country_py() {
-  #(
+  GeneratedCountry(
     "Paraguay",
     "PY",
     "PRY",
     "600",
     Americas,
     Some("Asunción"),
-    [Currency(code: "PYG", name: "Paraguayan guaraní", symbol: "₲")],
-    [#("Spanish", "es", "Español"), #("Guaraní", "gn", "Avañe'ẽ")],
-    ["595"],
-    [duration.hours(-4)],
+    [
+      Currency("PYG", "Paraguayan guaraní", "₲"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+      Language("Guaraní", "gn", "Avañe'ẽ"),
+    ],
+    [
+      "595",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_pe() {
-  #(
+  GeneratedCountry(
     "Peru",
     "PE",
     "PER",
     "604",
     Americas,
     Some("Lima"),
-    [Currency(code: "PEN", name: "Peruvian sol", symbol: "S/.")],
-    [#("Spanish", "es", "Español")],
-    ["51"],
-    [duration.hours(-5)],
+    [
+      Currency("PEN", "Peruvian sol", "S/."),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "51",
+    ],
+    [
+      duration.hours(-5),
+    ],
   )
 }
 
 fn country_ph() {
-  #(
+  GeneratedCountry(
     "Philippines",
     "PH",
     "PHL",
     "608",
     Asia,
     Some("Manila"),
-    [Currency(code: "PHP", name: "Philippine peso", symbol: "₱")],
-    [#("English", "en", "English")],
-    ["63"],
-    [duration.hours(8)],
+    [
+      Currency("PHP", "Philippine peso", "₱"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "63",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_pn() {
-  #(
+  GeneratedCountry(
     "Pitcairn",
     "PN",
     "PCN",
@@ -4351,131 +5736,202 @@ fn country_pn() {
     Oceania,
     Some("Adamstown"),
     [
-      Currency(code: "NZD", name: "New Zealand dollar", symbol: "$"),
-      Currency(code: "PND", name: "Pitcairn Islands dollar", symbol: "$"),
+      Currency("NZD", "New Zealand dollar", "$"),
+      Currency("PND", "Pitcairn Islands dollar", "$"),
     ],
-    [#("English", "en", "English")],
-    ["64"],
-    [duration.hours(-8)],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "64",
+    ],
+    [
+      duration.hours(-8),
+    ],
   )
 }
 
 fn country_pl() {
-  #(
+  GeneratedCountry(
     "Poland",
     "PL",
     "POL",
     "616",
     Europe,
     Some("Warsaw"),
-    [Currency(code: "PLN", name: "Polish złoty", symbol: "zł")],
-    [#("Polish", "pl", "język polski")],
-    ["48"],
-    [duration.hours(1)],
+    [
+      Currency("PLN", "Polish złoty", "zł"),
+    ],
+    [
+      Language("Polish", "pl", "język polski"),
+    ],
+    [
+      "48",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_pt() {
-  #(
+  GeneratedCountry(
     "Portugal",
     "PT",
     "PRT",
     "620",
     Europe,
     Some("Lisbon"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Portuguese", "pt", "Português")],
-    ["351"],
-    [duration.hours(-1), duration.empty],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "351",
+    ],
+    [
+      duration.hours(-1),
+      duration.empty,
+    ],
   )
 }
 
 fn country_pr() {
-  #(
+  GeneratedCountry(
     "Puerto Rico",
     "PR",
     "PRI",
     "630",
     Americas,
     Some("San Juan"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("Spanish", "es", "Español"), #("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_qa() {
-  #(
+  GeneratedCountry(
     "Qatar",
     "QA",
     "QAT",
     "634",
     Asia,
     Some("Doha"),
-    [Currency(code: "QAR", name: "Qatari riyal", symbol: "ر.ق")],
-    [#("Arabic", "ar", "العربية")],
-    ["974"],
-    [duration.hours(3)],
+    [
+      Currency("QAR", "Qatari riyal", "ر.ق"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "974",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_xk() {
-  #(
+  GeneratedCountry(
     "Republic of Kosovo",
     "XK",
     "UNK",
     "926",
     Europe,
     Some("Pristina"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Albanian", "sq", "Shqip"), #("Serbian", "sr", "српски језик")],
-    ["383"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Albanian", "sq", "Shqip"),
+      Language("Serbian", "sr", "српски језик"),
+    ],
+    [
+      "383",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_re() {
-  #(
+  GeneratedCountry(
     "Réunion",
     "RE",
     "REU",
     "638",
     Africa,
     Some("Saint-Denis"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["262"],
-    [duration.hours(4)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "262",
+    ],
+    [
+      duration.hours(4),
+    ],
   )
 }
 
 fn country_ro() {
-  #(
+  GeneratedCountry(
     "Romania",
     "RO",
     "ROU",
     "642",
     Europe,
     Some("Bucharest"),
-    [Currency(code: "RON", name: "Romanian leu", symbol: "lei")],
-    [#("Romanian", "ro", "Română")],
-    ["40"],
-    [duration.hours(2)],
+    [
+      Currency("RON", "Romanian leu", "lei"),
+    ],
+    [
+      Language("Romanian", "ro", "Română"),
+    ],
+    [
+      "40",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_ru() {
-  #(
+  GeneratedCountry(
     "Russian Federation",
     "RU",
     "RUS",
     "643",
     Europe,
     Some("Moscow"),
-    [Currency(code: "RUB", name: "Russian ruble", symbol: "₽")],
-    [#("Russian", "ru", "Русский")],
-    ["7"],
+    [
+      Currency("RUB", "Russian ruble", "₽"),
+    ],
+    [
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "7",
+    ],
     [
       duration.hours(3),
       duration.hours(4),
@@ -4491,744 +5947,1119 @@ fn country_ru() {
 }
 
 fn country_rw() {
-  #(
+  GeneratedCountry(
     "Rwanda",
     "RW",
     "RWA",
     "646",
     Africa,
     Some("Kigali"),
-    [Currency(code: "RWF", name: "Rwandan franc", symbol: "Fr")],
     [
-      #("Kinyarwanda", "rw", "Ikinyarwanda"),
-      #("English", "en", "English"),
-      #("French", "fr", "français"),
+      Currency("RWF", "Rwandan franc", "Fr"),
     ],
-    ["250"],
-    [duration.hours(2)],
+    [
+      Language("Kinyarwanda", "rw", "Ikinyarwanda"),
+      Language("English", "en", "English"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "250",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_bl() {
-  #(
+  GeneratedCountry(
     "Saint Barthélemy",
     "BL",
     "BLM",
     "652",
     Americas,
     Some("Gustavia"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["590"],
-    [duration.hours(-4)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "590",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_sh() {
-  #(
+  GeneratedCountry(
     "Saint Helena, Ascension and Tristan da Cunha",
     "SH",
     "SHN",
     "654",
     Africa,
     Some("Jamestown"),
-    [Currency(code: "SHP", name: "Saint Helena pound", symbol: "£")],
-    [#("English", "en", "English")],
-    ["290"],
-    [duration.empty],
+    [
+      Currency("SHP", "Saint Helena pound", "£"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "290",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_kn() {
-  #(
+  GeneratedCountry(
     "Saint Kitts and Nevis",
     "KN",
     "KNA",
     "659",
     Americas,
     Some("Basseterre"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_lc() {
-  #(
+  GeneratedCountry(
     "Saint Lucia",
     "LC",
     "LCA",
     "662",
     Americas,
     Some("Castries"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_mf() {
-  #(
+  GeneratedCountry(
     "Saint Martin (French part)",
     "MF",
     "MAF",
     "663",
     Americas,
     Some("Marigot"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
     [
-      #("English", "en", "English"),
-      #("French", "fr", "français"),
-      #("Dutch", "nl", "Nederlands"),
+      Currency("EUR", "Euro", "€"),
     ],
-    ["590"],
-    [duration.hours(-4)],
+    [
+      Language("English", "en", "English"),
+      Language("French", "fr", "français"),
+      Language("Dutch", "nl", "Nederlands"),
+    ],
+    [
+      "590",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_pm() {
-  #(
+  GeneratedCountry(
     "Saint Pierre and Miquelon",
     "PM",
     "SPM",
     "666",
     Americas,
     Some("Saint-Pierre"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("French", "fr", "français")],
-    ["508"],
-    [duration.hours(-3)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "508",
+    ],
+    [
+      duration.hours(-3),
+    ],
   )
 }
 
 fn country_vc() {
-  #(
+  GeneratedCountry(
     "Saint Vincent and the Grenadines",
     "VC",
     "VCT",
     "670",
     Americas,
     Some("Kingstown"),
-    [Currency(code: "XCD", name: "East Caribbean dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("XCD", "East Caribbean dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_ws() {
-  #(
+  GeneratedCountry(
     "Samoa",
     "WS",
     "WSM",
     "882",
     Oceania,
     Some("Apia"),
-    [Currency(code: "WST", name: "Samoan tālā", symbol: "T")],
-    [#("Samoan", "sm", "gagana fa'a Samoa"), #("English", "en", "English")],
-    ["685"],
-    [duration.hours(13)],
+    [
+      Currency("WST", "Samoan tālā", "T"),
+    ],
+    [
+      Language("Samoan", "sm", "gagana fa'a Samoa"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "685",
+    ],
+    [
+      duration.hours(13),
+    ],
   )
 }
 
 fn country_sm() {
-  #(
+  GeneratedCountry(
     "San Marino",
     "SM",
     "SMR",
     "674",
     Europe,
     Some("City of San Marino"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Italian", "it", "Italiano")],
-    ["378"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Italian", "it", "Italiano"),
+    ],
+    [
+      "378",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_st() {
-  #(
+  GeneratedCountry(
     "Sao Tome and Principe",
     "ST",
     "STP",
     "678",
     Africa,
     Some("São Tomé"),
-    [Currency(code: "STD", name: "São Tomé and Príncipe dobra", symbol: "Db")],
-    [#("Portuguese", "pt", "Português")],
-    ["239"],
-    [duration.empty],
+    [
+      Currency("STD", "São Tomé and Príncipe dobra", "Db"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "239",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_sa() {
-  #(
+  GeneratedCountry(
     "Saudi Arabia",
     "SA",
     "SAU",
     "682",
     Asia,
     Some("Riyadh"),
-    [Currency(code: "SAR", name: "Saudi riyal", symbol: "ر.س")],
-    [#("Arabic", "ar", "العربية")],
-    ["966"],
-    [duration.hours(3)],
+    [
+      Currency("SAR", "Saudi riyal", "ر.س"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "966",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_sn() {
-  #(
+  GeneratedCountry(
     "Senegal",
     "SN",
     "SEN",
     "686",
     Africa,
     Some("Dakar"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["221"],
-    [duration.empty],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "221",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_rs() {
-  #(
+  GeneratedCountry(
     "Serbia",
     "RS",
     "SRB",
     "688",
     Europe,
     Some("Belgrade"),
-    [Currency(code: "RSD", name: "Serbian dinar", symbol: "дин.")],
-    [#("Serbian", "sr", "српски језик")],
-    ["381"],
-    [duration.hours(1)],
+    [
+      Currency("RSD", "Serbian dinar", "дин."),
+    ],
+    [
+      Language("Serbian", "sr", "српски језик"),
+    ],
+    [
+      "381",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_sc() {
-  #(
+  GeneratedCountry(
     "Seychelles",
     "SC",
     "SYC",
     "690",
     Africa,
     Some("Victoria"),
-    [Currency(code: "SCR", name: "Seychellois rupee", symbol: "₨")],
-    [#("French", "fr", "français"), #("English", "en", "English")],
-    ["248"],
-    [duration.hours(4)],
+    [
+      Currency("SCR", "Seychellois rupee", "₨"),
+    ],
+    [
+      Language("French", "fr", "français"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "248",
+    ],
+    [
+      duration.hours(4),
+    ],
   )
 }
 
 fn country_sl() {
-  #(
+  GeneratedCountry(
     "Sierra Leone",
     "SL",
     "SLE",
     "694",
     Africa,
     Some("Freetown"),
-    [Currency(code: "SLL", name: "Sierra Leonean leone", symbol: "Le")],
-    [#("English", "en", "English")],
-    ["232"],
-    [duration.empty],
+    [
+      Currency("SLL", "Sierra Leonean leone", "Le"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "232",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_sg() {
-  #(
+  GeneratedCountry(
     "Singapore",
     "SG",
     "SGP",
     "702",
     Asia,
     Some("Singapore"),
-    [Currency(code: "SGD", name: "Singapore dollar", symbol: "$")],
     [
-      #("English", "en", "English"),
-      #("Malay", "ms", "bahasa Melayu"),
-      #("Tamil", "ta", "தமிழ்"),
-      #("Chinese", "zh", "中文 (Zhōngwén)"),
+      Currency("SGD", "Singapore dollar", "$"),
     ],
-    ["65"],
-    [duration.hours(8)],
+    [
+      Language("English", "en", "English"),
+      Language("Malay", "ms", "bahasa Melayu"),
+      Language("Tamil", "ta", "தமிழ்"),
+      Language("Chinese", "zh", "中文 (Zhōngwén)"),
+    ],
+    [
+      "65",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_sx() {
-  #(
+  GeneratedCountry(
     "Sint Maarten (Dutch part)",
     "SX",
     "SXM",
     "534",
     Americas,
     Some("Philipsburg"),
-    [Currency(code: "ANG", name: "Netherlands Antillean guilder", symbol: "ƒ")],
-    [#("Dutch", "nl", "Nederlands"), #("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("ANG", "Netherlands Antillean guilder", "ƒ"),
+    ],
+    [
+      Language("Dutch", "nl", "Nederlands"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_sk() {
-  #(
+  GeneratedCountry(
     "Slovakia",
     "SK",
     "SVK",
     "703",
     Europe,
     Some("Bratislava"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Slovak", "sk", "slovenčina")],
-    ["421"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Slovak", "sk", "slovenčina"),
+    ],
+    [
+      "421",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_si() {
-  #(
+  GeneratedCountry(
     "Slovenia",
     "SI",
     "SVN",
     "705",
     Europe,
     Some("Ljubljana"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Slovene", "sl", "slovenski jezik")],
-    ["386"],
-    [duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Slovene", "sl", "slovenski jezik"),
+    ],
+    [
+      "386",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_sb() {
-  #(
+  GeneratedCountry(
     "Solomon Islands",
     "SB",
     "SLB",
     "090",
     Oceania,
     Some("Honiara"),
-    [Currency(code: "SBD", name: "Solomon Islands dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["677"],
-    [duration.hours(11)],
+    [
+      Currency("SBD", "Solomon Islands dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "677",
+    ],
+    [
+      duration.hours(11),
+    ],
   )
 }
 
 fn country_so() {
-  #(
+  GeneratedCountry(
     "Somalia",
     "SO",
     "SOM",
     "706",
     Africa,
     Some("Mogadishu"),
-    [Currency(code: "SOS", name: "Somali shilling", symbol: "Sh")],
-    [#("Somali", "so", "Soomaaliga"), #("Arabic", "ar", "العربية")],
-    ["252"],
-    [duration.hours(3)],
+    [
+      Currency("SOS", "Somali shilling", "Sh"),
+    ],
+    [
+      Language("Somali", "so", "Soomaaliga"),
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "252",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_za() {
-  #(
+  GeneratedCountry(
     "South Africa",
     "ZA",
     "ZAF",
     "710",
     Africa,
     Some("Pretoria"),
-    [Currency(code: "ZAR", name: "South African rand", symbol: "R")],
     [
-      #("Afrikaans", "af", "Afrikaans"),
-      #("English", "en", "English"),
-      #("Southern Ndebele", "nr", "isiNdebele"),
-      #("Southern Sotho", "st", "Sesotho"),
-      #("Swati", "ss", "SiSwati"),
-      #("Tswana", "tn", "Setswana"),
-      #("Tsonga", "ts", "Xitsonga"),
-      #("Venda", "ve", "Tshivenḓa"),
-      #("Xhosa", "xh", "isiXhosa"),
-      #("Zulu", "zu", "isiZulu"),
+      Currency("ZAR", "South African rand", "R"),
     ],
-    ["27"],
-    [duration.hours(2)],
+    [
+      Language("Afrikaans", "af", "Afrikaans"),
+      Language("English", "en", "English"),
+      Language("Southern Ndebele", "nr", "isiNdebele"),
+      Language("Southern Sotho", "st", "Sesotho"),
+      Language("Swati", "ss", "SiSwati"),
+      Language("Tswana", "tn", "Setswana"),
+      Language("Tsonga", "ts", "Xitsonga"),
+      Language("Venda", "ve", "Tshivenḓa"),
+      Language("Xhosa", "xh", "isiXhosa"),
+      Language("Zulu", "zu", "isiZulu"),
+    ],
+    [
+      "27",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_gs() {
-  #(
+  GeneratedCountry(
     "South Georgia and the South Sandwich Islands",
     "GS",
     "SGS",
     "239",
     Americas,
     Some("King Edward Point"),
-    [Currency(code: "FKP", name: "Falkland Islands Pound", symbol: "£")],
-    [#("English", "en", "English")],
-    ["500"],
-    [duration.hours(-2)],
+    [
+      Currency("FKP", "Falkland Islands Pound", "£"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "500",
+    ],
+    [
+      duration.hours(-2),
+    ],
   )
 }
 
 fn country_ss() {
-  #(
+  GeneratedCountry(
     "South Sudan",
     "SS",
     "SSD",
     "728",
     Africa,
     Some("Juba"),
-    [Currency(code: "SSP", name: "South Sudanese pound", symbol: "£")],
-    [#("English", "en", "English")],
-    ["211"],
-    [duration.hours(3)],
+    [
+      Currency("SSP", "South Sudanese pound", "£"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "211",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_es() {
-  #(
+  GeneratedCountry(
     "Spain",
     "ES",
     "ESP",
     "724",
     Europe,
     Some("Madrid"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
-    [#("Spanish", "es", "Español")],
-    ["34"],
-    [duration.empty, duration.hours(1)],
+    [
+      Currency("EUR", "Euro", "€"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "34",
+    ],
+    [
+      duration.empty,
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_lk() {
-  #(
+  GeneratedCountry(
     "Sri Lanka",
     "LK",
     "LKA",
     "144",
     Asia,
     Some("Sri Jayawardenepura Kotte"),
-    [Currency(code: "LKR", name: "Sri Lankan rupee", symbol: "Rs")],
-    [#("Sinhalese", "si", "සිංහල"), #("Tamil", "ta", "தமிழ்")],
-    ["94"],
-    [duration.add(duration.hours(5), duration.minutes(30))],
+    [
+      Currency("LKR", "Sri Lankan rupee", "Rs"),
+    ],
+    [
+      Language("Sinhalese", "si", "සිංහල"),
+      Language("Tamil", "ta", "தமிழ்"),
+    ],
+    [
+      "94",
+    ],
+    [
+      duration.add(duration.hours(5), duration.minutes(30)),
+    ],
   )
 }
 
 fn country_sd() {
-  #(
+  GeneratedCountry(
     "Sudan",
     "SD",
     "SDN",
     "729",
     Africa,
     Some("Khartoum"),
-    [Currency(code: "SDG", name: "Sudanese pound", symbol: "ج.س.")],
-    [#("Arabic", "ar", "العربية"), #("English", "en", "English")],
-    ["249"],
-    [duration.hours(3)],
+    [
+      Currency("SDG", "Sudanese pound", "ج.س."),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "249",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_sr() {
-  #(
+  GeneratedCountry(
     "Suriname",
     "SR",
     "SUR",
     "740",
     Americas,
     Some("Paramaribo"),
-    [Currency(code: "SRD", name: "Surinamese dollar", symbol: "$")],
-    [#("Dutch", "nl", "Nederlands")],
-    ["597"],
-    [duration.hours(-3)],
+    [
+      Currency("SRD", "Surinamese dollar", "$"),
+    ],
+    [
+      Language("Dutch", "nl", "Nederlands"),
+    ],
+    [
+      "597",
+    ],
+    [
+      duration.hours(-3),
+    ],
   )
 }
 
 fn country_sj() {
-  #(
+  GeneratedCountry(
     "Svalbard and Jan Mayen",
     "SJ",
     "SJM",
     "744",
     Europe,
     Some("Longyearbyen"),
-    [Currency(code: "NOK", name: "Norwegian krone", symbol: "kr")],
-    [#("Norwegian", "no", "Norsk")],
-    ["47"],
-    [duration.hours(1)],
+    [
+      Currency("NOK", "Norwegian krone", "kr"),
+    ],
+    [
+      Language("Norwegian", "no", "Norsk"),
+    ],
+    [
+      "47",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_sz() {
-  #(
+  GeneratedCountry(
     "Swaziland",
     "SZ",
     "SWZ",
     "748",
     Africa,
     Some("Mbabane"),
-    [Currency(code: "SZL", name: "Swazi lilangeni", symbol: "L")],
-    [#("English", "en", "English"), #("Swati", "ss", "SiSwati")],
-    ["268"],
-    [duration.hours(2)],
+    [
+      Currency("SZL", "Swazi lilangeni", "L"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Swati", "ss", "SiSwati"),
+    ],
+    [
+      "268",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_se() {
-  #(
+  GeneratedCountry(
     "Sweden",
     "SE",
     "SWE",
     "752",
     Europe,
     Some("Stockholm"),
-    [Currency(code: "SEK", name: "Swedish krona", symbol: "kr")],
-    [#("Swedish", "sv", "svenska")],
-    ["46"],
-    [duration.hours(1)],
+    [
+      Currency("SEK", "Swedish krona", "kr"),
+    ],
+    [
+      Language("Swedish", "sv", "svenska"),
+    ],
+    [
+      "46",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ch() {
-  #(
+  GeneratedCountry(
     "Switzerland",
     "CH",
     "CHE",
     "756",
     Europe,
     Some("Bern"),
-    [Currency(code: "CHF", name: "Swiss franc", symbol: "Fr")],
     [
-      #("German", "de", "Deutsch"),
-      #("French", "fr", "français"),
-      #("Italian", "it", "Italiano"),
-      #("Romansh", "", ""),
+      Currency("CHF", "Swiss franc", "Fr"),
     ],
-    ["41"],
-    [duration.hours(1)],
+    [
+      Language("German", "de", "Deutsch"),
+      Language("French", "fr", "français"),
+      Language("Italian", "it", "Italiano"),
+      Language("Romansh", "", ""),
+    ],
+    [
+      "41",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_sy() {
-  #(
+  GeneratedCountry(
     "Syrian Arab Republic",
     "SY",
     "SYR",
     "760",
     Asia,
     Some("Damascus"),
-    [Currency(code: "SYP", name: "Syrian pound", symbol: "£")],
-    [#("Arabic", "ar", "العربية")],
-    ["963"],
-    [duration.hours(2)],
+    [
+      Currency("SYP", "Syrian pound", "£"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "963",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_tw() {
-  #(
+  GeneratedCountry(
     "Taiwan",
     "TW",
     "TWN",
     "158",
     Asia,
     Some("Taipei"),
-    [Currency(code: "TWD", name: "New Taiwan dollar", symbol: "$")],
-    [#("Chinese", "zh", "中文 (Zhōngwén)")],
-    ["886"],
-    [duration.hours(8)],
+    [
+      Currency("TWD", "New Taiwan dollar", "$"),
+    ],
+    [
+      Language("Chinese", "zh", "中文 (Zhōngwén)"),
+    ],
+    [
+      "886",
+    ],
+    [
+      duration.hours(8),
+    ],
   )
 }
 
 fn country_tj() {
-  #(
+  GeneratedCountry(
     "Tajikistan",
     "TJ",
     "TJK",
     "762",
     Asia,
     Some("Dushanbe"),
-    [Currency(code: "TJS", name: "Tajikistani somoni", symbol: "ЅМ")],
-    [#("Tajik", "tg", "тоҷикӣ"), #("Russian", "ru", "Русский")],
-    ["992"],
-    [duration.hours(5)],
+    [
+      Currency("TJS", "Tajikistani somoni", "ЅМ"),
+    ],
+    [
+      Language("Tajik", "tg", "тоҷикӣ"),
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "992",
+    ],
+    [
+      duration.hours(5),
+    ],
   )
 }
 
 fn country_tz() {
-  #(
+  GeneratedCountry(
     "Tanzania, United Republic of",
     "TZ",
     "TZA",
     "834",
     Africa,
     Some("Dodoma"),
-    [Currency(code: "TZS", name: "Tanzanian shilling", symbol: "Sh")],
-    [#("Swahili", "sw", "Kiswahili"), #("English", "en", "English")],
-    ["255"],
-    [duration.hours(3)],
+    [
+      Currency("TZS", "Tanzanian shilling", "Sh"),
+    ],
+    [
+      Language("Swahili", "sw", "Kiswahili"),
+      Language("English", "en", "English"),
+    ],
+    [
+      "255",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_th() {
-  #(
+  GeneratedCountry(
     "Thailand",
     "TH",
     "THA",
     "764",
     Asia,
     Some("Bangkok"),
-    [Currency(code: "THB", name: "Thai baht", symbol: "฿")],
-    [#("Thai", "th", "ไทย")],
-    ["66"],
-    [duration.hours(7)],
+    [
+      Currency("THB", "Thai baht", "฿"),
+    ],
+    [
+      Language("Thai", "th", "ไทย"),
+    ],
+    [
+      "66",
+    ],
+    [
+      duration.hours(7),
+    ],
   )
 }
 
 fn country_tl() {
-  #(
+  GeneratedCountry(
     "Timor-Leste",
     "TL",
     "TLS",
     "626",
     Asia,
     Some("Dili"),
-    [Currency(code: "USD", name: "United States Dollar", symbol: "$")],
-    [#("Portuguese", "pt", "Português")],
-    ["670"],
-    [duration.hours(9)],
+    [
+      Currency("USD", "United States Dollar", "$"),
+    ],
+    [
+      Language("Portuguese", "pt", "Português"),
+    ],
+    [
+      "670",
+    ],
+    [
+      duration.hours(9),
+    ],
   )
 }
 
 fn country_tg() {
-  #(
+  GeneratedCountry(
     "Togo",
     "TG",
     "TGO",
     "768",
     Africa,
     Some("Lomé"),
-    [Currency(code: "XOF", name: "West African CFA franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["228"],
-    [duration.empty],
+    [
+      Currency("XOF", "West African CFA franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "228",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_tk() {
-  #(
+  GeneratedCountry(
     "Tokelau",
     "TK",
     "TKL",
     "772",
     Oceania,
     Some("Fakaofo"),
-    [Currency(code: "NZD", name: "New Zealand dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["690"],
-    [duration.hours(13)],
+    [
+      Currency("NZD", "New Zealand dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "690",
+    ],
+    [
+      duration.hours(13),
+    ],
   )
 }
 
 fn country_to() {
-  #(
+  GeneratedCountry(
     "Tonga",
     "TO",
     "TON",
     "776",
     Oceania,
     Some("Nuku'alofa"),
-    [Currency(code: "TOP", name: "Tongan paʻanga", symbol: "T$")],
     [
-      #("English", "en", "English"),
-      #("Tonga (Tonga Islands)", "to", "faka Tonga"),
+      Currency("TOP", "Tongan paʻanga", "T$"),
     ],
-    ["676"],
-    [duration.hours(13)],
+    [
+      Language("English", "en", "English"),
+      Language("Tonga (Tonga Islands)", "to", "faka Tonga"),
+    ],
+    [
+      "676",
+    ],
+    [
+      duration.hours(13),
+    ],
   )
 }
 
 fn country_tt() {
-  #(
+  GeneratedCountry(
     "Trinidad and Tobago",
     "TT",
     "TTO",
     "780",
     Americas,
     Some("Port of Spain"),
-    [Currency(code: "TTD", name: "Trinidad and Tobago dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("TTD", "Trinidad and Tobago dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_tn() {
-  #(
+  GeneratedCountry(
     "Tunisia",
     "TN",
     "TUN",
     "788",
     Africa,
     Some("Tunis"),
-    [Currency(code: "TND", name: "Tunisian dinar", symbol: "د.ت")],
-    [#("Arabic", "ar", "العربية")],
-    ["216"],
-    [duration.hours(1)],
+    [
+      Currency("TND", "Tunisian dinar", "د.ت"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "216",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_tr() {
-  #(
+  GeneratedCountry(
     "Turkey",
     "TR",
     "TUR",
     "792",
     Asia,
     Some("Ankara"),
-    [Currency(code: "TRY", name: "Turkish lira", symbol: "₺")],
-    [#("Turkish", "tr", "Türkçe")],
-    ["90"],
-    [duration.hours(3)],
+    [
+      Currency("TRY", "Turkish lira", "₺"),
+    ],
+    [
+      Language("Turkish", "tr", "Türkçe"),
+    ],
+    [
+      "90",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_tm() {
-  #(
+  GeneratedCountry(
     "Turkmenistan",
     "TM",
     "TKM",
     "795",
     Asia,
     Some("Ashgabat"),
-    [Currency(code: "TMT", name: "Turkmenistan manat", symbol: "m")],
-    [#("Turkmen", "tk", "Türkmen"), #("Russian", "ru", "Русский")],
-    ["993"],
-    [duration.hours(5)],
+    [
+      Currency("TMT", "Turkmenistan manat", "m"),
+    ],
+    [
+      Language("Turkmen", "tk", "Türkmen"),
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "993",
+    ],
+    [
+      duration.hours(5),
+    ],
   )
 }
 
 fn country_tc() {
-  #(
+  GeneratedCountry(
     "Turks and Caicos Islands",
     "TC",
     "TCA",
     "796",
     Americas,
     Some("Cockburn Town"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_tv() {
-  #(
+  GeneratedCountry(
     "Tuvalu",
     "TV",
     "TUV",
@@ -5236,71 +7067,108 @@ fn country_tv() {
     Oceania,
     Some("Funafuti"),
     [
-      Currency(code: "AUD", name: "Australian dollar", symbol: "$"),
-      Currency(code: "TVD[G]", name: "Tuvaluan dollar", symbol: "$"),
+      Currency("AUD", "Australian dollar", "$"),
+      Currency("TVD[G]", "Tuvaluan dollar", "$"),
     ],
-    [#("English", "en", "English")],
-    ["688"],
-    [duration.hours(12)],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "688",
+    ],
+    [
+      duration.hours(12),
+    ],
   )
 }
 
 fn country_ug() {
-  #(
+  GeneratedCountry(
     "Uganda",
     "UG",
     "UGA",
     "800",
     Africa,
     Some("Kampala"),
-    [Currency(code: "UGX", name: "Ugandan shilling", symbol: "Sh")],
-    [#("English", "en", "English"), #("Swahili", "sw", "Kiswahili")],
-    ["256"],
-    [duration.hours(3)],
+    [
+      Currency("UGX", "Ugandan shilling", "Sh"),
+    ],
+    [
+      Language("English", "en", "English"),
+      Language("Swahili", "sw", "Kiswahili"),
+    ],
+    [
+      "256",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_ua() {
-  #(
+  GeneratedCountry(
     "Ukraine",
     "UA",
     "UKR",
     "804",
     Europe,
     Some("Kyiv"),
-    [Currency(code: "UAH", name: "Ukrainian hryvnia", symbol: "₴")],
-    [#("Ukrainian", "uk", "Українська")],
-    ["380"],
-    [duration.hours(2)],
+    [
+      Currency("UAH", "Ukrainian hryvnia", "₴"),
+    ],
+    [
+      Language("Ukrainian", "uk", "Українська"),
+    ],
+    [
+      "380",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_ae() {
-  #(
+  GeneratedCountry(
     "United Arab Emirates",
     "AE",
     "ARE",
     "784",
     Asia,
     Some("Abu Dhabi"),
-    [Currency(code: "AED", name: "United Arab Emirates dirham", symbol: "د.إ")],
-    [#("Arabic", "ar", "العربية")],
-    ["971"],
-    [duration.hours(4)],
+    [
+      Currency("AED", "United Arab Emirates dirham", "د.إ"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "971",
+    ],
+    [
+      duration.hours(4),
+    ],
   )
 }
 
 fn country_gb() {
-  #(
+  GeneratedCountry(
     "United Kingdom of Great Britain and Northern Ireland",
     "GB",
     "GBR",
     "826",
     Europe,
     Some("London"),
-    [Currency(code: "GBP", name: "British pound", symbol: "£")],
-    [#("English", "en", "English")],
-    ["44"],
+    [
+      Currency("GBP", "British pound", "£"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "44",
+    ],
     [
       duration.hours(-8),
       duration.hours(-5),
@@ -5316,31 +7184,47 @@ fn country_gb() {
 }
 
 fn country_um() {
-  #(
+  GeneratedCountry(
     "United States Minor Outlying Islands",
     "UM",
     "UMI",
     "581",
     Americas,
     None,
-    [Currency(code: "GBP", name: "British pound", symbol: "£")],
-    [#("English", "en", "English")],
-    ["246"],
-    [duration.hours(-11), duration.hours(-10), duration.hours(12)],
+    [
+      Currency("GBP", "British pound", "£"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "246",
+    ],
+    [
+      duration.hours(-11),
+      duration.hours(-10),
+      duration.hours(12),
+    ],
   )
 }
 
 fn country_us() {
-  #(
+  GeneratedCountry(
     "United States of America",
     "US",
     "USA",
     "840",
     Americas,
     Some("Washington, D.C."),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
     [
       duration.hours(-12),
       duration.hours(-11),
@@ -5358,151 +7242,220 @@ fn country_us() {
 }
 
 fn country_uy() {
-  #(
+  GeneratedCountry(
     "Uruguay",
     "UY",
     "URY",
     "858",
     Americas,
     Some("Montevideo"),
-    [Currency(code: "UYU", name: "Uruguayan peso", symbol: "$")],
-    [#("Spanish", "es", "Español")],
-    ["598"],
-    [duration.hours(-3)],
+    [
+      Currency("UYU", "Uruguayan peso", "$"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "598",
+    ],
+    [
+      duration.hours(-3),
+    ],
   )
 }
 
 fn country_uz() {
-  #(
+  GeneratedCountry(
     "Uzbekistan",
     "UZ",
     "UZB",
     "860",
     Asia,
     Some("Tashkent"),
-    [Currency(code: "UZS", name: "Uzbekistani so'm", symbol: "so'm")],
-    [#("Uzbek", "uz", "Oʻzbek"), #("Russian", "ru", "Русский")],
-    ["998"],
-    [duration.hours(5)],
+    [
+      Currency("UZS", "Uzbekistani so'm", "so'm"),
+    ],
+    [
+      Language("Uzbek", "uz", "Oʻzbek"),
+      Language("Russian", "ru", "Русский"),
+    ],
+    [
+      "998",
+    ],
+    [
+      duration.hours(5),
+    ],
   )
 }
 
 fn country_vu() {
-  #(
+  GeneratedCountry(
     "Vanuatu",
     "VU",
     "VUT",
     "548",
     Oceania,
     Some("Port Vila"),
-    [Currency(code: "VUV", name: "Vanuatu vatu", symbol: "Vt")],
     [
-      #("Bislama", "bi", "Bislama"),
-      #("English", "en", "English"),
-      #("French", "fr", "français"),
+      Currency("VUV", "Vanuatu vatu", "Vt"),
     ],
-    ["678"],
-    [duration.hours(11)],
+    [
+      Language("Bislama", "bi", "Bislama"),
+      Language("English", "en", "English"),
+      Language("French", "fr", "français"),
+    ],
+    [
+      "678",
+    ],
+    [
+      duration.hours(11),
+    ],
   )
 }
 
 fn country_va() {
-  #(
+  GeneratedCountry(
     "Vatican City",
     "VA",
     "VAT",
     "336",
     Europe,
     Some("Vatican City"),
-    [Currency(code: "EUR", name: "Euro", symbol: "€")],
     [
-      #("Latin", "la", "latine"),
-      #("Italian", "it", "Italiano"),
-      #("French", "fr", "Français"),
-      #("German", "de", "Deutsch"),
+      Currency("EUR", "Euro", "€"),
     ],
-    ["379"],
-    [duration.hours(1)],
+    [
+      Language("Latin", "la", "latine"),
+      Language("Italian", "it", "Italiano"),
+      Language("French", "fr", "Français"),
+      Language("German", "de", "Deutsch"),
+    ],
+    [
+      "379",
+    ],
+    [
+      duration.hours(1),
+    ],
   )
 }
 
 fn country_ve() {
-  #(
+  GeneratedCountry(
     "Venezuela (Bolivarian Republic of)",
     "VE",
     "VEN",
     "862",
     Americas,
     Some("Caracas"),
-    [Currency(code: "VEF", name: "Venezuelan bolívar", symbol: "Bs S")],
-    [#("Spanish", "es", "Español")],
-    ["58"],
-    [duration.hours(-4)],
+    [
+      Currency("VEF", "Venezuelan bolívar", "Bs S"),
+    ],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "58",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_vn() {
-  #(
+  GeneratedCountry(
     "Vietnam",
     "VN",
     "VNM",
     "704",
     Asia,
     Some("Hanoi"),
-    [Currency(code: "VND", name: "Vietnamese đồng", symbol: "₫")],
-    [#("Vietnamese", "vi", "Tiếng Việt")],
-    ["84"],
-    [duration.hours(7)],
+    [
+      Currency("VND", "Vietnamese đồng", "₫"),
+    ],
+    [
+      Language("Vietnamese", "vi", "Tiếng Việt"),
+    ],
+    [
+      "84",
+    ],
+    [
+      duration.hours(7),
+    ],
   )
 }
 
 fn country_vg() {
-  #(
+  GeneratedCountry(
     "Virgin Islands (British)",
     "VG",
     "VGB",
     "092",
     Americas,
     Some("Road Town"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1"],
-    [duration.hours(-4)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_vi() {
-  #(
+  GeneratedCountry(
     "Virgin Islands (U.S.)",
     "VI",
     "VIR",
     "850",
     Americas,
     Some("Charlotte Amalie"),
-    [Currency(code: "USD", name: "United States dollar", symbol: "$")],
-    [#("English", "en", "English")],
-    ["1 340"],
-    [duration.hours(-4)],
+    [
+      Currency("USD", "United States dollar", "$"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "1 340",
+    ],
+    [
+      duration.hours(-4),
+    ],
   )
 }
 
 fn country_wf() {
-  #(
+  GeneratedCountry(
     "Wallis and Futuna",
     "WF",
     "WLF",
     "876",
     Oceania,
     Some("Mata-Utu"),
-    [Currency(code: "XPF", name: "CFP franc", symbol: "Fr")],
-    [#("French", "fr", "français")],
-    ["681"],
-    [duration.hours(12)],
+    [
+      Currency("XPF", "CFP franc", "Fr"),
+    ],
+    [
+      Language("French", "fr", "français"),
+    ],
+    [
+      "681",
+    ],
+    [
+      duration.hours(12),
+    ],
   )
 }
 
 fn country_eh() {
-  #(
+  GeneratedCountry(
     "Western Sahara",
     "EH",
     "ESH",
@@ -5510,61 +7463,89 @@ fn country_eh() {
     Africa,
     Some("El Aaiún"),
     [
-      Currency(code: "MAD", name: "Moroccan dirham", symbol: "د.م."),
-      Currency(code: "DZD", name: "Algerian dinar", symbol: "د.ج"),
+      Currency("MAD", "Moroccan dirham", "د.م."),
+      Currency("DZD", "Algerian dinar", "د.ج"),
     ],
-    [#("Spanish", "es", "Español")],
-    ["212"],
-    [duration.empty],
+    [
+      Language("Spanish", "es", "Español"),
+    ],
+    [
+      "212",
+    ],
+    [
+      duration.empty,
+    ],
   )
 }
 
 fn country_ye() {
-  #(
+  GeneratedCountry(
     "Yemen",
     "YE",
     "YEM",
     "887",
     Asia,
     Some("Sana'a"),
-    [Currency(code: "YER", name: "Yemeni rial", symbol: "﷼")],
-    [#("Arabic", "ar", "العربية")],
-    ["967"],
-    [duration.hours(3)],
+    [
+      Currency("YER", "Yemeni rial", "﷼"),
+    ],
+    [
+      Language("Arabic", "ar", "العربية"),
+    ],
+    [
+      "967",
+    ],
+    [
+      duration.hours(3),
+    ],
   )
 }
 
 fn country_zm() {
-  #(
+  GeneratedCountry(
     "Zambia",
     "ZM",
     "ZMB",
     "894",
     Africa,
     Some("Lusaka"),
-    [Currency(code: "ZMW", name: "Zambian kwacha", symbol: "ZK")],
-    [#("English", "en", "English")],
-    ["260"],
-    [duration.hours(2)],
+    [
+      Currency("ZMW", "Zambian kwacha", "ZK"),
+    ],
+    [
+      Language("English", "en", "English"),
+    ],
+    [
+      "260",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 
 fn country_zw() {
-  #(
+  GeneratedCountry(
     "Zimbabwe",
     "ZW",
     "ZWE",
     "716",
     Africa,
     Some("Harare"),
-    [Currency(code: "ZMW", name: "Zambian kwacha", symbol: "K")],
     [
-      #("English", "en", "English"),
-      #("Shona", "sn", "chiShona"),
-      #("Northern Ndebele", "nd", "isiNdebele"),
+      Currency("ZMW", "Zambian kwacha", "K"),
     ],
-    ["263"],
-    [duration.hours(2)],
+    [
+      Language("English", "en", "English"),
+      Language("Shona", "sn", "chiShona"),
+      Language("Northern Ndebele", "nd", "isiNdebele"),
+    ],
+    [
+      "263",
+    ],
+    [
+      duration.hours(2),
+    ],
   )
 }
 

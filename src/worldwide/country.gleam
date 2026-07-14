@@ -8,13 +8,9 @@ import gleam/option.{type Option}
 import gleam/result
 import gleam/time/duration.{type Duration}
 import worldwide/currency.{type Currency}
-import worldwide/internal/gen/country as generated
+import worldwide/internal/gen/country.{type GeneratedCountry} as generated
+import worldwide/language.{type Language}
 import worldwide/region.{type Region}
-
-/// A language with its ISO 639-1 (two-letter) code.
-pub type Language {
-  Language(name: String, iso639_1: String, native_name: String)
-}
 
 /// A `Country` record. Currencies and languages may be empty for some
 /// territories. Codes follow ISO 3166-1.
@@ -72,35 +68,17 @@ pub fn from_alpha2(alpha2: String) -> Result(Country, Nil) {
   |> result.map(to_country)
 }
 
-fn to_country(country) -> Country {
-  let #(
-    name,
-    alpha2,
-    alpha3,
-    numeric,
-    region,
-    capital,
-    currencies,
-    languages,
-    calling_codes,
-    timezones,
-  ) = country
-
+fn to_country(country: GeneratedCountry) -> Country {
   Country(
-    name:,
-    alpha2:,
-    alpha3:,
-    numeric:,
-    region:,
-    capital:,
-    currencies:,
-    languages: list.map(languages, to_language),
-    calling_codes:,
-    timezones:,
+    name: country.name,
+    alpha2: country.alpha2,
+    alpha3: country.alpha3,
+    numeric: country.numeric,
+    region: country.region,
+    capital: country.capital,
+    currencies: country.currencies,
+    languages: country.languages,
+    calling_codes: country.calling_codes,
+    timezones: country.timezones,
   )
-}
-
-fn to_language(language) -> Language {
-  let #(name, iso639_1, native_name) = language
-  Language(name:, iso639_1:, native_name:)
 }

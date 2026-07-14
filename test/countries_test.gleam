@@ -4,6 +4,7 @@ import gleam/time/duration
 import worldwide
 import worldwide/country
 import worldwide/currency.{Currency}
+import worldwide/language.{Language}
 
 pub fn all_is_non_empty_test() {
   assert worldwide.all() != []
@@ -53,11 +54,7 @@ pub fn country_carries_language_test() {
   let assert Ok(japan) = country.from_iso_code("JP")
   assert japan.languages
     == [
-      country.Language(
-        name: "Japanese",
-        iso639_1: "ja",
-        native_name: "日本語 (にほんご)",
-      ),
+      Language(name: "Japanese", iso639_1: "ja", native_name: "日本語 (にほんご)"),
     ]
 }
 
@@ -90,7 +87,7 @@ pub fn territory_without_capital_test() {
   assert antarctica.capital == None
 }
 
-// --- tiny local list helpers to avoid extra imports in the test module ---
+// -- HELPERS
 
 fn unique_length(items: List(String)) -> Int {
   items

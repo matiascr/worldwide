@@ -26,29 +26,29 @@ const csv_path = "data/countries.csv"
 
 const country_out_path = "src/worldwide/internal/gen/country.gleam"
 
-const user_agent = "countries_gleam_generator/1.0"
+const user_agent = "worldwide_generator/1.0"
 
-type SourceCountry {
-  SourceCountry(
+type GeneratedCountry {
+  GeneratedCountry(
     name: String,
     alpha2: String,
     alpha3: String,
     numeric: String,
     region: String,
     capital: String,
-    currencies: List(SourceCurrency),
-    languages: List(SourceLanguage),
+    currencies: List(GeneratedCurrency),
+    languages: List(GeneratedLanguage),
     calling_codes: List(String),
     timezones: List(String),
   )
 }
 
-type SourceCurrency {
-  SourceCurrency(code: String, name: String, symbol: String)
+type GeneratedCurrency {
+  GeneratedCurrency(code: String, name: String, symbol: String)
 }
 
-type SourceLanguage {
-  SourceLanguage(name: String, iso639_1: String, native_name: String)
+type GeneratedLanguage {
+  GeneratedLanguage(name: String, iso639_1: String, native_name: String)
 }
 
 type CountryRow {
@@ -207,7 +207,7 @@ fn decode_countries(json_body: String) -> Result(List(CountryRow), String) {
   })
 }
 
-fn country_decoder() -> Decoder(SourceCountry) {
+fn country_decoder() -> Decoder(GeneratedCountry) {
   use name <- decode.field("name", string_or_empty())
   use alpha2 <- decode.field("alpha2Code", string_or_empty())
   use alpha3 <- decode.field("alpha3Code", string_or_empty())
@@ -234,7 +234,7 @@ fn country_decoder() -> Decoder(SourceCountry) {
     [],
     list_or_empty(string_or_empty()),
   )
-  decode.success(SourceCountry(
+  decode.success(GeneratedCountry(
     name:,
     alpha2:,
     alpha3:,
@@ -248,18 +248,18 @@ fn country_decoder() -> Decoder(SourceCountry) {
   ))
 }
 
-fn currency_decoder() -> Decoder(SourceCurrency) {
+fn currency_decoder() -> Decoder(GeneratedCurrency) {
   use code <- decode.optional_field("code", "", string_or_empty())
   use name <- decode.optional_field("name", "", string_or_empty())
   use symbol <- decode.optional_field("symbol", "", string_or_empty())
-  decode.success(SourceCurrency(code:, name:, symbol:))
+  decode.success(GeneratedCurrency(code:, name:, symbol:))
 }
 
-fn language_decoder() -> Decoder(SourceLanguage) {
+fn language_decoder() -> Decoder(GeneratedLanguage) {
   use name <- decode.optional_field("name", "", string_or_empty())
   use iso639_1 <- decode.optional_field("iso639_1", "", string_or_empty())
   use native_name <- decode.optional_field("nativeName", "", string_or_empty())
-  decode.success(SourceLanguage(name:, iso639_1:, native_name:))
+  decode.success(GeneratedLanguage(name:, iso639_1:, native_name:))
 }
 
 fn string_or_empty() -> Decoder(String) {
@@ -286,7 +286,7 @@ fn list_or_empty(inner: Decoder(a)) -> Decoder(List(a)) {
   ])
 }
 
-fn normalize_country(country: SourceCountry) -> CountryRow {
+fn normalize_country(country: GeneratedCountry) -> CountryRow {
   CountryRow(
     name: country.name,
     alpha2: country.alpha2,
@@ -390,29 +390,47 @@ fn csv_escape(cell: String) -> String {
 }
 
 fn render_country_module(rows: List(CountryRow)) -> String {
-  let header =
-    "//// Generated country data.\n////\n"
-    <> "//// Regenerate from countries.dev with `gleam run -m worldwide/pull_countries`.\n\n"
-    <> "// GENERATED FILE - do not edit by hand.\n"
-    <> "//\n\n"
-    <> "import worldwide/currency.{Currency}\n"
-    <> "import worldwide/region.{\n  Africa, Americas, Antarctic, AntarcticOcean, Asia, Europe, Oceania, Polar\n}\n\n"
-    <> "import gleam/option.{None, Some}\n"
-    <> "import gleam/string\n"
-    <> "import gleam/time/duration\n\n"
+  [
+    "//// Generated country data.\n////",
+    "//// Regenerate from countries.dev with `gleam run -m worldwide/pull_countries`.\n",
+    "// GENERATED FILE - do not edit by hand.",
+    "//\n",
+    "import gleam/option.{type Option, None, Some}",
+    "import gleam/string",
+    "import gleam/time/duration.{type Duration}",
+    "import worldwide/currency.{type Currency, Currency}",
+    "import worldwide/language.{type Language, Language}",
+    "import worldwide/region.{",
+    "  type Region, Africa, Americas, Antarctic, AntarcticOcean, Asia, Europe,",
+    "  Oceania, Polar,",
+    "}\n",
+    render_source_country_type(),
+    render_countries_function(rows),
+    render_country_from_iso_code_function(rows),
+    render_country_from_alpha2_function(rows),
+    render_country_from_name_function(rows),
+    render_country_literal_functions(rows),
+    render_normalize_function(),
+  ]
+  |> string.join("\n")
+}
 
-  header
-  <> render_countries_function(rows)
-  <> "\n"
-  <> render_country_from_iso_code_function(rows)
-  <> "\n"
-  <> render_country_from_alpha2_function(rows)
-  <> "\n"
-  <> render_country_from_name_function(rows)
-  <> "\n"
-  <> render_country_literal_functions(rows)
-  <> "\n"
-  <> render_normalize_function()
+fn render_source_country_type() -> String {
+  "@internal
+pub type GeneratedCountry {
+  GeneratedCountry(
+    name: String,
+    alpha2: String,
+    alpha3: String,
+    numeric: String,
+    region: Region,
+    capital: Option(String),
+    currencies: List(Currency),
+    languages: List(Language),
+    calling_codes: List(String),
+    timezones: List(Duration),
+  )
+}\n"
 }
 
 fn render_countries_function(rows: List(CountryRow)) -> String {
@@ -512,7 +530,7 @@ fn render_country_literal_functions(rows: List(CountryRow)) -> String {
     "fn "
     <> country_fn_name(row)
     <> "() {\n"
-    <> render_country_literal(row, "  ")
+    <> render_country_literal(row, string.repeat(" ", 4))
     <> "}\n"
   })
   |> string.join("\n")
@@ -523,7 +541,7 @@ fn country_fn_name(row: CountryRow) -> String {
 }
 
 fn render_country_literal(row: CountryRow, indent: String) -> String {
-  "#(\n"
+  "  GeneratedCountry(\n"
   <> indent
   <> quote(row.name)
   <> ",\n"
@@ -575,21 +593,25 @@ fn render_capital(raw: String) -> String {
 fn render_currencies(currencies: List(CurrencyRow)) -> String {
   currencies
   |> list.map(fn(currency) {
-    "Currency(code: "
-    <> quote(currency.code)
-    <> ", name: "
-    <> quote(currency.name)
-    <> ", symbol: "
-    <> quote(currency.symbol)
+    "Currency("
+    <> {
+      [
+        quote(currency.code),
+        quote(currency.name),
+        quote(currency.symbol),
+      ]
+      |> string.join(", ")
+    }
     <> ")"
   })
+  |> list.map(fn(s) { "      " <> s })
   |> wrap_list()
 }
 
 fn render_languages(languages: List(LanguageRow)) -> String {
   languages
   |> list.map(fn(language) {
-    "#("
+    "Language("
     <> quote(language.name)
     <> ", "
     <> quote(language.iso639_1)
@@ -597,12 +619,14 @@ fn render_languages(languages: List(LanguageRow)) -> String {
     <> quote(language.native_name)
     <> ")"
   })
+  |> list.map(fn(s) { "      " <> s })
   |> wrap_list()
 }
 
 fn render_timezones(timezones: List(String)) -> String {
   timezones
   |> list.map(render_timezone)
+  |> list.map(fn(s) { "      " <> s })
   |> wrap_list()
 }
 
@@ -663,11 +687,15 @@ fn render_duration_offset(hours: Int, minutes: Int) -> String {
 fn render_str_list(items: List(String)) -> String {
   items
   |> list.map(quote)
+  |> list.map(fn(s) { "      " <> s })
   |> wrap_list()
 }
 
 fn wrap_list(items: List(String)) -> String {
-  "[" <> string.join(items, ", ") <> "]"
+  case items {
+    [] -> "[]"
+    [_, ..] -> "[\n" <> string.join(items, ",\n") <> ",\n    ]"
+  }
 }
 
 fn quote(s: String) -> String {
