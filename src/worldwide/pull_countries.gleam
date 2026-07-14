@@ -22,7 +22,9 @@ import simplifile
 
 const countries_url = "https://countries.dev/countries?fields=name,alpha2Code,alpha3Code,numericCode,region,capital,currencies,languages,callingCodes,timezones&sort=name"
 
-const csv_path = "data/countries.csv"
+const csv_parent = "data/"
+
+const csv_path = csv_parent <> "countries.csv"
 
 const country_out_path = "src/worldwide/internal/gen/country.gleam"
 
@@ -122,6 +124,14 @@ fn report_result(result: Result(Int, String)) {
 fn generate_from_body(body: String) -> Result(Int, String) {
   use rows <- result.try(decode_countries(body))
   let csv = render_csv(rows)
+  use _ <- result.try(case simplifile.create_file(csv_path) {
+    Ok(_) -> Ok(Nil)
+    Error(_) -> {
+      let _ = simplifile.create_directory_all(csv_parent)
+      let _ = simplifile.create_file(csv_path)
+      Ok(Nil)
+    }
+  })
   use _ <- result.try(
     simplifile.write(csv_path, csv)
     |> result.map_error(fn(e) {

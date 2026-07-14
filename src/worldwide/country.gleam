@@ -82,3 +82,63 @@ fn to_country(country: GeneratedCountry) -> Country {
     timezones: country.timezones,
   )
 }
+
+/// A record access function for the `name` field to use when composing
+/// functions and piping.
+pub fn name(country: Country) -> String {
+  country.name
+}
+
+/// A record access function for the `alpha2` field to use when composing
+/// functions and piping.
+pub fn alpha2(country: Country) -> String {
+  country.alpha2
+}
+
+/// A record access function for the `alpha3` field to use when composing
+/// functions and piping.
+pub fn alpha3(country: Country) -> String {
+  country.alpha3
+}
+
+/// A record access function for the `numeric` field to use when composing
+/// functions and piping.
+pub fn numeric(country: Country) -> String {
+  country.numeric
+}
+
+/// A record access function for the `region` field to use when composing
+/// functions and piping.
+pub fn region(country: Country) -> Region {
+  country.region
+}
+
+/// A record access function for the `capital` field to use when composing
+/// functions and piping.
+pub fn capital(country: Country) -> Option(String) {
+  country.capital
+}
+
+/// A record access function for the `currencies` field to use when composing
+/// functions and piping.
+pub fn currencies(country: Country) -> List(Currency) {
+  country.currencies
+}
+
+/// A record access function for the `languages` field to use when composing
+/// functions and piping.
+pub fn languages(country: Country) -> List(Language) {
+  country.languages
+}
+
+/// A record access function for the `calling_codes` field to use when composing
+/// functions and piping.
+pub fn calling_codes(country: Country) -> List(String) {
+  country.calling_codes
+}
+
+/// A record access function for the `timezones` field to use when composing
+/// functions and piping.
+pub fn timezones(country: Country) -> List(Duration) {
+  country.timezones
+}

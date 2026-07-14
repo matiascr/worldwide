@@ -24,7 +24,7 @@ pub fn to_string(raw: Region) -> String {
   }
 }
 
-/// Parse a `String` as a Region value.
+/// Parse a `String` as a `Region` value.
 pub fn from_string(raw: String) -> Result(Region, Nil) {
   case raw {
     "Africa" -> Africa |> Ok
