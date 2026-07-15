@@ -354,8 +354,15 @@ fn normalize_subregion(subregion: String) -> Option(String) {
       panic as message
     }
     "Antarctic" -> None
-    subregion ->
-      subregion
+    subregion -> {
+      let lowercase_subregion = string.lowercase(subregion)
+      case
+        string.starts_with(lowercase_subregion, "north")
+        && string.ends_with(lowercase_subregion, "america")
+      {
+        True -> "North America"
+        False -> subregion
+      }
       |> string.trim()
       |> string.replace("-", " ")
       |> string.split(" ")
@@ -363,6 +370,7 @@ fn normalize_subregion(subregion: String) -> Option(String) {
       |> list.map(string.trim)
       |> string.concat()
       |> string.to_option()
+    }
   }
 }
 

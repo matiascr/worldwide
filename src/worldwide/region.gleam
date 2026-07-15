@@ -20,7 +20,6 @@ pub type Subregion {
 
   CentralAmerica
   NorthAmerica
-  NorthernAmerica
   SouthAmerica
   Caribbean
 
@@ -89,7 +88,6 @@ pub fn all_subregions() {
     WesternAfrica,
     CentralAmerica,
     NorthAmerica,
-    NorthernAmerica,
     SouthAmerica,
     Caribbean,
     CentralAsia,

@@ -2166,7 +2166,7 @@ fn country_bm() {
     "BMU",
     "060",
     region.Americas,
-    Some(region.NorthernAmerica),
+    Some(region.NorthAmerica),
     Some("Hamilton"),
     [
       Currency("BMD", "Bermudian dollar", "$"),
@@ -2566,7 +2566,7 @@ fn country_ca() {
     "CAN",
     "124",
     region.Americas,
-    Some(region.NorthernAmerica),
+    Some(region.NorthAmerica),
     Some("Ottawa"),
     [
       Currency("CAD", "Canadian dollar", "$"),
@@ -3707,7 +3707,7 @@ fn country_gl() {
     "GRL",
     "304",
     region.Americas,
-    Some(region.NorthernAmerica),
+    Some(region.NorthAmerica),
     Some("Nuuk"),
     [
       Currency("DKK", "Danish krone", "kr"),
@@ -6282,7 +6282,7 @@ fn country_pm() {
     "SPM",
     "666",
     region.Americas,
-    Some(region.NorthernAmerica),
+    Some(region.NorthAmerica),
     Some("Saint-Pierre"),
     [
       Currency("EUR", "Euro", "€"),
@@ -7423,7 +7423,7 @@ fn country_um() {
     "UMI",
     "581",
     region.Americas,
-    Some(region.NorthernAmerica),
+    Some(region.NorthAmerica),
     None,
     [
       Currency("GBP", "British pound", "£"),
@@ -7449,7 +7449,7 @@ fn country_us() {
     "USA",
     "840",
     region.Americas,
-    Some(region.NorthernAmerica),
+    Some(region.NorthAmerica),
     Some("Washington, D.C."),
     [
       Currency("USD", "United States dollar", "$"),
