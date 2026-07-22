@@ -1,8 +1,19 @@
-//// Fetches the current [countries.dev](https://countries.dev) country list, snapshots it to
-//// `data/countries.csv`, and writes the generated
-//// `src/worldwide/internal/gen/country.gleam` module.
-//// Run with `gleam run -m worldwide/pull_countries`.
+//// Fetches the current [countries.dev](https://countries.dev) country list
+//// and writes it to `data/worldwide_countries.json` in *your* project -
+//// `worldwide` itself does not ship any data, so this is the only way to get
+//// it. `worldwide.all()` (and other lookups) read this file at runtime.
+////
+//// Run with `gleam run -m worldwide/pull_countries` any time you want to
+//// refresh the data. The file belongs to your project: commit it, and
+//// re-run the command whenever you want fresher data, independent of
+//// whatever `worldwide` version you depend on.
+////
+//// `gleam run -m worldwide/pull_countries check` re-fetches the data and
+//// reports whether your generated file is stale, without writing anything -
+//// useful as a CI step.
 
+import argv
+import filepath
 import gleam/dynamic/decode.{type Decoder}
 @target(javascript)
 import gleam/fetch
@@ -13,22 +24,29 @@ import gleam/int
 import gleam/io
 @target(javascript)
 import gleam/javascript/promise.{type Promise}
-import gleam/json
+import gleam/json.{type Json}
 import gleam/list
-import gleam/option.{type Option, None, Some}
+import gleam/option.{type Option, None}
 import gleam/result
 import gleam/string
 import simplifile
+import worldwide/internal/project
 
 const countries_url = "https://countries.dev/countries?fields=name,alpha2Code,alpha3Code,numericCode,region,subregion,capital,currencies,languages,callingCodes,timezones&sort=name"
 
-const csv_parent = "data/"
+const data_path = "data/worldwide_countries.json"
 
-const csv_path = csv_parent <> "countries.csv"
-
-const country_out_path = "src/worldwide/internal/gen/country.gleam"
+/// Paths written by older `worldwide` versions that are no longer used.
+/// Cleaned up after a successful generate so upgrading doesn't leave stale
+/// files lying around.
+const legacy_paths = ["data/countries.csv"]
 
 const user_agent = "worldwide_generator/1.0"
+
+type Mode {
+  Generate
+  Check
+}
 
 type GeneratedCountry {
   GeneratedCountry(
@@ -54,8 +72,8 @@ type GeneratedLanguage {
   GeneratedLanguage(name: String, iso639_1: String, native_name: String)
 }
 
-type CountryRow {
-  CountryRow(
+type NormalizedCountry {
+  NormalizedCountry(
     name: String,
     alpha2: String,
     alpha3: String,
@@ -63,59 +81,55 @@ type CountryRow {
     region: String,
     subregion: Option(String),
     capital: String,
-    currencies: List(CurrencyRow),
-    languages: List(LanguageRow),
+    currencies: List(NormalizedCurrency),
+    languages: List(NormalizedLanguage),
     calling_codes: List(String),
-    timezones: List(String),
+    timezones: List(Int),
   )
 }
 
-type CurrencyRow {
-  CurrencyRow(code: String, name: String, symbol: String)
+type NormalizedCurrency {
+  NormalizedCurrency(code: String, name: String, symbol: String)
 }
 
-type LanguageRow {
-  LanguageRow(name: String, iso639_1: String, native_name: String)
+type NormalizedLanguage {
+  NormalizedLanguage(name: String, iso639_1: String, native_name: String)
 }
 
 pub fn main() {
-  run()
+  case argv.load().arguments {
+    [] -> run(Generate)
+    ["check"] -> run(Check)
+    _ -> panic as "Usage: gleam run -m worldwide/pull_countries [check]"
+  }
 }
 
 @target(erlang)
-fn run() {
+fn run(mode: Mode) -> Nil {
   fetch_countries()
-  |> generate_from_fetch()
+  |> generate_from_fetch(mode)
   |> report_result()
 }
 
 @target(javascript)
-fn run() {
-  fetch_countries()
-  |> promise.map(fn(fetched) {
-    fetched
-    |> generate_from_fetch()
-    |> report_result()
-  })
+fn run(mode: Mode) {
+  use fetched <- promise.map(fetch_countries())
+  fetched
+  |> generate_from_fetch(mode)
+  |> report_result()
 }
 
-fn generate_from_fetch(fetched: Result(String, String)) -> Result(Int, String) {
+fn generate_from_fetch(
+  fetched: Result(String, String),
+  mode: Mode,
+) -> Result(String, String) {
   use body <- result.try(fetched)
-  generate_from_body(body)
+  generate_from_body(body, mode)
 }
 
-fn report_result(result: Result(Int, String)) {
+fn report_result(result: Result(String, String)) -> Nil {
   case result {
-    Ok(count) ->
-      io.println(
-        "Fetched "
-        <> int.to_string(count)
-        <> " countries, wrote "
-        <> csv_path
-        <> ", "
-        <> "and "
-        <> country_out_path,
-      )
+    Ok(message) -> io.println(message)
     Error(msg) -> {
       let message = "worldwide/pull_countries failed: " <> msg
       panic as message
@@ -123,31 +137,85 @@ fn report_result(result: Result(Int, String)) {
   }
 }
 
-fn generate_from_body(body: String) -> Result(Int, String) {
-  use rows <- result.try(decode_countries(body))
-  let csv = render_csv(rows)
-  use _ <- result.try(case simplifile.create_file(csv_path) {
+fn generate_from_body(body: String, mode: Mode) -> Result(String, String) {
+  use countries <- result.try(decode_countries(body))
+  let content = encode_countries(countries)
+  let root = project.root()
+  let path = filepath.join(root, data_path)
+
+  case mode {
+    Generate -> write_and_report(root, path, content, list.length(countries))
+    Check -> check_and_report(path, content)
+  }
+}
+
+fn write_and_report(
+  root: String,
+  path: String,
+  content: String,
+  count: Int,
+) -> Result(String, String) {
+  use _ <- result.try(write_file(path, content))
+  let removed = cleanup_legacy_files(root)
+  Ok(
+    "Fetched "
+    <> int.to_string(count)
+    <> " countries, wrote "
+    <> path
+    <> describe_removed(removed),
+  )
+}
+
+/// Deletes any files written by older, now-unused `worldwide` generator
+/// versions. Best-effort: a file that's missing or can't be removed is
+/// silently skipped, since it's cleanup, not a requirement for success.
+fn cleanup_legacy_files(root: String) -> List(String) {
+  legacy_paths
+  |> list.map(fn(legacy_path) { filepath.join(root, legacy_path) })
+  |> list.filter(fn(path) {
+    case simplifile.delete(path) {
+      Ok(_) -> True
+      Error(_) -> False
+    }
+  })
+}
+
+fn describe_removed(removed: List(String)) -> String {
+  case removed {
+    [] -> ""
+    _ -> ", removed unused " <> string.join(removed, ", ")
+  }
+}
+
+fn write_file(path: String, content: String) -> Result(Nil, String) {
+  use _ <- result.try(case simplifile.create_file(path) {
     Ok(_) -> Ok(Nil)
     Error(_) -> {
-      let _ = simplifile.create_directory_all(csv_parent)
-      let _ = simplifile.create_file(csv_path)
+      let _ = simplifile.create_directory_all(filepath.directory_name(path))
+      let _ = simplifile.create_file(path)
       Ok(Nil)
     }
   })
-  use _ <- result.try(
-    simplifile.write(csv_path, csv)
-    |> result.map_error(fn(e) {
-      "write " <> csv_path <> ": " <> string.inspect(e)
-    }),
-  )
-  let module = render_country_module(rows)
-  use _ <- result.try(
-    simplifile.write(country_out_path, module)
-    |> result.map_error(fn(e) {
-      "write " <> country_out_path <> ": " <> string.inspect(e)
-    }),
-  )
-  Ok(list.length(rows))
+  simplifile.write(path, content)
+  |> result.map_error(fn(e) { "write " <> path <> ": " <> string.inspect(e) })
+}
+
+fn check_and_report(path: String, content: String) -> Result(String, String) {
+  case simplifile.read(path) {
+    Ok(existing) if existing == content -> Ok(path <> " is up to date")
+    Ok(_) ->
+      panic as {
+        "worldwide/pull_countries: "
+        <> path
+        <> " is out of date\nrun `gleam run -m worldwide/pull_countries` to refresh"
+      }
+    Error(_) ->
+      panic as {
+        "worldwide/pull_countries: "
+        <> path
+        <> " is missing\nrun `gleam run -m worldwide/pull_countries` to generate it"
+      }
+  }
 }
 
 @target(erlang)
@@ -211,7 +279,7 @@ fn response_to_result(status: Int, body: String) -> Result(String, String) {
   }
 }
 
-fn decode_countries(json_body: String) -> Result(List(CountryRow), String) {
+fn decode_countries(json_body: String) -> Result(List(NormalizedCountry), String) {
   json.parse(json_body, decode.list(country_decoder()))
   |> result.map(list.map(_, normalize_country))
   |> result.map_error(fn(e) {
@@ -277,31 +345,17 @@ fn language_decoder() -> Decoder(GeneratedLanguage) {
 }
 
 fn string_or_empty() -> Decoder(String) {
-  decode.one_of(decode.string, [
-    decode.optional(decode.string)
-    |> decode.map(fn(value) {
-      case value {
-        Some(text) -> text
-        None -> ""
-      }
-    }),
-  ])
+  use value <- decode.map(decode.optional(decode.string))
+  option.unwrap(value, "")
 }
 
 fn list_or_empty(inner: Decoder(a)) -> Decoder(List(a)) {
-  decode.one_of(decode.list(inner), [
-    decode.optional(decode.list(inner))
-    |> decode.map(fn(value) {
-      case value {
-        Some(items) -> items
-        None -> []
-      }
-    }),
-  ])
+  use decoded_list <- decode.map(decode.optional(decode.list(inner)))
+  option.unwrap(decoded_list, [])
 }
 
-fn normalize_country(country: GeneratedCountry) -> CountryRow {
-  CountryRow(
+fn normalize_country(country: GeneratedCountry) -> NormalizedCountry {
+  NormalizedCountry(
     name: country.name,
     alpha2: country.alpha2,
     alpha3: country.alpha3,
@@ -310,21 +364,21 @@ fn normalize_country(country: GeneratedCountry) -> CountryRow {
     subregion: normalize_subregion(country.subregion),
     capital: country.capital,
     currencies: list.map(country.currencies, fn(currency) {
-      CurrencyRow(
+      NormalizedCurrency(
         code: currency.code,
         name: currency.name,
         symbol: currency.symbol,
       )
     }),
     languages: list.map(country.languages, fn(language) {
-      LanguageRow(
+      NormalizedLanguage(
         name: language.name,
         iso639_1: language.iso639_1,
         native_name: language.native_name,
       )
     }),
     calling_codes: country.calling_codes,
-    timezones: country.timezones,
+    timezones: list.map(country.timezones, timezone_minutes),
   )
 }
 
@@ -341,7 +395,7 @@ fn normalize_region(region: String) -> String {
     "Antarctic Ocean" -> "AntarcticOcean"
 
     _ -> {
-      let message = "tried to generate code for " <> region
+      let message = "tried to generate data for region " <> region
       panic as message
     }
   }
@@ -350,7 +404,7 @@ fn normalize_region(region: String) -> String {
 fn normalize_subregion(subregion: String) -> Option(String) {
   case subregion {
     "" -> {
-      let message = "tried to generate code for " <> subregion
+      let message = "tried to generate data for subregion " <> subregion
       panic as message
     }
     "Antarctic" -> None
@@ -374,387 +428,86 @@ fn normalize_subregion(subregion: String) -> Option(String) {
   }
 }
 
-fn render_csv(rows: List(CountryRow)) -> String {
-  let header =
-    "name,alpha2,alpha3,numeric,region,capital,currencies,languages,calling_codes,timezones"
-
-  [header, ..list.map(rows, render_csv_row)]
-  |> string.join("\n")
-  |> string.append("\n")
-}
-
-fn render_csv_row(row: CountryRow) -> String {
-  [
-    row.name,
-    row.alpha2,
-    row.alpha3,
-    row.numeric,
-    row.region,
-    row.capital,
-    render_currency_cell(row.currencies),
-    render_language_cell(row.languages),
-    string.join(row.calling_codes, ";"),
-    string.join(row.timezones, ";"),
-  ]
-  |> list.map(csv_escape)
-  |> string.join(",")
-}
-
-fn render_currency_cell(currencies: List(CurrencyRow)) -> String {
-  currencies
-  |> list.map(fn(currency) {
-    string.join([currency.code, currency.name, currency.symbol], "|")
-  })
-  |> string.join(";")
-}
-
-fn render_language_cell(languages: List(LanguageRow)) -> String {
-  languages
-  |> list.map(fn(language) {
-    string.join([language.name, language.iso639_1, language.native_name], "|")
-  })
-  |> string.join(";")
-}
-
-fn csv_escape(cell: String) -> String {
-  let clean =
-    cell
-    |> string.replace("\r", " ")
-    |> string.replace("\n", " ")
-
-  case
-    string.contains(clean, ",")
-    || string.contains(clean, "\"")
-    || string.contains(clean, "\n")
-    || string.contains(clean, "\r")
-  {
-    True -> "\"" <> string.replace(clean, "\"", "\"\"") <> "\""
-    False -> clean
-  }
-}
-
-fn render_country_module(rows: List(CountryRow)) -> String {
-  [
-    "//// Generated country data.\n////",
-    "//// Regenerate from [countries.dev](https://countries.dev) with `gleam run -m worldwide/pull_countries`.\n",
-    "// GENERATED FILE - do not edit by hand.",
-    "//\n",
-    "import gleam/option.{type Option, None, Some}",
-    "import gleam/string",
-    "import gleam/time/duration.{type Duration}",
-    "import worldwide/currency.{type Currency, Currency}",
-    "import worldwide/language.{type Language, Language}",
-    "import worldwide/region.{type Region, type Subregion}",
-    render_source_country_type(),
-    render_countries_function(rows),
-    render_country_from_iso_code_function(rows),
-    render_country_from_alpha2_function(rows),
-    render_country_from_name_function(rows),
-    render_country_literal_functions(rows),
-    render_normalize_function(),
-  ]
-  |> string.join("\n")
-}
-
-fn render_source_country_type() -> String {
-  "
-@internal
-pub type GeneratedCountry {
-  GeneratedCountry(
-    name: String,
-    alpha2: String,
-    alpha3: String,
-    numeric: String,
-    region: Region,
-    subregion: Option(Subregion),
-    capital: Option(String),
-    currencies: List(Currency),
-    languages: List(Language),
-    calling_codes: List(String),
-    timezones: List(Duration),
-  )
-}\n"
-}
-
-fn render_countries_function(rows: List(CountryRow)) -> String {
-  "/// Return every known country in [countries.dev](https://countries.dev) name order.\n"
-  <> "@internal\n"
-  <> "pub fn all() {\n"
-  <> "  [\n"
-  <> {
-    rows
-    |> list.map(fn(row) { "    " <> country_fn_name(row) <> "(),\n" })
-    |> string.join("")
-  }
-  <> "  ]\n"
-  <> "}\n"
-}
-
-fn render_country_from_alpha2_function(rows: List(CountryRow)) -> String {
-  "/// Look up a country by normalized alpha-2 code.\n"
-  <> "@internal\n"
-  <> "pub fn from_alpha2(alpha2: String) {\n"
-  <> "  case normalize(alpha2) {\n"
-  <> {
-    rows
-    |> list.map(fn(row) {
-      "    "
-      <> quote(row.alpha2)
-      <> " -> Ok("
-      <> country_fn_name(row)
-      <> "())\n"
-    })
-    |> string.join("")
-  }
-  <> "    _ -> Error(Nil)\n"
-  <> "  }\n"
-  <> "}\n"
-}
-
-fn render_country_from_iso_code_function(rows: List(CountryRow)) -> String {
-  "/// Look up a country by normalized alpha-2, alpha-3, or numeric code.\n"
-  <> "@internal\n"
-  <> "pub fn from_iso_code(code: String) {\n"
-  <> "  case normalize(code) {\n"
-  <> {
-    rows
-    |> list.map(fn(row) {
-      "    "
-      <> quote(row.alpha2)
-      <> " -> Ok("
-      <> country_fn_name(row)
-      <> "())\n"
-      <> "    "
-      <> quote(row.alpha3)
-      <> " -> Ok("
-      <> country_fn_name(row)
-      <> "())\n"
-      <> "    "
-      <> quote(row.numeric)
-      <> " -> Ok("
-      <> country_fn_name(row)
-      <> "())\n"
-    })
-    |> string.join("")
-  }
-  <> "    _ -> Error(Nil)\n"
-  <> "  }\n"
-  <> "}\n"
-}
-
-fn render_country_from_name_function(rows: List(CountryRow)) -> String {
-  "/// Look up a country by exact common English name.\n"
-  <> "@internal\n"
-  <> "pub fn from_name(name: String) {\n"
-  <> "  case string.trim(name) {\n"
-  <> {
-    rows
-    |> list.map(fn(row) {
-      "    " <> quote(row.name) <> " -> Ok(" <> country_fn_name(row) <> "())\n"
-    })
-    |> string.join("")
-  }
-  <> "    _ -> Error(Nil)\n"
-  <> "  }\n"
-  <> "}\n"
-}
-
-fn render_normalize_function() -> String {
-  "fn normalize(value: String) -> String {\n"
-  <> "  value\n"
-  <> "  |> string.trim()\n"
-  <> "  |> string.uppercase()\n"
-  <> "}\n"
-}
-
-fn render_country_literal_functions(rows: List(CountryRow)) -> String {
-  rows
-  |> list.map(fn(row) {
-    "fn "
-    <> country_fn_name(row)
-    <> "() {\n"
-    <> render_country_literal(row, string.repeat(" ", 4))
-    <> "}\n"
-  })
-  |> string.join("\n")
-}
-
-fn country_fn_name(row: CountryRow) -> String {
-  "country_" <> string.lowercase(row.alpha2)
-}
-
-fn render_country_literal(row: CountryRow, indent: String) -> String {
-  "  GeneratedCountry(\n"
-  <> indent
-  <> quote(row.name)
-  <> ",\n"
-  <> indent
-  <> quote(row.alpha2)
-  <> ",\n"
-  <> indent
-  <> quote(row.alpha3)
-  <> ",\n"
-  <> indent
-  <> quote(row.numeric)
-  <> ",\n"
-  <> indent
-  <> render_region(row.region)
-  <> ",\n"
-  <> indent
-  <> render_subregion(row.subregion)
-  <> ",\n"
-  <> indent
-  <> render_capital(row.capital)
-  <> ",\n"
-  <> indent
-  <> render_currencies(row.currencies)
-  <> ",\n"
-  <> indent
-  <> render_languages(row.languages)
-  <> ",\n"
-  <> indent
-  <> render_str_list(row.calling_codes)
-  <> ",\n"
-  <> indent
-  <> render_timezones(row.timezones)
-  <> ",\n"
-  <> string.drop_end(indent, 2)
-  <> ")\n"
-}
-
-fn render_region(raw: String) -> String {
-  case string.split(raw, "|") {
-    [bare] -> "region." <> bare
-    _ -> "Other(" <> quote(raw) <> ")"
-  }
-}
-
-fn render_subregion(subregion: Option(String)) -> String {
-  case subregion {
-    Some(subregion) -> "Some(region." <> subregion <> ")"
-    None -> "None"
-  }
-}
-
-fn render_capital(raw: String) -> String {
-  case raw {
-    "" -> "None"
-    name -> "Some(" <> quote(name) <> ")"
-  }
-}
-
-fn render_currencies(currencies: List(CurrencyRow)) -> String {
-  currencies
-  |> list.map(fn(currency) {
-    "Currency("
-    <> {
-      [
-        quote(currency.code),
-        quote(currency.name),
-        quote(currency.symbol),
-      ]
-      |> string.join(", ")
-    }
-    <> ")"
-  })
-  |> list.map(fn(s) { "      " <> s })
-  |> wrap_list()
-}
-
-fn render_languages(languages: List(LanguageRow)) -> String {
-  languages
-  |> list.map(fn(language) {
-    "Language("
-    <> quote(language.name)
-    <> ", "
-    <> quote(language.iso639_1)
-    <> ", "
-    <> quote(language.native_name)
-    <> ")"
-  })
-  |> list.map(fn(s) { "      " <> s })
-  |> wrap_list()
-}
-
-fn render_timezones(timezones: List(String)) -> String {
-  timezones
-  |> list.map(render_timezone)
-  |> list.map(fn(s) { "      " <> s })
-  |> wrap_list()
-}
-
-fn render_timezone(timezone: String) -> String {
+fn timezone_minutes(timezone: String) -> Int {
   case string.split(timezone, "UTC") {
-    ["", ""] -> "duration.empty"
-    ["", offset] -> render_timezone_offset(timezone, offset)
+    ["", ""] -> 0
+    ["", offset] -> timezone_offset_minutes(timezone, offset)
     _ -> {
-      let message = "tried to generate code for timezone " <> timezone
+      let message = "tried to generate data for timezone " <> timezone
       panic as message
     }
   }
 }
 
-fn render_timezone_offset(timezone: String, offset: String) -> String {
+fn timezone_offset_minutes(timezone: String, offset: String) -> Int {
   case string.slice(offset, 0, 1) {
-    "+" -> render_timezone_parts(timezone, 1, string.drop_start(offset, 1))
-    "-" -> render_timezone_parts(timezone, -1, string.drop_start(offset, 1))
+    "+" -> timezone_parts_minutes(timezone, 1, string.drop_start(offset, 1))
+    "-" -> timezone_parts_minutes(timezone, -1, string.drop_start(offset, 1))
     _ -> {
-      let message = "tried to generate code for timezone " <> timezone
+      let message = "tried to generate data for timezone " <> timezone
       panic as message
     }
   }
 }
 
-fn render_timezone_parts(timezone: String, sign: Int, time: String) -> String {
+fn timezone_parts_minutes(timezone: String, sign: Int, time: String) -> Int {
   case string.split(time, ":") {
     [hours, minutes] ->
       case int.parse(hours), int.parse(minutes) {
-        Ok(hours), Ok(minutes) ->
-          render_duration_offset(sign * hours, sign * minutes)
+        Ok(hours), Ok(minutes) -> sign * { hours * 60 + minutes }
         _, _ -> {
-          let message = "tried to generate code for timezone " <> timezone
+          let message = "tried to generate data for timezone " <> timezone
           panic as message
         }
       }
     _ -> {
-      let message = "tried to generate code for timezone " <> timezone
+      let message = "tried to generate data for timezone " <> timezone
       panic as message
     }
   }
 }
 
-fn render_duration_offset(hours: Int, minutes: Int) -> String {
-  case hours, minutes {
-    0, 0 -> "duration.empty"
-    _, 0 -> "duration.hours(" <> int.to_string(hours) <> ")"
-    0, _ -> "duration.minutes(" <> int.to_string(minutes) <> ")"
-    _, _ ->
-      "duration.add(duration.hours("
-      <> int.to_string(hours)
-      <> "), duration.minutes("
-      <> int.to_string(minutes)
-      <> "))"
+fn encode_countries(countries: List(NormalizedCountry)) -> String {
+  countries
+  |> json.array(encode_country)
+  |> json.to_string()
+}
+
+fn encode_country(country: NormalizedCountry) -> Json {
+  json.object([
+    #("name", json.string(country.name)),
+    #("alpha2", json.string(country.alpha2)),
+    #("alpha3", json.string(country.alpha3)),
+    #("numeric", json.string(country.numeric)),
+    #("region", json.string(country.region)),
+    #("subregion", json.nullable(country.subregion, json.string)),
+    #("capital", encode_capital(country.capital)),
+    #("currencies", json.array(country.currencies, encode_currency)),
+    #("languages", json.array(country.languages, encode_language)),
+    #("calling_codes", json.array(country.calling_codes, json.string)),
+    #("timezones", json.array(country.timezones, json.int)),
+  ])
+}
+
+fn encode_capital(raw: String) -> Json {
+  case raw {
+    "" -> json.null()
+    name -> json.string(name)
   }
 }
 
-fn render_str_list(items: List(String)) -> String {
-  items
-  |> list.map(quote)
-  |> list.map(fn(s) { "      " <> s })
-  |> wrap_list()
+fn encode_currency(currency: NormalizedCurrency) -> Json {
+  json.object([
+    #("code", json.string(currency.code)),
+    #("name", json.string(currency.name)),
+    #("symbol", json.string(currency.symbol)),
+  ])
 }
 
-fn wrap_list(items: List(String)) -> String {
-  case items {
-    [] -> "[]"
-    [_, ..] -> "[\n" <> string.join(items, ",\n") <> ",\n    ]"
-  }
-}
-
-fn quote(s: String) -> String {
-  let escaped =
-    s
-    |> string.replace("\\", "\\\\")
-    |> string.replace("\"", "\\\"")
-  "\"" <> escaped <> "\""
+fn encode_language(language: NormalizedLanguage) -> Json {
+  json.object([
+    #("name", json.string(language.name)),
+    #("iso639_1", json.string(language.iso639_1)),
+    #("native_name", json.string(language.native_name)),
+  ])
 }

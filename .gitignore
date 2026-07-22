@@ -2,3 +2,8 @@
 *.ez
 /build
 erl_crash.dump
+
+# worldwide ships no country data - this is regenerated locally by
+# `gleam run -m worldwide/pull_countries` (see .github/workflows/test.yml).
+# Consumers of worldwide should *not* gitignore their own copy of this.
+/data/worldwide_countries.json

@@ -18,8 +18,10 @@ jobs:
           gleam-version: "1.17.0"
           rebar3-version: "3"
       - run: gleam deps download
+      # worldwide ships no country data - generate it before building/testing,
+      # exercising both targets' fetch code paths.
+      - run: gleam run --target erlang -m worldwide/pull_countries
+      - run: gleam run --target javascript -m worldwide/pull_countries
       - run: gleam test --target javascript
       - run: gleam test --target erlang
       - run: gleam format --check src/*.gleam test
-      - run: gleam run -m worldwide/pull_countries --target erlang
-      - run: gleam run -m worldwide/pull_countries --target javascript

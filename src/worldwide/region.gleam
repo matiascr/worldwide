@@ -73,6 +73,58 @@ pub fn from_string(raw: String) -> Result(Region, Nil) {
   }
 }
 
+/// Parses the identifier a `Region` is stored under in generated data (its
+/// bare constructor name, e.g. `"AntarcticOcean"`), as opposed to `from_string`
+/// which parses the human-readable display form (`"Antarctic Ocean"`).
+@internal
+pub fn from_identifier(raw: String) -> Result(Region, Nil) {
+  case raw {
+    "Africa" -> Ok(Africa)
+    "Americas" -> Ok(Americas)
+    "Asia" -> Ok(Asia)
+    "Europe" -> Ok(Europe)
+    "Oceania" -> Ok(Oceania)
+    "Polar" -> Ok(Polar)
+    "AntarcticOcean" -> Ok(AntarcticOcean)
+    "Antarctic" -> Ok(Antarctic)
+    _ -> Error(Nil)
+  }
+}
+
+/// Parses the identifier a `Subregion` is stored under in generated data (its
+/// bare constructor name, e.g. `"NorthAmerica"`).
+@internal
+pub fn subregion_from_identifier(raw: String) -> Result(Subregion, Nil) {
+  case raw {
+    "EasternAfrica" -> Ok(EasternAfrica)
+    "MiddleAfrica" -> Ok(MiddleAfrica)
+    "NorthernAfrica" -> Ok(NorthernAfrica)
+    "SouthernAfrica" -> Ok(SouthernAfrica)
+    "WesternAfrica" -> Ok(WesternAfrica)
+    "CentralAmerica" -> Ok(CentralAmerica)
+    "NorthAmerica" -> Ok(NorthAmerica)
+    "SouthAmerica" -> Ok(SouthAmerica)
+    "Caribbean" -> Ok(Caribbean)
+    "CentralAsia" -> Ok(CentralAsia)
+    "EasternAsia" -> Ok(EasternAsia)
+    "SouthEasternAsia" -> Ok(SouthEasternAsia)
+    "SouthernAsia" -> Ok(SouthernAsia)
+    "WesternAsia" -> Ok(WesternAsia)
+    "CentralEurope" -> Ok(CentralEurope)
+    "EasternEurope" -> Ok(EasternEurope)
+    "NorthernEurope" -> Ok(NorthernEurope)
+    "SouthernEurope" -> Ok(SouthernEurope)
+    "WesternEurope" -> Ok(WesternEurope)
+    "AustraliaAndNewZealand" -> Ok(AustraliaAndNewZealand)
+    "Melanesia" -> Ok(Melanesia)
+    "Micronesia" -> Ok(Micronesia)
+    "Polynesia" -> Ok(Polynesia)
+    "SouthAntarcticOcean" -> Ok(SouthAntarcticOcean)
+    "Antarctica" -> Ok(Antarctica)
+    _ -> Error(Nil)
+  }
+}
+
 @internal
 pub fn all_regions() {
   [Africa, Americas, Asia, Europe, Oceania, Polar, AntarcticOcean, Antarctic]

@@ -5,6 +5,7 @@ import worldwide
 import worldwide/country
 import worldwide/currency.{Currency}
 import worldwide/language.{Language}
+import worldwide/region.{Europe}
 
 pub fn all_is_non_empty_test() {
   assert worldwide.all() != []
@@ -85,6 +86,14 @@ pub fn from_name_test() {
 pub fn territory_without_capital_test() {
   let assert Ok(antarctica) = country.from_iso_code("AQ")
   assert antarctica.capital == None
+}
+
+pub fn filter_by_region_test() {
+  let assert Ok(spain) = country.from_iso_code("ES")
+  let europe =
+    worldwide.all()
+    |> worldwide.filter_by(worldwide.Region(Europe))
+  assert list.contains(europe, spain)
 }
 
 // -- HELPERS

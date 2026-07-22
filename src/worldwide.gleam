@@ -1,16 +1,21 @@
-//// A typed, offline database of world countries.
+//// A typed database of world countries.
 ////
-//// Update the list of countries with with `gleam run -m worldwide/pull_countries`.
+//// `worldwide` ships no country data itself: run
+//// `gleam run -m worldwide/pull_countries` once in your own project to
+//// generate `data/worldwide_countries.json`. `worldwide.all()` (and any
+//// other lookup) reads it the first time it's called and panics with
+//// instructions if it isn't there yet.
 ////
 //// ## Quick start
 ////
 //// ```gleam
 //// import worldwide
-//// import worldwide/country.{type Country}
+//// import worldwide/region
 ////
 //// pub fn main() {
 ////   worldwide.all()
-////   // -> [Country(..), ..]
+////   |> worldwide.filter_by(worldwide.Region(region.Europe))
+////   // -> [Country(region: Europe, ..), ..]
 //// }
 //// ```
 ////
@@ -44,6 +49,9 @@ pub type Filter {
 }
 
 /// Return every known country.
+///
+/// Panics if `gleam run -m worldwide/pull_countries` has not been run yet in
+/// this project.
 pub fn all() -> List(Country) {
   country.all()
 }
@@ -86,7 +94,7 @@ pub fn timezones() -> List(Duration) {
 /// Used to filter countries by the supported filters.
 /// ```gleam
 /// import worldwide
-/// import worldwide.region.{Europe}
+/// import worldwide/region.{Europe}
 ///
 /// pub fn main() {
 ///   worldwide.all()
