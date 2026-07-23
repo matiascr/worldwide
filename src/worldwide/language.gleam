@@ -1,22 +1,17 @@
-/// A language with its ISO 639-1 (two-letter) code.
+import gleam/dynamic/decode.{type Decoder}
+import gleam/option.{type Option}
+
+/// A spoken language.
 pub type Language {
-  Language(name: String, iso639_1: String, native_name: String)
+  Language(name: String, iso639_1: Option(String), native_name: Option(String))
 }
 
-/// A record access function for the `name` field to use when composing
-/// functions and piping.
-pub fn name(language: Language) -> String {
-  language.name
-}
+@internal
+pub fn decoder() -> Decoder(Language) {
+  use name <- decode.field("name", decode.string)
+  use iso639_1 <- decode.field("iso639_1", decode.optional(decode.string))
+  use native_name <- decode.field("nativeName", decode.optional(decode.string))
 
-/// A record access function for the `iso639_1` field to use when composing
-/// functions and piping.
-pub fn iso639_1(language: Language) -> String {
-  language.iso639_1
-}
-
-/// A record access function for the `native_name` field to use when composing
-/// functions and piping.
-pub fn native_name(language: Language) -> String {
-  language.native_name
+  Language(name:, iso639_1: iso639_1, native_name: native_name)
+  |> decode.success()
 }
