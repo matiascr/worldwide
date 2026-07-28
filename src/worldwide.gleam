@@ -1,151 +1,84 @@
-//// A typed database of world countries.
-////
-//// `worldwide` ships no country data itself: run
-//// `gleam run -m worldwide/pull_countries` once in your own project to
-//// generate `data/worldwide_countries.json`. `worldwide.all()` (and any
-//// other lookup) reads it the first time it's called and panics with
-//// instructions if it isn't there yet.
-////
-//// ## Quick start
+//// Typed world country data.
 ////
 //// ```gleam
+//// import gleam/httpc
+//// import gleam/json
 //// import worldwide
 //// import worldwide/region
 ////
 //// pub fn main() {
-////   worldwide.all()
-////   |> worldwide.filter_by(worldwide.Region(region.Europe))
-////   // -> [Country(region: Europe, ..), ..]
+////   let assert Ok(req) = worldwide.request()
+////   let assert Ok(response) = httpc.send(req)
+////   let assert Ok(countries) = json.parse(response.body, worldwide.decoder())
+////
+////   // Or let countries.dev do the filtering for you.
+////   let assert Ok(europe_req) =
+////     worldwide.filter(worldwide.ByRegion(region.Europe))
 //// }
 //// ```
-////
-//// See the `worldwide/country` module for more details.
 
-import gleam/list
-import gleam/option.{Some}
-import gleam/string
-import gleam/time/duration.{type Duration}
+import gleam/dynamic/decode.{type Decoder}
+import gleam/http/request.{type Request}
 import worldwide/country.{type Country}
-import worldwide/currency.{type Currency}
-import worldwide/language.{type Language}
-import worldwide/region.{type Region, type Subregion}
+import worldwide/region.{type Region}
+import worldwide/sources/countries_dev
+import worldwide/subregion.{type Subregion}
 
-/// Filters that can be used to quickly get subsets of the worldwide data.
+/// Selects which [countries.dev](https://countries.dev) endpoint a request
+/// is built for.
 pub type Filter {
-  /// Filters by names containing the provided `String`.
-  NameContains(String)
-  /// Filters by the provided `Region`.
-  Region(Region)
-  /// Filters by the provided `Subregion`.
-  Subregion(Subregion)
-  /// Filters by the provided `Currency`.
-  Currency(String)
-  /// Filters by the provided `Language`.
-  Language(String)
-  /// Filters by the provided `CallingCode`.
-  CallingCode(String)
-  /// Filters by the provided `TimeZone`.
-  TimeZone(Duration)
+  /// Returns every country whose name contains the given value (case-insensitive).
+  ByName(String)
+  /// Returns a single country matching the given ISO 3166-1 alpha-2 or
+  /// alpha-3 code (case-insensitive).
+  ByIso(String)
+  /// Returns the country matching the given ISO 3166-1 numeric code. Leading
+  /// zeros are optional.
+  ByNumericCode(String)
+  /// Returns the country matching the given International Olympic Committee
+  /// (IOC) country code.
+  ByIocCode(String)
+  /// Returns every country in the given region (exact match, case-insensitive).
+  ByRegion(Region)
+  /// Returns every country in the given subregion (exact match, case-insensitive).
+  BySubregion(Subregion)
+  /// Returns every country that uses the given ISO 4217 currency code (case-insensitive).
+  ByCurrency(String)
+  /// Returns every country that has the given language, matched by ISO 639-1
+  /// (`he`) or ISO 639-2 (`heb`) code.
+  ByLanguage(String)
+  /// Returns every country that uses the given international calling code.
+  /// This only filters by the country code, not the area code.
+  ByCallingCode(Int)
+  /// Returns every country that observes the given UTC timezone (exact
+  /// match, case-insensitive, e.g. "UTC+02:00")
+  ByTimeZone(String)
 }
 
-/// Return every known country.
-///
-/// Panics if `gleam run -m worldwide/pull_countries` has not been run yet in
-/// this project.
-pub fn all() -> List(Country) {
-  country.all()
+/// Builds a request for the complete list of countries.
+pub fn request() -> Result(Request(String), Nil) {
+  countries_dev.all()
 }
 
-/// Returns every region as a typed value.
-pub fn regions() -> List(Region) {
-  region.all_regions()
+/// Builds a request for the given filter, to be sent with an HTTP client
+/// (`gleam_httpc`, `gleam_fetch`, etc...), then the response body decoded
+/// with `decoder()`.
+pub fn filter(filter: Filter) -> Result(Request(String), Nil) {
+  case filter {
+    ByRegion(region) -> countries_dev.by_region(region)
+    BySubregion(subregion) -> countries_dev.by_subregion(subregion)
+    ByCurrency(currency) -> countries_dev.by_currency(currency)
+    ByLanguage(language) -> countries_dev.by_language(language)
+    ByCallingCode(code) -> countries_dev.by_calling_code(code)
+    ByTimeZone(timezone) -> countries_dev.by_timezone(timezone)
+    ByName(name) -> countries_dev.by_name(name)
+    ByIso(iso) -> countries_dev.by_iso_code(iso)
+    ByNumericCode(code) -> countries_dev.by_numeric_code(code)
+    ByIocCode(ioc) -> countries_dev.by_ioc_code(ioc)
+  }
 }
 
-/// Returns every region as a typed value.
-pub fn subregions() -> List(Subregion) {
-  region.all_subregions()
-}
-
-/// Returns every currency as a typed value.
-pub fn currencies() -> List(Currency) {
-  all()
-  |> list.map(country.currencies)
-  |> list.flatten()
-  |> list.unique()
-}
-
-/// Returns every language as a typed value.
-pub fn languages() -> List(Language) {
-  all()
-  |> list.map(country.languages)
-  |> list.flatten()
-  |> list.unique()
-}
-
-/// Returns every timezone as a typed value.
-pub fn timezones() -> List(Duration) {
-  all()
-  |> list.map(country.timezones)
-  |> list.flatten()
-  |> list.unique()
-  |> list.sort(duration.compare)
-}
-
-/// Used to filter countries by the supported filters.
-/// ```gleam
-/// import worldwide
-/// import worldwide/region.{Europe}
-///
-/// pub fn main() {
-///   worldwide.all()
-///   |> worldwide.filter_by(worldwide.Region(Europe))
-///   // -> [Country(region: Europe, ..), ..]
-/// }
-/// ```
-pub fn filter_by(countries: List(Country), filter: Filter) -> List(Country) {
-  countries
-  |> list.filter(fn(country) {
-    case filter {
-      NameContains(filtered_name) -> {
-        country.name
-        |> string.lowercase()
-        |> string.contains(string.lowercase(filtered_name))
-      }
-
-      Region(filtered_region) -> {
-        country.region == filtered_region
-      }
-
-      Subregion(filtered_subregion) -> {
-        country.subregion == Some(filtered_subregion)
-      }
-
-      Currency(filtered_currency) -> {
-        country.currencies
-        |> list.any(fn(currency) {
-          filtered_currency == currency.code
-          || filtered_currency == currency.name
-          || filtered_currency == currency.symbol
-        })
-      }
-
-      Language(filtered_language) ->
-        country.languages
-        |> list.any(fn(language) {
-          filtered_language == language.name
-          || filtered_language == language.iso639_1
-          || filtered_language == language.native_name
-        })
-
-      CallingCode(filtered_calling_code) -> {
-        country.calling_codes
-        |> list.contains(filtered_calling_code)
-      }
-
-      TimeZone(filtered_time_zone) -> {
-        country.timezones
-        |> list.contains(filtered_time_zone)
-      }
-    }
-  })
+/// Decodes a country list response body into a list of `Country`.
+pub fn decoder() -> Decoder(List(Country)) {
+  countries_dev.decoder()
 }

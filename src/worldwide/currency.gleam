@@ -1,22 +1,18 @@
+import gleam/dynamic/decode.{type Decoder}
+
+// import gleam/option
+
 /// An ISO 4217 currency.
 pub type Currency {
   Currency(code: String, name: String, symbol: String)
 }
 
-/// A record access function for the `code` field to use when composing
-/// functions and piping.
-pub fn code(currency: Currency) -> String {
-  currency.code
-}
+@internal
+pub fn decoder() -> Decoder(Currency) {
+  use code <- decode.field("code", decode.string)
+  use name <- decode.field("name", decode.string)
+  use symbol <- decode.field("symbol", decode.string)
 
-/// A record access function for the `name` field to use when composing
-/// functions and piping.
-pub fn name(currency: Currency) -> String {
-  currency.name
-}
-
-/// A record access function for the `symbol` field to use when composing
-/// functions and piping.
-pub fn symbol(currency: Currency) -> String {
-  currency.symbol
+  Currency(code:, name:, symbol:)
+  |> decode.success()
 }
