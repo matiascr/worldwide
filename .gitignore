@@ -2,3 +2,9 @@
 *.ez
 /build
 erl_crash.dump
+
+# worldwide ships no country data itself - this repo's own copy is
+# regenerated locally by `gleam run -m worldwide/pull_countries` purely to
+# exercise the generator (see .github/workflows/test.yml). Consumers of
+# worldwide should *not* gitignore their own generated countries.gleam.
+/src/countries.gleam
