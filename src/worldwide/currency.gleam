@@ -1,7 +1,5 @@
 import gleam/dynamic/decode.{type Decoder}
 
-// import gleam/option
-
 /// An ISO 4217 currency.
 pub type Currency {
   Currency(code: String, name: String, symbol: String)

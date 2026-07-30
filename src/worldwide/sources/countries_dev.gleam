@@ -116,7 +116,8 @@ fn create_request(dest: List(String)) -> Result(Request(String), Nil) {
 }
 
 /// The fields to request from [countries.dev](https://countries.dev).
-const request_fields = "name,alpha2Code,alpha3Code,"
+const request_fields =
+  "name,alpha2Code,alpha3Code,"
   <> "numericCode,region,subregion,capital,"
   <> "currencies,languages,callingCodes,timezones"
 

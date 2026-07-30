@@ -64,3 +64,38 @@ This works the same way with any other HTTP client that can send a
 `gleam/http/request.Request(String)` and give you back a body string. For
 example, you can use the `gleam/fetch` library if you want to work with the
 JavaScript target.
+
+## Or: vendor the data at build time
+
+If you'd rather not fetch or decode anything at runtime, `worldwide` also
+ships a generator that writes the data straight into your project as plain
+Gleam source.
+
+```sh
+gleam add worldwide gleam_time
+gleam run -m worldwide/pull_countries
+```
+
+This fetches the current countries.dev list and writes `src/countries.gleam`:
+ a single `pub fn all() -> List(worldwide/country.Country)` built from
+`worldwide`'s own public types. `worldwide` stays a regular dependency. The
+generated file hard-codes the country data and uses `worldwide`'s types, but
+nothing in your compiled app needs to send requests or parse JSON:
+
+```gleam
+import gleam/list
+import worldwide/countries
+
+pub fn main() {
+  let currencies =
+    countries.all()
+    |> list.map(fn(country) { country.currencies })
+    |> list.flatten()
+    |> list.unique()
+}
+```
+
+Pass a path to generate elsewhere (`gleam run -m worldwide/pull_countries
+src/world_data`), and use `gleam run -m worldwide/pull_countries check` in CI to fail
+the build when the generated file is stale against the current countries.dev
+data, without writing anything.

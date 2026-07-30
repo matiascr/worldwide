@@ -1,12 +1,13 @@
 name = "worldwide"
-version = "3.0.0"
+version = "3.0.1"
 description = "Typed world country data for Gleam"
 licences = ["Apache-2.0"]
 
 repository = { type = "github", user = "matiascr", repo = "worldwide" }
 
 internal_modules = [
-  "worldwide/sources/*"
+  "worldwide/sources/*",
+  "worldwide/internal/*"
 ]
 
 [dependencies]
@@ -14,7 +15,14 @@ gleam_stdlib = ">= 1.0.0 and < 2.0.0"
 gleam_time = ">= 1.8.0 and < 2.0.0"
 gleam_http = ">= 4.3.0 and < 5.0.0"
 gleam_httpc = ">= 5.0.0 and < 6.0.0"
+gleam_fetch = ">= 1.4.0 and < 2.0.0"
+gleam_javascript = ">= 1.0.1 and < 2.0.0"
+gleam_json = ">= 3.1.0 and < 4.0.0"
+simplifile = ">= 2.5.0 and < 3.0.0"
+filepath = ">= 1.0.0 and < 2.0.0"
+argv = ">= 1.0.2 and < 2.0.0"
+glance = ">= 3.0.0 and < 4.0.0"
+glance_printer = ">= 3.0.0 and < 4.0.0"
 
 [dev_dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
-gleam_json = ">= 3.1.0 and < 4.0.0"

@@ -278,7 +278,8 @@ fn request_path(filter: worldwide.Filter) -> Result(String, Nil) {
   Ok(req.path)
 }
 
-const sample_response = "[
+const sample_response =
+  "[
   {
     \"name\": \"Spain\",
     \"alpha2Code\": \"ES\",
