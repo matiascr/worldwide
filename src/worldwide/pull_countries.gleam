@@ -81,10 +81,8 @@ fn generate_from_fetch(
 fn report_result(result: Result(String, String)) -> Nil {
   case result {
     Ok(message) -> io.println(message)
-    Error(msg) -> {
-      let message = "worldwide/pull_countries failed: " <> msg
-      io.println_error(message)
-    }
+    // Panic so the process exits non-zero, letting CI catch a failed run.
+    Error(msg) -> panic as { "worldwide/pull_countries failed: " <> msg }
   }
 }
 
@@ -93,9 +91,9 @@ fn generate_from_body(body: String, mode: Mode) -> Result(String, String) {
   use content <- result.try({
     let render_result = render_module(countries)
     render_result
-    |> result.replace_error(
-      "Failed to generate module due to: " <> string.inspect(render_result),
-    )
+    |> result.map_error(fn(e) {
+      "Failed to generate module due to: " <> string.inspect(e)
+    })
   })
 
   case mode {
@@ -123,14 +121,7 @@ fn write_and_report(
 }
 
 fn write_file(path: String, content: String) -> Result(Nil, String) {
-  use _ <- result.try(case simplifile.create_file(path) {
-    Ok(_) -> Ok(Nil)
-    Error(_) -> {
-      let _ = simplifile.create_directory_all(filepath.directory_name(path))
-      let _ = simplifile.create_file(path)
-      Ok(Nil)
-    }
-  })
+  let _ = simplifile.create_directory_all(filepath.directory_name(path))
   simplifile.write(path, content)
   |> result.map_error(fn(e) { "write " <> path <> ": " <> string.inspect(e) })
 }
@@ -215,174 +206,47 @@ pub fn decode_countries(json_body: String) -> Result(List(Country), String) {
 
 @internal
 pub fn render_module(countries: List(Country)) -> Result(String, Error) {
+  use option <- result.try(define_option_module())
+  use duration <- result.try(define_duration_module())
+  use region <- result.try(define_region_module())
+  use subregion <- result.try(define_subregion_module())
+  use currency <- result.try(define_currency_module())
+  use language <- result.try(define_language_module(option))
+  use calling_code <- result.try(define_calling_code_module(option))
+
+  use country <- result.try(define_countries_module(
+    calling_code,
+    language,
+    currency,
+    subregion,
+    region,
+    duration,
+    option,
+  ))
+
   trick.to_string({
     use <- trick.module_comment(header_documentation)
 
-    // import gleam/option
-    let assert Ok(option_module) =
-      trick.define_module("gleam/option", {
-        use _ <- trick.define_custom_type("Option")
-        use a <- trick.define_type_parameter("a")
-        use <- trick.define_constructors([
-          trick.DefinedConstructor("Some", [trick.Field(None, a)]),
-          trick.DefinedConstructor("None", []),
-        ])
-        trick.define_values([])
-      })
-    use option <- trick.import_(option_module, None)
-    let option_type = trick.imported_generic_type(option, "Option")
+    use option <- trick.import_(option, None)
+    use duration <- trick.import_(duration, None)
+    use calling_code <- trick.import_(calling_code, None)
+    use country <- trick.import_(country, None)
+    use currency <- trick.import_(currency, None)
+    use language <- trick.import_(language, None)
+    use region <- trick.import_(region, None)
+    use subregion <- trick.import_(subregion, None)
+
     let some = trick.imported_constuctor(option, "Some")
     let none = trick.imported_constuctor(option, "None")
-
-    // import worldwide/region
-    let assert Ok(region_module) =
-      trick.define_module("worldwide/region", {
-        use _ <- trick.define_custom_type("Region")
-        use <- trick.define_constructors({
-          use r <- list.map(region.all())
-          trick.DefinedConstructor(string.inspect(r), [])
-        })
-        trick.define_values([])
-      })
-    use region <- trick.import_(region_module, None)
-    let region_type = trick.imported_type(region, "Region")
-
-    // import worldwide/subregion
-    let assert Ok(subregion_module) =
-      trick.define_module("worldwide/subregion", {
-        use _ <- trick.define_custom_type("Subregion")
-        use <- trick.define_constructors({
-          use r <- list.map(subregion.all())
-          trick.DefinedConstructor(string.inspect(r), [])
-        })
-        trick.define_values([])
-      })
-    use subregion <- trick.import_(subregion_module, None)
-    let subregion_type = trick.imported_type(subregion, "Subregion")
-
-    // import worldwide/currency
-    let assert Ok(currency_module) =
-      trick.define_module("worldwide/currency", {
-        use _ <- trick.define_custom_type("Currency")
-        use <- trick.define_constructors([
-          trick.DefinedConstructor("Currency", [
-            trick.Field(Some("code"), trick.string_type()),
-            trick.Field(Some("name"), trick.string_type()),
-            trick.Field(Some("symbol"), trick.string_type()),
-          ]),
-        ])
-        trick.define_values([])
-      })
-    use currency <- trick.import_(currency_module, None)
-    let currency_type = trick.imported_type(currency, "Currency")
-    let currency_constructor = trick.imported_constuctor(currency, "Currency")
-
-    // import worldwide/language
-    let assert Ok(language_module) =
-      trick.define_module("worldwide/language", {
-        use _ <- trick.define_custom_type("Language")
-        use <- trick.define_constructors([
-          trick.DefinedConstructor("Language", [
-            trick.Field(Some("name"), trick.string_type()),
-            trick.Field(
-              Some("iso639_1"),
-              option_type |> trick.with_generics([trick.string_type()]),
-            ),
-            trick.Field(
-              Some("native_name"),
-              option_type |> trick.with_generics([trick.string_type()]),
-            ),
-          ]),
-        ])
-        trick.define_values([])
-      })
-    use language <- trick.import_(language_module, None)
-    let language_type = trick.imported_type(language, "Language")
-    let language_constructor = trick.imported_constuctor(language, "Language")
-
-    // import worldwide/calling_code
-    let assert Ok(calling_code_module) =
-      trick.define_module("worldwide/calling_code", {
-        use _ <- trick.define_custom_type("CallingCode")
-        use <- trick.define_constructors([
-          trick.DefinedConstructor("CallingCode", [
-            trick.Field(Some("country_code"), trick.int_type()),
-            trick.Field(
-              Some("area_code"),
-              option_type |> trick.with_generics([trick.int_type()]),
-            ),
-          ]),
-        ])
-        trick.define_values([])
-      })
-    use calling_code <- trick.import_(calling_code_module, None)
-    let calling_code_type = trick.imported_type(calling_code, "CallingCode")
+    let country_constructor = trick.imported_value(country, "Country")
+    let currency_constructor = trick.imported_value(currency, "Currency")
+    let language_constructor = trick.imported_value(language, "Language")
     let calling_code_constructor =
-      trick.imported_constuctor(calling_code, "CallingCode")
-
-    // import gleam/duration
-    let assert Ok(duration_module) =
-      trick.define_module("gleam/duration", {
-        use duration_type <- trick.define_custom_type("Duration")
-        use <- trick.define_constructors([
-          trick.DefinedConstructor("Duration", []),
-        ])
-        trick.define_values([
-          trick.FunctionInterface(
-            "minutes",
-            [trick.Field(Some("amount"), trick.int_type())],
-            duration_type,
-          ),
-        ])
-      })
-    use duration <- trick.import_(duration_module, None)
-    let duration_type = trick.imported_type(duration, "Duration")
-
-    // import worldwide/country
-    let assert Ok(country_module) =
-      trick.define_module("worldwide/country", {
-        use _ <- trick.define_custom_type("Country")
-        use <- trick.define_constructors([
-          trick.DefinedConstructor("Country", [
-            trick.Field(Some("name"), trick.string_type()),
-            // : String
-            trick.Field(Some("alpha2"), trick.string_type()),
-            // : String
-            trick.Field(Some("alpha3"), trick.string_type()),
-            // : String
-            trick.Field(Some("numeric"), trick.string_type()),
-            // : String
-            trick.Field(Some("region"), region_type),
-            // : Region
-            trick.Field(Some("subregion"), {
-              option_type |> trick.with_generics([subregion_type])
-            }),
-            // : Option(Subregion)
-            trick.Field(Some("capital"), {
-              option_type |> trick.with_generics([trick.string_type()])
-            }),
-            // : Option(String)
-            trick.Field(Some("currencies"), trick.list_type(currency_type)),
-            // : List(Currency)
-            trick.Field(Some("languages"), trick.list_type(language_type)),
-            // : List(Language)
-            trick.Field(Some("calling_codes"), {
-              trick.list_type(calling_code_type)
-            }),
-            // : List(CallingCode)
-            trick.Field(Some("timezones"), trick.list_type(duration_type)),
-            // : List(Duration)
-          ]),
-        ])
-        trick.define_values([])
-      })
-    use country <- trick.import_(country_module, None)
-    let country_constructor = trick.imported_constuctor(country, "Country")
+      trick.imported_value(calling_code, "CallingCode")
 
     use _all <- trick.function("all", Public, {
       list.map(countries, fn(c) {
         country_constructor
-        |> trick.construct()
         |> trick.labelled_call([
           trick.Argument(Some("name"), trick.string(c.name)),
           trick.Argument(Some("alpha2"), trick.string(c.alpha2)),
@@ -420,7 +284,6 @@ pub fn render_module(countries: List(Country)) -> Result(String, Error) {
             trick.list({
               use Currency(code:, name:, symbol:) <- list.map(c.currencies)
               currency_constructor
-              |> trick.construct()
               |> trick.labelled_call([
                 trick.Argument(Some("code"), trick.string(code)),
                 trick.Argument(Some("name"), trick.string(name)),
@@ -434,7 +297,6 @@ pub fn render_module(countries: List(Country)) -> Result(String, Error) {
                 c.languages,
               )
               language_constructor
-              |> trick.construct()
               |> trick.labelled_call([
                 trick.Argument(Some("name"), trick.string(name)),
                 trick.Argument(Some("iso639_1"), {
@@ -464,7 +326,6 @@ pub fn render_module(countries: List(Country)) -> Result(String, Error) {
                 c.calling_codes,
               )
               calling_code_constructor
-              |> trick.construct()
               |> trick.labelled_call([
                 trick.Argument(Some("country_code"), trick.int(country_code)),
                 trick.Argument(Some("area_code"), {
@@ -498,15 +359,194 @@ pub fn render_module(countries: List(Country)) -> Result(String, Error) {
 
     trick.end_module()
   })
+  |> result.map(strip_trailing_whitespace)
+}
+
+fn define_option_module() -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("gleam/option", {
+    use _ <- trick.define_custom_type("Option")
+    use a <- trick.define_type_parameter("a")
+    use <- trick.define_constructors([
+      trick.DefinedConstructor("Some", [trick.Field(None, a)]),
+      trick.DefinedConstructor("None", []),
+    ])
+    trick.define_values([])
+  })
+}
+
+fn define_duration_module() -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("gleam/time/duration", {
+    use duration_type <- trick.define_custom_type("Duration")
+    use <- trick.define_constructors([
+      trick.DefinedConstructor("Duration", []),
+    ])
+    trick.define_values([
+      trick.FunctionInterface(
+        "minutes",
+        [trick.Field(Some("amount"), trick.int_type())],
+        duration_type,
+      ),
+    ])
+  })
+}
+
+fn define_region_module() -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("worldwide/region", {
+    use _ <- trick.define_custom_type("Region")
+    use <- trick.define_constructors({
+      use r <- list.map(region.all())
+      trick.DefinedConstructor(string.inspect(r), [])
+    })
+    trick.define_values([])
+  })
+}
+
+fn define_subregion_module() -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("worldwide/subregion", {
+    use _ <- trick.define_custom_type("Subregion")
+    use <- trick.define_constructors({
+      use r <- list.map(subregion.all())
+      trick.DefinedConstructor(string.inspect(r), [])
+    })
+    trick.define_values([])
+  })
+}
+
+fn define_currency_module() -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("worldwide/currency", {
+    use _ <- trick.define_custom_type("Currency")
+    use <- trick.define_constructors([
+      trick.DefinedConstructor("Currency", [
+        trick.Field(Some("code"), trick.string_type()),
+        trick.Field(Some("name"), trick.string_type()),
+        trick.Field(Some("symbol"), trick.string_type()),
+      ]),
+    ])
+    trick.define_values([])
+  })
+}
+
+fn define_language_module(
+  option_module: trick.ModuleInterface,
+) -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("worldwide/language", {
+    use option <- trick.define_import(option_module)
+    let option_type = trick.imported_generic_type(option, "Option")
+    use _ <- trick.define_custom_type("Language")
+    use <- trick.define_constructors([
+      trick.DefinedConstructor("Language", [
+        trick.Field(Some("name"), trick.string_type()),
+        trick.Field(
+          Some("iso639_1"),
+          option_type |> trick.with_generics([trick.string_type()]),
+        ),
+        trick.Field(
+          Some("native_name"),
+          option_type |> trick.with_generics([trick.string_type()]),
+        ),
+      ]),
+    ])
+    trick.define_values([])
+  })
+}
+
+fn define_calling_code_module(
+  option_module: trick.ModuleInterface,
+) -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("worldwide/calling_code", {
+    use option <- trick.define_import(option_module)
+    let option_type = trick.imported_generic_type(option, "Option")
+    use _ <- trick.define_custom_type("CallingCode")
+    use <- trick.define_constructors([
+      trick.DefinedConstructor("CallingCode", [
+        trick.Field(Some("country_code"), trick.int_type()),
+        trick.Field(
+          Some("area_code"),
+          option_type |> trick.with_generics([trick.int_type()]),
+        ),
+      ]),
+    ])
+    trick.define_values([])
+  })
+}
+
+fn define_countries_module(
+  calling_code: trick.ModuleInterface,
+  language: trick.ModuleInterface,
+  currency: trick.ModuleInterface,
+  subregion: trick.ModuleInterface,
+  region: trick.ModuleInterface,
+  duration: trick.ModuleInterface,
+  option: trick.ModuleInterface,
+) -> Result(trick.ModuleInterface, Error) {
+  trick.define_module("worldwide/country", {
+    use option <- trick.define_import(option)
+    use duration <- trick.define_import(duration)
+    use region <- trick.define_import(region)
+    use subregion <- trick.define_import(subregion)
+    use currency <- trick.define_import(currency)
+    use language <- trick.define_import(language)
+    use calling_code <- trick.define_import(calling_code)
+    let option_type = trick.imported_generic_type(option, "Option")
+
+    use _ <- trick.define_custom_type("Country")
+    use <- trick.define_constructors([
+      trick.DefinedConstructor("Country", [
+        trick.Field(Some("name"), trick.string_type()),
+        // : String
+        trick.Field(Some("alpha2"), trick.string_type()),
+        // : String
+        trick.Field(Some("alpha3"), trick.string_type()),
+        // : String
+        trick.Field(Some("numeric"), trick.string_type()),
+        // : String
+        trick.Field(Some("region"), trick.imported_type(region, "Region")),
+        // : Region
+        trick.Field(Some("subregion"), {
+          option_type
+          |> trick.with_generics([
+            trick.imported_type(subregion, "Subregion"),
+          ])
+        }),
+        // : Option(Subregion)
+        trick.Field(Some("capital"), {
+          option_type |> trick.with_generics([trick.string_type()])
+        }),
+        // : Option(String)
+        trick.Field(Some("currencies"), {
+          trick.list_type(trick.imported_type(currency, "Currency"))
+        }),
+        // : List(Currency)
+        trick.Field(Some("languages"), {
+          trick.list_type(trick.imported_type(language, "Language"))
+        }),
+        // : List(Language)
+        trick.Field(Some("calling_codes"), {
+          trick.list_type(trick.imported_type(calling_code, "CallingCode"))
+        }),
+        // : List(CallingCode)
+        trick.Field(Some("timezones"), {
+          trick.list_type(trick.imported_type(duration, "Duration"))
+        }),
+        // : List(Duration)
+      ]),
+    ])
+    trick.define_values([])
+  })
+}
+
+fn strip_trailing_whitespace(code: String) -> String {
+  code
+  |> string.split("\n")
+  |> list.map(string.trim_end)
+  |> string.join("\n")
 }
 
 const header_documentation =
-  "//// Generated country data.
-////
-//// Regenerate with `gleam run -m worldwide/pull_countries`.
-//// Check whether this file is stale with
-//// `gleam run -m worldwide/pull_countries check`.
+  "Generated country data.
 
-// GENERATED FILE - do not edit by hand.
+Regenerate with `gleam run -m worldwide/pull_countries`.
+Check whether this file is stale with
+`gleam run -m worldwide/pull_countries check`.
 
-"
+GENERATED FILE - do not edit by hand."

@@ -83,8 +83,8 @@ generated file hard-codes the country data and uses `worldwide`'s types, but
 nothing in your compiled app needs to send requests or parse JSON:
 
 ```gleam
+import countries
 import gleam/list
-import worldwide/countries
 
 pub fn main() {
   let currencies =

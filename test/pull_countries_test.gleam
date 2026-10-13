@@ -80,7 +80,7 @@ pub fn rendered_module_imports_each_submodule_test() {
   assert string.contains(rendered, "import worldwide/region")
   assert string.contains(rendered, "import worldwide/subregion")
   assert string.contains(rendered, "import gleam/time/duration")
-  assert string.contains(rendered, "import gleam/option.{None, Some}")
+  assert string.contains(rendered, "import gleam/option")
 }
 
 pub fn rendered_module_qualifies_each_constructor_test() {
@@ -92,7 +92,7 @@ pub fn rendered_module_qualifies_each_constructor_test() {
   assert string.contains(rendered, "language.Language(")
   assert string.contains(rendered, "calling_code.CallingCode(")
   assert string.contains(rendered, "region: region.Europe")
-  assert string.contains(rendered, "Some(subregion.SouthernEurope)")
+  assert string.contains(rendered, "option.Some(subregion.SouthernEurope)")
 }
 
 pub fn rendered_module_embeds_spains_data_test() {
@@ -101,11 +101,11 @@ pub fn rendered_module_embeds_spains_data_test() {
 
   assert string.contains(rendered, "name: \"Spain\"")
   assert string.contains(rendered, "alpha2: \"ES\"")
-  assert string.contains(rendered, "capital: Some(\"Madrid\")")
+  assert string.contains(rendered, "capital: option.Some(\"Madrid\")")
   assert string.contains(rendered, "code: \"EUR\"")
   assert string.contains(rendered, "name: \"Euro\"")
-  assert string.contains(rendered, "iso639_1: Some(\"es\")")
-  assert string.contains(rendered, "native_name: Some(\"Español\")")
+  assert string.contains(rendered, "iso639_1: option.Some(\"es\")")
+  assert string.contains(rendered, "native_name: option.Some(\"Español\")")
 }
 
 pub fn rendered_module_builds_durations_via_function_calls_test() {
@@ -133,7 +133,7 @@ pub fn rendered_module_handles_calling_code_with_area_code_test() {
 
   // "1 340" -> country code 1, area code 340.
   assert string.contains(rendered, "country_code: 1")
-  assert string.contains(rendered, "area_code: Some(340)")
+  assert string.contains(rendered, "area_code: option.Some(340)")
 }
 
 pub fn rendered_module_handles_calling_code_without_area_code_test() {
@@ -141,7 +141,7 @@ pub fn rendered_module_handles_calling_code_without_area_code_test() {
   let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "country_code: 34")
-  assert string.contains(rendered, "area_code: None")
+  assert string.contains(rendered, "area_code: option.None")
 }
 
 pub fn rendered_module_handles_missing_capital_test() {
@@ -149,6 +149,7 @@ pub fn rendered_module_handles_missing_capital_test() {
   let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "name: \"Antarctica\"")
+  assert string.contains(rendered, "capital: option.None")
 }
 
 pub fn rendered_module_has_generated_file_marker_test() {
@@ -156,6 +157,32 @@ pub fn rendered_module_has_generated_file_marker_test() {
   let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "GENERATED FILE - do not edit by hand")
+}
+
+pub fn rendered_module_sorts_imports_test() {
+  let assert Ok(countries) = pull_countries.decode_countries(sample_response)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
+
+  // Same order `gleam format` would put them in.
+  assert string.contains(
+    rendered,
+    "import gleam/option
+import gleam/time/duration
+import worldwide/calling_code
+import worldwide/country
+import worldwide/currency
+import worldwide/language
+import worldwide/region
+import worldwide/subregion
+",
+  )
+}
+
+pub fn rendered_module_has_no_trailing_whitespace_test() {
+  let assert Ok(countries) = pull_countries.decode_countries(sample_response)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
+
+  assert !string.contains(rendered, " \n")
 }
 
 pub fn parse_args_defaults_to_generate_at_src_test() {
