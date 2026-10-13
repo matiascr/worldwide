@@ -21,8 +21,7 @@ gleam_json = ">= 3.1.0 and < 4.0.0"
 simplifile = ">= 2.5.0 and < 3.0.0"
 filepath = ">= 1.0.0 and < 2.0.0"
 argv = ">= 1.0.2 and < 2.0.0"
-glance = ">= 3.0.0 and < 4.0.0"
-glance_printer = ">= 3.0.0 and < 4.0.0"
+trick = { git = "https://github.com/GearsDatapacks/trick.git", ref = "main" }
 
 [dev_dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"

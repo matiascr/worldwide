@@ -1,10 +1,5 @@
 import argv
 import filepath
-import glance.{
-  type Expression, Call, LabelledField, List as GList, NamedType, Public,
-  String as GString, UnlabelledField, Variable,
-}
-import glance_printer
 @target(javascript)
 import gleam/fetch
 @target(erlang)
@@ -15,19 +10,20 @@ import gleam/io
 import gleam/javascript/promise.{type Promise}
 import gleam/json
 import gleam/list
-import gleam/option.{type Option, None, Some}
+import gleam/option.{None, Some}
 import gleam/result
 import gleam/string
-import gleam/time/duration.{type Duration}
+import gleam/time/duration
 import simplifile
+import trick.{type Error, Public}
 import worldwide
-import worldwide/calling_code.{type CallingCode}
+import worldwide/calling_code.{CallingCode}
 import worldwide/country.{type Country}
-import worldwide/currency.{type Currency}
+import worldwide/currency.{Currency}
 import worldwide/internal/project
-import worldwide/language.{type Language}
-import worldwide/region.{type Region}
-import worldwide/subregion.{type Subregion}
+import worldwide/language.{Language}
+import worldwide/region
+import worldwide/subregion
 
 const default_path = "src"
 
@@ -94,7 +90,13 @@ fn report_result(result: Result(String, String)) -> Nil {
 
 fn generate_from_body(body: String, mode: Mode) -> Result(String, String) {
   use countries <- result.try(decode_countries(body))
-  let content = render_module(countries)
+  use content <- result.try({
+    let render_result = render_module(countries)
+    render_result
+    |> result.replace_error(
+      "Failed to generate module due to: " <> string.inspect(render_result),
+    )
+  })
 
   case mode {
     Generate(path) -> write_and_report(path, content, list.length(countries))
@@ -212,158 +214,290 @@ pub fn decode_countries(json_body: String) -> Result(List(Country), String) {
 // -- CODE GENERATION -----------------------------------------------------
 
 @internal
-pub fn render_module(countries: List(Country)) -> String {
-  let all_fn =
-    glance.Function(
-      "all",
-      Public,
-      [],
-      Some(NamedType("List", None, [NamedType("Country", Some("country"), [])])),
-      [glance.Expression(GList(list.map(countries, country_expr), None))],
-      glance.Span(0, 0),
-    )
+pub fn render_module(countries: List(Country)) -> Result(String, Error) {
+  trick.to_string({
+    use <- trick.module_comment(header_documentation)
 
-  let imports = [
-    glance.Import("worldwide/country", None, [], []),
-    glance.Import("worldwide/currency", None, [], []),
-    glance.Import("worldwide/language", None, [], []),
-    glance.Import("worldwide/calling_code", None, [], []),
-    glance.Import("worldwide/region", None, [], []),
-    glance.Import("worldwide/subregion", None, [], []),
-    glance.Import("gleam/option", None, [], [
-      glance.UnqualifiedImport("None", None),
-      glance.UnqualifiedImport("Some", None),
-    ]),
-    glance.Import("gleam/time/duration", None, [], []),
-  ]
-  let module =
-    glance.Module(list.map(imports, glance.Definition([], _)), [], [], [], [
-      glance.Definition([], all_fn),
-    ])
+    // import gleam/option
+    let assert Ok(option_module) =
+      trick.define_module("gleam/option", {
+        use _ <- trick.define_custom_type("Option")
+        use a <- trick.define_type_parameter("a")
+        use <- trick.define_constructors([
+          trick.DefinedConstructor("Some", [trick.Field(None, a)]),
+          trick.DefinedConstructor("None", []),
+        ])
+        trick.define_values([])
+      })
+    use option <- trick.import_(option_module, None)
+    let option_type = trick.imported_generic_type(option, "Option")
+    let some = trick.imported_constuctor(option, "Some")
+    let none = trick.imported_constuctor(option, "None")
 
-  header_documentation <> glance_printer.print(module)
-}
+    // import worldwide/region
+    let assert Ok(region_module) =
+      trick.define_module("worldwide/region", {
+        use _ <- trick.define_custom_type("Region")
+        use <- trick.define_constructors({
+          use r <- list.map(region.all())
+          trick.DefinedConstructor(string.inspect(r), [])
+        })
+        trick.define_values([])
+      })
+    use region <- trick.import_(region_module, None)
+    let region_type = trick.imported_type(region, "Region")
 
-fn country_expr(country: Country) -> Expression {
-  Call(module_ref("country", "Country"), [
-    LabelledField("name", GString(country.name)),
-    LabelledField("alpha2", GString(country.alpha2)),
-    LabelledField("alpha3", GString(country.alpha3)),
-    LabelledField("numeric", GString(country.numeric)),
-    LabelledField("region", region_expr(country.region)),
-    LabelledField("subregion", option_expr(country.subregion, subregion_expr)),
-    LabelledField("capital", option_expr(country.capital, GString)),
-    LabelledField(
-      "currencies",
-      GList(list.map(country.currencies, currency_expr), None),
-    ),
-    LabelledField(
-      "languages",
-      GList(list.map(country.languages, language_expr), None),
-    ),
-    LabelledField(
-      "calling_codes",
-      GList(list.map(country.calling_codes, calling_code_expr), None),
-    ),
-    LabelledField(
-      "timezones",
-      GList(list.map(country.timezones, duration_expr), None),
-    ),
-  ])
-}
+    // import worldwide/subregion
+    let assert Ok(subregion_module) =
+      trick.define_module("worldwide/subregion", {
+        use _ <- trick.define_custom_type("Subregion")
+        use <- trick.define_constructors({
+          use r <- list.map(subregion.all())
+          trick.DefinedConstructor(string.inspect(r), [])
+        })
+        trick.define_values([])
+      })
+    use subregion <- trick.import_(subregion_module, None)
+    let subregion_type = trick.imported_type(subregion, "Subregion")
 
-fn currency_expr(currency: Currency) -> Expression {
-  Call(module_ref("currency", "Currency"), [
-    LabelledField("code", GString(currency.code)),
-    LabelledField("name", GString(currency.name)),
-    LabelledField("symbol", GString(currency.symbol)),
-  ])
-}
+    // import worldwide/currency
+    let assert Ok(currency_module) =
+      trick.define_module("worldwide/currency", {
+        use _ <- trick.define_custom_type("Currency")
+        use <- trick.define_constructors([
+          trick.DefinedConstructor("Currency", [
+            trick.Field(Some("code"), trick.string_type()),
+            trick.Field(Some("name"), trick.string_type()),
+            trick.Field(Some("symbol"), trick.string_type()),
+          ]),
+        ])
+        trick.define_values([])
+      })
+    use currency <- trick.import_(currency_module, None)
+    let currency_type = trick.imported_type(currency, "Currency")
+    let currency_constructor = trick.imported_constuctor(currency, "Currency")
 
-fn language_expr(language: Language) -> Expression {
-  Call(module_ref("language", "Language"), [
-    LabelledField("name", GString(language.name)),
-    LabelledField("iso639_1", option_expr(language.iso639_1, GString)),
-    LabelledField("native_name", option_expr(language.native_name, GString)),
-  ])
-}
+    // import worldwide/language
+    let assert Ok(language_module) =
+      trick.define_module("worldwide/language", {
+        use _ <- trick.define_custom_type("Language")
+        use <- trick.define_constructors([
+          trick.DefinedConstructor("Language", [
+            trick.Field(Some("name"), trick.string_type()),
+            trick.Field(
+              Some("iso639_1"),
+              option_type |> trick.with_generics([trick.string_type()]),
+            ),
+            trick.Field(
+              Some("native_name"),
+              option_type |> trick.with_generics([trick.string_type()]),
+            ),
+          ]),
+        ])
+        trick.define_values([])
+      })
+    use language <- trick.import_(language_module, None)
+    let language_type = trick.imported_type(language, "Language")
+    let language_constructor = trick.imported_constuctor(language, "Language")
 
-fn calling_code_expr(calling_code: CallingCode) -> Expression {
-  Call(module_ref("calling_code", "CallingCode"), [
-    LabelledField("country_code", int_expr(calling_code.country_code)),
-    LabelledField("area_code", option_expr(calling_code.area_code, int_expr)),
-  ])
-}
+    // import worldwide/calling_code
+    let assert Ok(calling_code_module) =
+      trick.define_module("worldwide/calling_code", {
+        use _ <- trick.define_custom_type("CallingCode")
+        use <- trick.define_constructors([
+          trick.DefinedConstructor("CallingCode", [
+            trick.Field(Some("country_code"), trick.int_type()),
+            trick.Field(
+              Some("area_code"),
+              option_type |> trick.with_generics([trick.int_type()]),
+            ),
+          ]),
+        ])
+        trick.define_values([])
+      })
+    use calling_code <- trick.import_(calling_code_module, None)
+    let calling_code_type = trick.imported_type(calling_code, "CallingCode")
+    let calling_code_constructor =
+      trick.imported_constuctor(calling_code, "CallingCode")
 
-fn int_expr(value: Int) -> Expression {
-  glance.Int(int.to_string(value))
-}
+    // import gleam/duration
+    let assert Ok(duration_module) =
+      trick.define_module("gleam/duration", {
+        use duration_type <- trick.define_custom_type("Duration")
+        use <- trick.define_constructors([
+          trick.DefinedConstructor("Duration", []),
+        ])
+        trick.define_values([
+          trick.FunctionInterface(
+            "minutes",
+            [trick.Field(Some("amount"), trick.int_type())],
+            duration_type,
+          ),
+        ])
+      })
+    use duration <- trick.import_(duration_module, None)
+    let duration_type = trick.imported_type(duration, "Duration")
 
-fn duration_expr(value: Duration) -> Expression {
-  let #(seconds, _nanoseconds) = duration.to_seconds_and_nanoseconds(value)
-  Call(glance.FieldAccess(Variable("duration"), "minutes"), [
-    UnlabelledField(int_expr(seconds / 60)),
-  ])
-}
+    // import worldwide/country
+    let assert Ok(country_module) =
+      trick.define_module("worldwide/country", {
+        use _ <- trick.define_custom_type("Country")
+        use <- trick.define_constructors([
+          trick.DefinedConstructor("Country", [
+            trick.Field(Some("name"), trick.string_type()),
+            // : String
+            trick.Field(Some("alpha2"), trick.string_type()),
+            // : String
+            trick.Field(Some("alpha3"), trick.string_type()),
+            // : String
+            trick.Field(Some("numeric"), trick.string_type()),
+            // : String
+            trick.Field(Some("region"), region_type),
+            // : Region
+            trick.Field(Some("subregion"), {
+              option_type |> trick.with_generics([subregion_type])
+            }),
+            // : Option(Subregion)
+            trick.Field(Some("capital"), {
+              option_type |> trick.with_generics([trick.string_type()])
+            }),
+            // : Option(String)
+            trick.Field(Some("currencies"), trick.list_type(currency_type)),
+            // : List(Currency)
+            trick.Field(Some("languages"), trick.list_type(language_type)),
+            // : List(Language)
+            trick.Field(Some("calling_codes"), {
+              trick.list_type(calling_code_type)
+            }),
+            // : List(CallingCode)
+            trick.Field(Some("timezones"), trick.list_type(duration_type)),
+            // : List(Duration)
+          ]),
+        ])
+        trick.define_values([])
+      })
+    use country <- trick.import_(country_module, None)
+    let country_constructor = trick.imported_constuctor(country, "Country")
 
-fn region_expr(region: Region) -> Expression {
-  module_ref("region", region_identifier(region))
-}
+    use _all <- trick.function("all", Public, {
+      list.map(countries, fn(c) {
+        country_constructor
+        |> trick.construct()
+        |> trick.labelled_call([
+          trick.Argument(Some("name"), trick.string(c.name)),
+          trick.Argument(Some("alpha2"), trick.string(c.alpha2)),
+          trick.Argument(Some("alpha3"), trick.string(c.alpha3)),
+          trick.Argument(Some("numeric"), trick.string(c.numeric)),
+          trick.Argument(Some("region"), {
+            region
+            |> trick.imported_constuctor(string.inspect(c.region))
+            |> trick.construct()
+          }),
+          trick.Argument(Some("subregion"), {
+            case c.subregion {
+              Some(sr) -> {
+                let subregion_expression =
+                  subregion
+                  |> trick.imported_constuctor(string.inspect(sr))
+                  |> trick.construct()
 
-fn subregion_expr(subregion: Subregion) -> Expression {
-  module_ref("subregion", subregion_identifier(subregion))
-}
+                trick.construct(some)
+                |> trick.call([subregion_expression])
+              }
+              None -> trick.construct(none)
+            }
+          }),
+          trick.Argument(Some("capital"), {
+            case c.capital {
+              Some(cp) -> {
+                trick.construct(some)
+                |> trick.call([trick.string(cp)])
+              }
+              None -> trick.construct(none)
+            }
+          }),
+          trick.Argument(Some("currencies"), {
+            trick.list({
+              use Currency(code:, name:, symbol:) <- list.map(c.currencies)
+              currency_constructor
+              |> trick.construct()
+              |> trick.labelled_call([
+                trick.Argument(Some("code"), trick.string(code)),
+                trick.Argument(Some("name"), trick.string(name)),
+                trick.Argument(Some("symbol"), trick.string(symbol)),
+              ])
+            })
+          }),
+          trick.Argument(Some("languages"), {
+            trick.list({
+              use Language(name:, iso639_1:, native_name:) <- list.map(
+                c.languages,
+              )
+              language_constructor
+              |> trick.construct()
+              |> trick.labelled_call([
+                trick.Argument(Some("name"), trick.string(name)),
+                trick.Argument(Some("iso639_1"), {
+                  case iso639_1 {
+                    Some(iso639_1) -> {
+                      trick.construct(some)
+                      |> trick.call([trick.string(iso639_1)])
+                    }
+                    None -> trick.construct(none)
+                  }
+                }),
+                trick.Argument(Some("native_name"), {
+                  case native_name {
+                    Some(native_name) -> {
+                      trick.construct(some)
+                      |> trick.call([trick.string(native_name)])
+                    }
+                    None -> trick.construct(none)
+                  }
+                }),
+              ])
+            })
+          }),
+          trick.Argument(Some("calling_codes"), {
+            trick.list({
+              use CallingCode(country_code:, area_code:) <- list.map(
+                c.calling_codes,
+              )
+              calling_code_constructor
+              |> trick.construct()
+              |> trick.labelled_call([
+                trick.Argument(Some("country_code"), trick.int(country_code)),
+                trick.Argument(Some("area_code"), {
+                  case area_code {
+                    Some(area_code) -> {
+                      trick.construct(some)
+                      |> trick.call([trick.int(area_code)])
+                    }
+                    None -> trick.construct(none)
+                  }
+                }),
+              ])
+            })
+          }),
+          trick.Argument(Some("timezones"), {
+            trick.list({
+              use timezone <- list.map(c.timezones)
+              let #(seconds, _nanoseconds) =
+                duration.to_seconds_and_nanoseconds(timezone)
 
-fn region_identifier(region: Region) -> String {
-  case region {
-    region.Africa -> "Africa"
-    region.Americas -> "Americas"
-    region.Asia -> "Asia"
-    region.Europe -> "Europe"
-    region.Oceania -> "Oceania"
-    region.Polar -> "Polar"
-  }
-}
+              trick.imported_value(duration, "minutes")
+              |> trick.call([trick.int(seconds / 60)])
+            })
+          }),
+        ])
+      })
+      |> trick.list()
+      |> trick.expression()
+      |> trick.function_body()
+    })
 
-fn subregion_identifier(subregion: Subregion) -> String {
-  case subregion {
-    subregion.EasternAfrica -> "EasternAfrica"
-    subregion.MiddleAfrica -> "MiddleAfrica"
-    subregion.NorthernAfrica -> "NorthernAfrica"
-    subregion.SouthernAfrica -> "SouthernAfrica"
-    subregion.WesternAfrica -> "WesternAfrica"
-    subregion.CentralAmerica -> "CentralAmerica"
-    subregion.NorthAmerica -> "NorthAmerica"
-    subregion.SouthAmerica -> "SouthAmerica"
-    subregion.Caribbean -> "Caribbean"
-    subregion.CentralAsia -> "CentralAsia"
-    subregion.EasternAsia -> "EasternAsia"
-    subregion.SouthEasternAsia -> "SouthEasternAsia"
-    subregion.SouthernAsia -> "SouthernAsia"
-    subregion.WesternAsia -> "WesternAsia"
-    subregion.CentralEurope -> "CentralEurope"
-    subregion.EasternEurope -> "EasternEurope"
-    subregion.NorthernEurope -> "NorthernEurope"
-    subregion.SouthernEurope -> "SouthernEurope"
-    subregion.WesternEurope -> "WesternEurope"
-    subregion.AustraliaAndNewZealand -> "AustraliaAndNewZealand"
-    subregion.Melanesia -> "Melanesia"
-    subregion.Micronesia -> "Micronesia"
-    subregion.Polynesia -> "Polynesia"
-    subregion.SouthAntarcticOcean -> "SouthAntarcticOcean"
-    subregion.Antarctica -> "Antarctica"
-  }
-}
-
-fn module_ref(module: String, name: String) -> Expression {
-  glance.FieldAccess(Variable(module), name)
-}
-
-fn option_expr(value: Option(a), to_expr: fn(a) -> Expression) -> Expression {
-  case value {
-    None -> Variable("None")
-    Some(inner) -> Call(Variable("Some"), [UnlabelledField(to_expr(inner))])
-  }
+    trick.end_module()
+  })
 }
 
 const header_documentation =

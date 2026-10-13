@@ -62,7 +62,7 @@ pub fn decode_countries_test() {
 
 pub fn rendered_module_only_defines_data_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   // No type definitions - those live in worldwide's own modules.
   assert !string.contains(rendered, "pub type ")
@@ -71,7 +71,7 @@ pub fn rendered_module_only_defines_data_test() {
 
 pub fn rendered_module_imports_each_submodule_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "import worldwide/country")
   assert string.contains(rendered, "import worldwide/currency")
@@ -85,7 +85,7 @@ pub fn rendered_module_imports_each_submodule_test() {
 
 pub fn rendered_module_qualifies_each_constructor_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "country.Country(")
   assert string.contains(rendered, "currency.Currency(")
@@ -97,7 +97,7 @@ pub fn rendered_module_qualifies_each_constructor_test() {
 
 pub fn rendered_module_embeds_spains_data_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "name: \"Spain\"")
   assert string.contains(rendered, "alpha2: \"ES\"")
@@ -110,7 +110,7 @@ pub fn rendered_module_embeds_spains_data_test() {
 
 pub fn rendered_module_builds_durations_via_function_calls_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   // `Duration` is opaque - must be built via `duration.minutes`, never as a
   // literal record (that would be a compile error in the generated file).
@@ -121,7 +121,7 @@ pub fn rendered_module_builds_durations_via_function_calls_test() {
 
 pub fn rendered_module_handles_fractional_timezones_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   // Afghanistan is UTC+04:30 -> 4*60 + 30 = 270 minutes.
   assert string.contains(rendered, "duration.minutes(270)")
@@ -129,7 +129,7 @@ pub fn rendered_module_handles_fractional_timezones_test() {
 
 pub fn rendered_module_handles_calling_code_with_area_code_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   // "1 340" -> country code 1, area code 340.
   assert string.contains(rendered, "country_code: 1")
@@ -138,7 +138,7 @@ pub fn rendered_module_handles_calling_code_with_area_code_test() {
 
 pub fn rendered_module_handles_calling_code_without_area_code_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "country_code: 34")
   assert string.contains(rendered, "area_code: None")
@@ -146,14 +146,14 @@ pub fn rendered_module_handles_calling_code_without_area_code_test() {
 
 pub fn rendered_module_handles_missing_capital_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "name: \"Antarctica\"")
 }
 
 pub fn rendered_module_has_generated_file_marker_test() {
   let assert Ok(countries) = pull_countries.decode_countries(sample_response)
-  let rendered = pull_countries.render_module(countries)
+  let assert Ok(rendered) = pull_countries.render_module(countries)
 
   assert string.contains(rendered, "GENERATED FILE - do not edit by hand")
 }
